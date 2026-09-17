@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import { clampScore, completeLesson, initialProgress, recordAttempt, resetLesson } from './progression'
+import { clampScore, completeLesson, initialProgress, reconcileProgress, recordAttempt, resetLesson } from './progression'
 import { requireTraining } from './registry'
 import type { ChallengeResult, TrainingProgress } from './types'
 
@@ -23,9 +23,14 @@ export const useProgressStore = create<ProgressState>()(
       progress: {},
 
       startTraining: (trainingId) => {
+        const training = requireTraining(trainingId)
         const existing = get().progress[trainingId]
-        if (existing) return existing
-        const fresh = initialProgress(requireTraining(trainingId))
+        if (existing) {
+          const reconciled = reconcileProgress(training, existing)
+          if (reconciled !== existing) set((s) => ({ progress: { ...s.progress, [trainingId]: reconciled } }))
+          return reconciled
+        }
+        const fresh = initialProgress(training)
         set((s) => ({ progress: { ...s.progress, [trainingId]: fresh } }))
         return fresh
       },

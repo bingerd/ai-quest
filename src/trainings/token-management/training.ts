@@ -7,6 +7,7 @@ import ContextPollution from './lessons/04-context-pollution.mdx'
 import { InteractiveContextWindow } from './lessons/InteractiveContextWindow'
 import { TokenVisualizer } from './lessons/TokenVisualizer'
 import { foundationsQuiz } from './data/quizzes'
+import { contextSurgeonChallenge, tokenHeistChallenge } from './challenges/contextChallenges'
 
 export const tokenManagementTraining: Training = {
   id: 'token-management',
@@ -36,6 +37,15 @@ export const tokenManagementTraining: Training = {
         { id: 'what-is-a-context-window', title: 'What is a context window?', type: 'explanation', component: WhatIsAContextWindow, estimatedMinutes: 2 },
         { id: 'interactive-context-window', title: 'Make it fit', type: 'interactive', component: InteractiveContextWindow, estimatedMinutes: 2 },
         { id: 'context-pollution', title: 'Pollution, repetition and caching', type: 'explanation', component: ContextPollution, estimatedMinutes: 2 },
+        { id: 'context-surgeon', title: 'Challenge: Context Surgeon', type: 'challenge', challenge: contextSurgeonChallenge, estimatedMinutes: 3 },
+      ],
+    },
+    {
+      id: 'budgets',
+      title: 'Budgets',
+      description: 'Choosing what goes in when you cannot have everything.',
+      lessons: [
+        { id: 'token-heist', title: 'Challenge: Token Heist', type: 'challenge', challenge: tokenHeistChallenge, estimatedMinutes: 4 },
       ],
     },
   ],

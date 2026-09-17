@@ -26,9 +26,11 @@ export function LessonPage() {
   const submitChallenge = useProgressStore((s) => s.submitChallenge)
   const recordScore = useProgressStore((s) => s.recordScore)
 
+  // Idempotent: creates progress on first visit and reconciles it with the
+  // current training definition on later visits (new lessons, removed lessons).
   useEffect(() => {
-    if (training && !progress) startTraining(training.id)
-  }, [training, progress, startTraining])
+    if (training) startTraining(training.id)
+  }, [training, startTraining])
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })

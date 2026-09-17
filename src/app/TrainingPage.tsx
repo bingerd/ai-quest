@@ -30,9 +30,11 @@ export function TrainingPage() {
   const startTraining = useProgressStore((s) => s.startTraining)
   const resetTraining = useProgressStore((s) => s.resetTraining)
 
+  // Idempotent: creates progress on first visit and reconciles it with the
+  // current training definition on later visits (new lessons, removed lessons).
   useEffect(() => {
-    if (training && !progress) startTraining(training.id)
-  }, [training, progress, startTraining])
+    if (training) startTraining(training.id)
+  }, [training, startTraining])
 
   if (!training) return <NotFound message="That training does not exist." />
   if (!progress) return null

@@ -10,6 +10,7 @@ import {
   nextLessonId,
   previousLessonId,
   recordAttempt,
+  reconcileProgress,
   resetLesson,
 } from './progression'
 import type { ChallengeResult } from './types'
@@ -115,5 +116,34 @@ describe('resetLesson', () => {
 describe('finalScore', () => {
   it('is null before any scored attempt', () => {
     expect(finalScore(training, initialProgress(training))).toBeNull()
+  })
+})
+
+describe('reconcileProgress', () => {
+  it('returns the same object when nothing changed', () => {
+    const p = initialProgress(training)
+    expect(reconcileProgress(training, p)).toBe(p)
+  })
+  it('adds records for new lessons and unlocks the next one', () => {
+    let p = completeLesson(training, initialProgress(training), 'l1')
+    p = recordAttempt(p, 'l2', result(100))
+    p = completeLesson(training, p, 'l2')
+    p = recordAttempt(p, 'l3', result(80))
+    p = completeLesson(training, p, 'l3')
+    expect(p.completed).toBe(true)
+    const grown = makeStubTraining()
+    grown.modules[1]!.lessons.push({ id: 'l4', title: 'New', type: 'explanation', component: () => null })
+    const r = reconcileProgress(grown, p)
+    expect(r.lessons['l4']?.status).toBe('available')
+    expect(r.completed).toBe(false)
+    expect(r.badges).toContain('module:m1')
+    expect(r.badges).not.toContain('training:stub')
+  })
+  it('drops records for removed lessons', () => {
+    const p = initialProgress(training)
+    const shrunk = makeStubTraining()
+    shrunk.modules[1]!.lessons = []
+    const r = reconcileProgress(shrunk, p)
+    expect(Object.keys(r.lessons)).toEqual(['l1', 'l2'])
   })
 })

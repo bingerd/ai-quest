@@ -133,6 +133,40 @@ export function completeLesson(
   return updated
 }
 
+/**
+ * Bring a stored progress record in line with the current training definition:
+ * add records for new lessons, drop records for removed ones, unlock the lesson
+ * after the last completed one, and recompute completion. Returns the same
+ * object when nothing changed.
+ */
+export function reconcileProgress(training: Training, progress: TrainingProgress): TrainingProgress {
+  const flat = flattenLessons(training)
+  const lessons: Record<string, LessonRecord> = {}
+  let changed = false
+  let previousCompleted = true
+  for (const { lesson } of flat) {
+    const existing = progress.lessons[lesson.id]
+    if (existing) {
+      let record = existing
+      if (record.status === 'locked' && previousCompleted) {
+        record = { ...record, status: 'available' }
+        changed = true
+      }
+      lessons[lesson.id] = record
+    } else {
+      lessons[lesson.id] = emptyRecord(previousCompleted ? 'available' : 'locked')
+      changed = true
+    }
+    previousCompleted = lessons[lesson.id]?.status === 'completed'
+  }
+  if (Object.keys(progress.lessons).length !== flat.length) changed = true
+  if (!changed) return progress
+  const updated: TrainingProgress = { ...progress, lessons, completed: false }
+  updated.badges = earnedBadges(training, updated)
+  updated.completed = flat.every((f) => updated.lessons[f.lesson.id]?.status === 'completed')
+  return updated
+}
+
 /** Clear attempts and scores for a lesson so it can be replayed. Keeps completion status. */
 export function resetLesson(progress: TrainingProgress, lessonId: string): TrainingProgress {
   const record = getRecord(progress, lessonId)
