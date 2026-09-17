@@ -1,0 +1,41 @@
+# settings.json: layers that decide what wins
+
+Configuration comes from five layers. Highest precedence first:
+
+| Layer | File | Who it affects |
+| --- | --- | --- |
+| Managed | managed settings (file, MDM or admin console) | Everyone; cannot be overridden |
+| Command line | `--settings`, flags | This launch |
+| Local project | `.claude/settings.local.json` | You, this repo (gitignored) |
+| Project | `.claude/settings.json` | Everyone on the repo (committed) |
+| User | `~/.claude/settings.json` | You, every project |
+
+<ConceptCard title="Scalars override, rules merge" icon="🧮">
+  For a single value like `model`, the highest layer that sets it wins. Permission rule lists (`allow`, `ask`, `deny`) are **merged** across every layer, then checked in order: **deny first, then ask, then allow**. An allow rule cannot carve a hole in someone else's deny.
+</ConceptCard>
+
+<ConceptReveal prompt="Can a repository turn off your permission prompts?">
+  No. `defaultMode` values `bypassPermissions` and `auto` are ignored in project and local settings. Organisations can go further and disable bypass mode entirely with `permissions.disableBypassPermissionsMode` in managed settings.
+</ConceptReveal>
+
+<BeforeAfter
+  beforeLabel="A request"
+  afterLabel="A rule"
+  beforeCaption="Usually followed. Not enforced."
+  afterCaption="Enforced by Claude Code on every tool call."
+  before={<pre>{`CLAUDE.md
+- Please never read .env files.`}</pre>}
+  after={<pre>{`.claude/settings.json
+{ "permissions": { "deny": ["Read(.env)"] } }`}</pre>}
+/>
+
+A few rule shapes you will use in a moment:
+
+- `Bash(npm test *)`: `*` matches any text; a trailing ` *` (or `:*`) also matches the bare `npm test`.
+- Compound commands are split on `&&`, `||`, `;`, `|`: **every** part must be allowed, and a deny on **any** part blocks.
+- `Read(.env)`: a bare filename matches at any depth. `Edit(src/**)`: `**` crosses folders, `*` does not.
+- `WebFetch(domain:docs.stripe.com)`: one domain.
+
+<ConceptCard title="A guardrail, not a sandbox" icon="🚧" tone="warn">
+  Bash deny rules match the command text Claude writes. The same program via another path or `sh -c` is not matched. For hard guarantees, pair rules with sandboxing.
+</ConceptCard>

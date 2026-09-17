@@ -1,0 +1,23 @@
+# Hooks: things that must happen every time
+
+CLAUDE.md is a request. A **hook** is a command Claude Code runs at a specific moment, every time. Use hooks when "usually" is not good enough.
+
+<InteractiveDiagram
+  title="Hook events you will use"
+  nodes={[
+    { id: 'start', label: 'SessionStart', icon: '🚀', detail: 'When a session starts. Matcher filters how it started (startup, resume, clear, compact). Plain-text output with exit 0 is added to Claude\'s context.' },
+    { id: 'prompt', label: 'UserPromptSubmit', icon: '⌨️', detail: 'Every time you send a prompt. No matcher. Output with exit 0 is added as context, on every prompt.' },
+    { id: 'pre', label: 'PreToolUse', icon: '🛑', detail: 'Before a tool runs. Matcher is the tool name, like Bash or Edit|Write. Exit code 2 blocks the call and sends your message back to Claude.' },
+    { id: 'post', label: 'PostToolUse', icon: '🧹', detail: 'After a tool succeeded. Perfect for formatting or linting. Exit code 2 cannot undo anything: the tool already ran.' },
+    { id: 'notify', label: 'Notification', icon: '🔔', detail: 'When Claude Code sends a notification. Matcher is the type, such as permission_prompt or idle_prompt.' },
+    { id: 'stop', label: 'Stop', icon: '🏁', detail: 'When Claude finishes responding. No matcher. Exit code 2 keeps Claude working.' },
+  ]}
+/>
+
+<ConceptCard title="Matchers and exit codes" icon="🎯">
+  A matcher of `*` or empty matches everything. Plain names and `|` lists match exactly (`Edit|Write`). Anything else is treated as a regular expression (`mcp__.*`). Exit **0** is success. Exit **2** blocks where blocking is possible. Any other code is reported as an error but blocks nothing.
+</ConceptCard>
+
+<ConceptReveal prompt="Where do hooks live?">
+  In the same settings files as everything else: `~/.claude/settings.json`, `.claude/settings.json` (shareable with the team), `.claude/settings.local.json`, managed settings, plugins, and skill or subagent frontmatter.
+</ConceptReveal>

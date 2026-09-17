@@ -1,0 +1,18 @@
+# There is no auto-router. You are the router.
+
+Claude Code does not pick a model per task for you. What it gives you is the controls to do it well:
+
+- **Aliases**: `haiku`, `sonnet`, `opus`, plus `sonnet[1m]` / `opus[1m]` for a larger context window.
+- **`opusplan`**: Opus while planning, Sonnet while executing. Deep reasoning where the design happens, efficient execution for the rest.
+- **Subagent models**: set `model:` in a subagent's frontmatter, or a default with `CLAUDE_CODE_SUBAGENT_MODEL`. Volume work belongs on a fast tier.
+- **`/effort`**: low to max, for how hard the model thinks.
+- **`/fast`**: fast mode, a faster research preview that is priced higher.
+- **`fallbackModel`**: which models to use when one is overloaded or unavailable.
+
+<ConceptCard title="Which setting wins" icon="🏆">
+  `/model` in the session › `--model` at launch › `ANTHROPIC_MODEL` › the `model` setting. Admins can restrict choices with `availableModels`.
+</ConceptCard>
+
+<ConceptReveal prompt="Isn't the best model always the safest choice?">
+  For hard design and tricky bugs, yes, it pays for itself. For renames, searches and running tests it mostly adds cost and waiting time. Put capability where the thinking happens. In the next challenge the model numbers are simulated, but the trade-off is real.
+</ConceptReveal>

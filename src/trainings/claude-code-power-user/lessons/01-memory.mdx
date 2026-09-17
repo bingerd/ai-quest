@@ -1,0 +1,26 @@
+# CLAUDE.md: the memory every session starts with
+
+Claude Code loads memory files at the start of every session. Click through where they come from:
+
+<InteractiveDiagram
+  title="Where memory comes from"
+  nodes={[
+    { id: 'managed', label: 'Managed', icon: '🏢', detail: 'An organisation-wide CLAUDE.md deployed by your admins. Applies to everyone on the machine.' },
+    { id: 'user', label: 'User', icon: '👤', detail: '~/.claude/CLAUDE.md. Your personal preferences, for every project.' },
+    { id: 'project', label: 'Project', icon: '📦', detail: './CLAUDE.md or ./.claude/CLAUDE.md. Committed, shared with the team: commands, conventions, architecture pointers.' },
+    { id: 'local', label: 'Local', icon: '🔒', detail: './CLAUDE.local.md. Yours, for this project only. Add it to .gitignore.' },
+    { id: 'imports', label: 'Imports and rules', icon: '🔗', detail: '@path imports pull in other files (nesting up to 4 hops). Files in .claude/rules/ can be scoped to certain paths. Subdirectory CLAUDE.md files load when Claude works there.' },
+  ]}
+/>
+
+<ConceptCard title="Files are combined, not overridden" icon="➕">
+  Every memory file that applies is loaded together. Put team facts in the project file and personal taste in your user file, and both are there.
+</ConceptCard>
+
+<ConceptCard title="Every line is paid for, every session" icon="💸" tone="warn">
+  Memory loads into every session for everyone. Anthropic suggests keeping each CLAUDE.md under about 200 lines. Keep commands and conventions Claude cannot guess. Move long references into files and `@import` them. Drop generic advice like "write clean code".
+</ConceptCard>
+
+<ConceptReveal prompt="What should never be in CLAUDE.md?">
+  Secrets. CLAUDE.md is usually committed and is always loaded into context. API keys belong in environment variables or a secrets manager. You can also run `/init` to generate a starter file and `/memory` to edit memory files.
+</ConceptReveal>

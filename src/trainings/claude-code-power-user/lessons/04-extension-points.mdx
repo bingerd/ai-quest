@@ -1,0 +1,20 @@
+# Skills, subagents, MCP and output styles
+
+Beyond memory, settings and hooks, Claude Code has four more places to extend it:
+
+<InteractiveDiagram
+  title="Extension points"
+  nodes={[
+    { id: 'skill', label: 'Skills', icon: '🧰', detail: 'A folder with a SKILL.md in .claude/skills/ or ~/.claude/skills/. Only the description is loaded up front; the full instructions load when the skill is used. Skills also create /name commands (the older .claude/commands folder still works, but is legacy).' },
+    { id: 'subagent', label: 'Subagents', icon: '🧑‍🔧', detail: 'Markdown files in .claude/agents/ with frontmatter such as name, description, tools and model. A subagent works in its own context window and hands back a summary, so big searches and reviews do not flood your session.' },
+    { id: 'mcp', label: 'MCP servers', icon: '🔌', detail: 'Connections to external tools and data. Local scope is just you in this project, project scope is shared through .mcp.json (and needs approval), user scope is you in every project.' },
+    { id: 'style', label: 'Output styles', icon: '🎨', detail: 'Change how Claude responds. Built-in styles include Explanatory and Learning; custom styles live in .claude/output-styles. Choose one in /config.' },
+    { id: 'status', label: 'Status line', icon: '📟', detail: 'A statusLine setting runs your script with session details, such as model and context usage, so you always see where you stand.' },
+  ]}
+/>
+
+<ConceptCard title="Suggestion, guarantee, or on demand?" icon="🧭">
+  **CLAUDE.md** is always loaded and followed as guidance. **settings.json** is enforced. **Hooks** always run. **Skills** cost almost nothing until needed. **Subagents** keep noisy work out of your context. Choose by what you need: a fact, a rule, a guarantee, a workflow, or a clean context.
+</ConceptCard>
+
+Plugins bundle several of these (skills, agents, hooks, MCP servers, output styles) into one installable package.
