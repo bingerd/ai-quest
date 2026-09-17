@@ -15,13 +15,13 @@ Goal: a working, polished MVP of an interactive training platform, with the firs
 
 1. **Foundation** — Vite/React/TS strict, Tailwind 4, MDX, router, design tokens, shell, catalogue. ✅
 2. **Training engine** — generic types, pure progression, registry, persisted store, lesson page. ✅
-3. **Core components + first lessons** — TokenMeter, ContextWindow, ContextItem, Token Visualizer, Interactive Context Window, Modules 1–2 content.
-4. **Token Heist** — `simulateContextSelection` + tests, Phaser scene + React bridge + list fallback.
-5. **Context Surgeon** — same simulation, removal-oriented scenario, live metrics.
-6. **Model Selection, retrieval lesson, Prompt Surgery editor** — `simulateModelSelection`, `simulateRetrieval`, `evaluatePrompt` + Monaco editor.
-7. **Enterprise scenario + Final Challenge** — decision-point engine, composed final simulation, results page.
-8. **Polish** — motion, a11y, responsive, error/empty/loading states.
-9. **Content** — final copy pass, vendor mapping, docs.
+3. **Core components + first lessons** ✅ — TokenMeter, ContextWindow, ContextItem, Token Visualizer, Interactive Context Window, Modules 1–2 content.
+4. **Token Heist** ✅ — `simulateContextSelection` + tests, Phaser scene + React bridge + list fallback.
+5. **Context Surgeon** ✅ — same simulation, removal-oriented scenario, live metrics.
+6. **Model Selection, retrieval lesson, Prompt Surgery editor** ✅ — `simulateModelSelection`, `simulateRetrieval`, `evaluatePrompt` + Monaco editor.
+7. **Enterprise scenario + Final Challenge** ✅ — decision-point engine, composed final simulation, results page.
+8. **Polish** ✅ — motion, a11y, responsive, error/empty/loading states.
+9. **Content** ✅ — final copy pass, vendor mapping, docs.
 
 Each phase ends with `npm test`, `npm run typecheck`, `npm run build` and one commit.
 
@@ -29,3 +29,17 @@ Each phase ends with `npm test`, `npm run typecheck`, `npm run build` and one co
 
 See the checklist in the original spec (platform, token training, technical, architecture). The
 architecture goal is that adding Training #2 means adding a folder under `src/trainings` and one import line.
+
+## Status
+
+All nine phases are implemented. Beyond the original plan, the repository also has engagement gating for
+explanation lessons, an attempt gate on Prompt Surgery, and GitHub Pages deployment.
+
+## Known limitations
+
+- Token counts use `characters / 4` and model profiles are fictional. Numbers teach trade-offs; they are not
+  vendor figures.
+- Prompt Surgery is rule-based: it checks structure, markers and patterns, not meaning.
+- The Phaser board is pointer-driven. Keyboard and screen-reader users get the equivalent list view.
+- The agent simulation from the spec is not built. Tool selection is covered inside the Final Challenge.
+- Progress lives in one browser's localStorage. There is no sync, no accounts and no analytics.
