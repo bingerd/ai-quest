@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { scoreQuiz } from '../engine/quiz'
 import type { ChallengeResult, QuizQuestion } from '../engine/types'
 import { Feedback } from '../ui/Feedback'
 import { MultipleChoice } from '../ui/MultipleChoice'
@@ -9,23 +10,6 @@ export interface QuizLessonProps {
   onSubmit: (result: ChallengeResult) => void
   onContinue: () => void
   passScore?: number
-}
-
-/** Pure scoring so it can be unit-tested and reused. */
-export function scoreQuiz(questions: QuizQuestion[], answers: Record<string, string | null>, passScore = 60): ChallengeResult {
-  const correct = questions.filter((q) => answers[q.id] === q.correctOptionId)
-  const score = questions.length === 0 ? 0 : Math.round((correct.length / questions.length) * 100)
-  return {
-    score,
-    passed: score >= passScore,
-    breakdown: [{ id: 'accuracy', label: 'Accuracy', score }],
-    feedback: questions.map((q) => ({
-      tone: answers[q.id] === q.correctOptionId ? 'positive' : 'warning',
-      title: q.prompt,
-      body: q.explanation,
-    })),
-    summary: `${correct.length} of ${questions.length} correct`,
-  }
 }
 
 export function QuizLesson({ questions, onSubmit, onContinue, passScore }: QuizLessonProps) {

@@ -55,7 +55,7 @@ export function FinalChallenge({ submit, result, attempts, bestScore, retry, onC
         typed ? (
           <div className="space-y-3">
             <div className="card p-4 space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-wide ink-3">What happened</p>
+              <p className="text-xs font-semibold uppercase tracking-wide ink-3">The run</p>
               {typed.narrative.map((line, i) => (
                 <p key={i} className="text-sm ink-2">
                   {line}
