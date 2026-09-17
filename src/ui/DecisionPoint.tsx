@@ -18,7 +18,7 @@ export function DecisionPoint({ decision, index, total, onDecide, onNext, isLast
   const tone = option ? (option.outcome.score >= 80 ? 'border-good/50 bg-good/10' : option.outcome.score >= 50 ? 'border-brand-400/50 bg-brand-500/10' : 'border-warn/50 bg-warn/10') : ''
 
   return (
-    <div className="space-y-4 animate-rise" key={decision.id}>
+    <div className="space-y-4 animate-rise">
       <div className="flex items-center justify-between gap-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-brand-600">
           Situation {index + 1} of {total}

@@ -18,6 +18,7 @@ export function Scenario({ scenario, onComplete }: ScenarioProps) {
     <div className="space-y-4">
       <ProgressBar value={(index / scenario.decisions.length) * 100} label="Scenario progress" size="sm" />
       <DecisionPoint
+        key={decision.id}
         decision={decision}
         index={index}
         total={scenario.decisions.length}
