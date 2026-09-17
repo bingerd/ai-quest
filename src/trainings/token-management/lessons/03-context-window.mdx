@@ -1,0 +1,21 @@
+# What is a context window?
+
+The <VendorTerm concept="contextWindow" /> is the total number of tokens a model can consider in one request: **everything you send plus everything it writes back**.
+
+Think of it as a desk. It has a fixed size. On it you place:
+
+- **System instructions**: who the assistant is and how it should behave
+- **Conversation**: every message exchanged so far
+- **Documents**: files, pasted text, project knowledge
+- **Tool results**: what came back from searches, databases, calculators
+- **Output reservation**: the empty space you must leave for the answer
+
+<ConceptCard title="More is not better" icon="🧹" tone="warn">
+  A model does not skim. Everything on the desk is read, every request, and it all costs tokens. Irrelevant material makes requests slower, more expensive, and often **worse**: the model has to find the signal in the noise.
+</ConceptCard>
+
+<ConceptReveal prompt="What happens when the desk overflows?">
+  Depending on the product, either the request fails, or the oldest content (usually the start of the conversation) is silently dropped. Both are bad surprises. The fix is the same: put less on the desk.
+</ConceptReveal>
+
+In the next screen, the desk is already overflowing. Your job is to make it fit.

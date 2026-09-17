@@ -2,15 +2,18 @@ import type { MDXComponents } from 'mdx/types'
 import { BeforeAfter } from '../ui/BeforeAfter'
 import { ConceptCard } from '../ui/ConceptCard'
 import { ConceptReveal } from '../ui/ConceptReveal'
+import { InteractiveDiagram } from '../ui/InteractiveDiagram'
 import { VendorTerm } from '../concepts/VendorTerm'
 
 /** Components available inside every MDX lesson without imports. */
 export const mdxComponents: MDXComponents = {
   ConceptCard,
   ConceptReveal,
+  InteractiveDiagram,
   BeforeAfter,
   VendorTerm,
-  h1: (p) => <h1 className="text-2xl font-bold tracking-tight sm:text-3xl" {...p} />,
+  // Lesson titles come from the training definition; an MDX h1 is a lead-in line.
+  h1: (p) => <p className="text-xl font-semibold tracking-tight ink-1" {...p} />,
   h2: (p) => <h2 className="mt-8 text-xl font-semibold" {...p} />,
   h3: (p) => <h3 className="mt-6 text-lg font-semibold" {...p} />,
   p: (p) => <p className="leading-relaxed ink-2" {...p} />,

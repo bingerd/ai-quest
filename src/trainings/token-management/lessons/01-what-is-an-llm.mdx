@@ -1,0 +1,22 @@
+# What is a large language model?
+
+A large language model (LLM) is a system that takes in text and produces text, one small piece at a time. It has no memory between requests. Everything it "knows" about your situation has to be **in the request**.
+
+Click through each step of a single request:
+
+<InteractiveDiagram
+  title="One AI request"
+  nodes={[
+    { id: 'input', label: 'Input', icon: '📥', detail: 'Your instructions, the conversation so far, any documents and tool results. All of it is sent, every time.' },
+    { id: 'tokens', label: 'Tokens', icon: '🎟️', detail: 'The input is chopped into tokens, the unit the model reads. Roughly four characters each, in English.' },
+    { id: 'window', label: 'Context window', icon: '🪟', detail: 'The maximum number of tokens the model can consider at once. Input and output share it.' },
+    { id: 'model', label: 'Model', icon: '🧠', detail: 'Reads all the tokens in the window and predicts the answer, token by token. Bigger models reason better, cost more and take longer.' },
+    { id: 'output', label: 'Output', icon: '📤', detail: 'The answer, also counted in tokens. Output tokens are the slowest and most expensive part.' },
+  ]}
+/>
+
+<ConceptCard title="Stateless by default" icon="🔁">
+  When you continue a chat, the whole conversation is sent again with your new message. The model does not remember; the application re-sends. That is why long chats get slower and more expensive.
+</ConceptCard>
+
+Vendors package this differently. A <VendorTerm concept="conversation" /> in one product, a <VendorTerm concept="projectContext" /> in another. Underneath, it is always the same loop: input tokens in, output tokens out, all inside one context window.

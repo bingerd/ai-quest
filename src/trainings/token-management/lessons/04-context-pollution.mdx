@@ -1,0 +1,47 @@
+# Context pollution, repetition and caching
+
+Three habits quietly waste most of an organisation's AI budget.
+
+## 1. Context pollution
+
+Dumping "everything, just in case" into a request. The relevant 2,000 tokens get buried under 30,000 tokens of noise.
+
+<BeforeAfter
+  beforeLabel="Polluted"
+  afterLabel="Focused"
+  beforeCaption="~31,000 simulated tokens. Slower, pricier, and the answer often drifts."
+  afterCaption="~3,000 simulated tokens. Same question, better answer."
+  before={
+    <pre>{`SYSTEM: You are a helpful assistant.
+CONTEXT:
+  [Entire employee handbook, 120 pages]
+  [Full Q1–Q3 sales spreadsheet export]
+  [Every Slack message from #sales this year]
+TASK: What was Q3 revenue in EMEA?`}</pre>
+  }
+  after={
+    <pre>{`SYSTEM: You are a sales analyst. Answer with figures and sources.
+CONTEXT:
+  [Q3 regional revenue table]
+TASK: What was Q3 revenue in EMEA?
+OUTPUT: One number, plus the source row.`}</pre>
+  }
+/>
+
+## 2. Repeated context
+
+Every turn of a chat re-sends the whole conversation. A 40-message thread that started with a 20,000-token document sends that document **40 times**.
+
+<ConceptReveal prompt="A team pastes the same 15,000-token policy document into a fresh chat 200 times a day. How many tokens is that per day?">
+  **3,000,000 tokens** per day, just for the document, before anyone asks a question. That is the kind of pattern where <VendorTerm concept="projectContext" /> or retrieval, which send only the relevant parts, pays for itself immediately.
+</ConceptReveal>
+
+## 3. Not using caching
+
+Most platforms can **cache** a stable prefix of a request (system instructions, a standing document) so it is not fully reprocessed every time. The concept is simple: keep the stable stuff at the front, keep it identical, and repeated requests get cheaper and faster.
+
+<ConceptCard title="Three habits, one principle" icon="🎯">
+  Send what the task needs, once, in a stable shape. Everything else is waste that you pay for on every request.
+</ConceptCard>
+
+Time to practise. Next up: **Context Surgeon**.

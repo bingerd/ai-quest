@@ -1,0 +1,22 @@
+# What is a token?
+
+Models do not read characters or words. They read **tokens**: chunks of text that are usually a bit shorter than a word.
+
+Rules of thumb that are good enough for planning:
+
+| Text | Simulated tokens |
+| --- | --- |
+| One English word | about 1.3 |
+| One page of text (~500 words) | about 700 |
+| A 20-page report | about 14,000 |
+| An hour-long meeting transcript | about 12,000 |
+
+<ConceptReveal prompt="Which costs more: sending 10,000 tokens of input, or receiving 2,000 tokens of output?">
+  Usually the **output**. Output tokens are typically priced 3 to 5 times higher than input tokens, and they take far longer to produce because the model generates them one at a time. Asking for shorter, more focused answers is one of the cheapest optimisations there is.
+</ConceptReveal>
+
+<ConceptCard title="Two meters are always running" icon="⏱️">
+  Input tokens decide how much the model has to read. Output tokens decide how much it has to write. Cost and latency come from both. This simulator uses **tokens ≈ characters ÷ 4**. Real tokenizers vary, but the resource-management lesson is the same.
+</ConceptCard>
+
+Next, you will watch it happen live.
