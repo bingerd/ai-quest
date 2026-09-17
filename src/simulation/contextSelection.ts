@@ -116,6 +116,8 @@ export function simulateContextSelection(input: ContextSelectionInput): ContextS
   ]
   let score = weightedTotal(breakdown)
   if (overBudget > 0) score = Math.min(score, 55)
+  // Lean context that cannot answer the task is not a pass, however cheap it is.
+  if (missingRequired.length > 0) score = Math.min(score, 50)
 
   const isIdeal = selected.length === ideal.length && ideal.every((id) => selected.some((s) => s.id === id))
   const feedback = buildFeedback({ input, selected, overBudget, missingRequired, tokensUsed, cost, latency, isIdeal })

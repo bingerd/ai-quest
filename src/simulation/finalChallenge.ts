@@ -111,6 +111,8 @@ export function simulateFinalChallenge(scenario: FinalScenario, answer: FinalAns
   ]
   let score = weightedTotal(breakdown)
   if (overBudget > 0) score = Math.min(score, 50)
+  // Without the facts of the case (a required document or tool), the workflow cannot succeed.
+  if (coverage < 60) score = Math.min(score, 50)
 
   const feedback: Feedback[] = []
   const narrative: string[] = []

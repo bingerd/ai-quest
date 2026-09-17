@@ -54,6 +54,13 @@ describe('simulateContextSelection', () => {
     expect(r.metrics.relevance).toBeLessThan(50)
   })
 
+  it('fails a cheap selection that leaves out a required item', () => {
+    const r = simulateContextSelection({ ...base, selectedIds: ['customers', 'prev'] })
+    expect(r.metrics.overBudget).toBe(0)
+    expect(r.score).toBeLessThanOrEqual(50)
+    expect(r.passed).toBe(false)
+  })
+
   it('mentions a useful item that was left out', () => {
     const r = simulateContextSelection({ ...base, selectedIds: ['sales'] })
     expect(r.feedback.some((f) => f.title.startsWith('Customer Data would have helped'))).toBe(true)

@@ -5,7 +5,8 @@ import { modelScenarios } from '../data/modelScenarios'
 import { ModelSelectionChallenge, type ModelSelectionAnswer } from './ModelSelectionChallenge'
 
 function isAnswer(a: unknown): a is ModelSelectionAnswer {
-  return typeof a === 'object' && a !== null && typeof (a as ModelSelectionAnswer).choices === 'object'
+  const choices = typeof a === 'object' && a !== null ? (a as ModelSelectionAnswer).choices : null
+  return typeof choices === 'object' && choices !== null
 }
 
 /** Aggregate: each scenario is scored by the model simulation; the total is the mean. */

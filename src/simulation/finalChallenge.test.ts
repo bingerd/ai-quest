@@ -49,6 +49,12 @@ describe('simulateFinalChallenge', () => {
     expect(r.feedback.some((f) => f.title.includes('Web search') && f.title.includes('added nothing'))).toBe(true)
     expect(r.breakdown.find((d) => d.id === 'coverage')?.score).toBeLessThan(60)
   })
+  it('fails a cheap workflow that leaves out the required ticket', () => {
+    const r = simulateFinalChallenge(scenario, { ...good, selectedIds: ['contract', 'policy', 'prev', 'project'] })
+    expect(r.score).toBeLessThanOrEqual(50)
+    expect(r.passed).toBe(false)
+  })
+
   it('penalises a starved output budget', () => {
     const r = simulateFinalChallenge(scenario, { ...good, outputTokens: 100 })
     expect(r.breakdown.find((d) => d.id === 'output')?.score).toBeLessThan(50)
