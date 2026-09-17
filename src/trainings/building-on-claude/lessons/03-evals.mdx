@@ -1,0 +1,18 @@
+# Evals: the difference between shipping and hoping
+
+You cannot diff a prompt change. The only way to know whether a new prompt, a new model or a new tool made things better is to measure it on cases you chose in advance.
+
+Anthropic's guidance is short and practical:
+
+- Define **specific, measurable** success criteria.
+- Mirror **real traffic**, including the edge cases.
+- Prefer **many automatically graded** cases over a few hand-graded ones.
+- Grade with code where you can, a model where you must, a person for the small sample that needs judgement.
+
+<ConceptCard title="A slow suite is a suite you will skip" icon="⏱️">
+  Five hundred code-graded cases that run in a minute will catch more regressions over a year than fifty hand-reviewed ones that take an afternoon, because the fast suite actually runs on every change.
+</ConceptCard>
+
+<ConceptReveal prompt="A failure affects 2% of inputs. How many cases do you need to see it?">
+  With ten cases you will usually see nothing. Rare-but-serious failures need either a large sample or a targeted edge-case set that deliberately contains them. Sample size is a coverage decision, not a budget decision.
+</ConceptReveal>

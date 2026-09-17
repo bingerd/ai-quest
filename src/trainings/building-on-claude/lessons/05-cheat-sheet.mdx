@@ -1,0 +1,14 @@
+# Cheat sheet
+
+| Situation | Move |
+| --- | --- |
+| Same big prefix on every call | Stable content first, cache breakpoint after it, lifetime matched to call spacing |
+| Nobody is waiting for the result | Batches API, 50% off |
+| Not sure how big a request is | `count_tokens`, it is free |
+| Bill tripled | Look at traffic first: repeated prefixes and unbatched async work before model choice |
+| Agent needs to act | Read-only tools plus a draft; a human or an approved flow performs the irreversible step |
+| Changing a prompt or model | Run the eval suite: happy, edge, adversarial, regression, graded by code where possible |
+| Rolling out to an organisation | Managed settings for the floor, telemetry for visibility, a gateway if you need one |
+| Agent in CI | `claude -p --bare`, explicit allowed tools, a turn limit, a scoped directory |
+
+**Sources** (checked September 2026): [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching) · [Batch processing](https://platform.claude.com/docs/en/build-with-claude/batch-processing) · [Token counting](https://platform.claude.com/docs/en/build-with-claude/token-counting) · [Develop tests](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests) · [Managed settings](https://code.claude.com/docs/en/settings) · [LLM gateway](https://code.claude.com/docs/en/llm-gateway) · [Monitoring](https://code.claude.com/docs/en/monitoring-usage) · [Headless](https://code.claude.com/docs/en/headless) · [GitHub Actions](https://code.claude.com/docs/en/github-actions)

@@ -1,0 +1,15 @@
+# Tools are an interface, and a blast radius
+
+An agent is a loop: the model picks a tool, the result comes back into context, and it decides again. Two things follow.
+
+**Tool descriptions are prompts.** A tool named `data.query` described as "queries data" will be called at the wrong moment, or not at all. Say what it does, what it returns, and when to use it.
+
+**Every tool you grant is something the agent can do at the wrong moment.** Not because it is malicious, but because a plausible-looking argument is one hallucination away.
+
+<ConceptCard title="Recommend, then execute separately" icon="🔒">
+  Let the agent read freely and draft anything. Keep the irreversible step, sending, paying, deleting, deploying, behind a person or a separate approved flow. You keep almost all the value and lose almost all the risk.
+</ConceptCard>
+
+<ConceptReveal prompt="Why not give the agent every tool, just in case?">
+  Three costs. Tool definitions occupy context on every request. More options mean more wrong turns. And the tool you never needed is the one that turns a bad suggestion into an incident. MCP servers make adding tools easy, which is exactly why scoping them matters.
+</ConceptReveal>

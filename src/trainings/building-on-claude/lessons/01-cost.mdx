@@ -1,0 +1,22 @@
+# The three levers on cost
+
+Most AI bills are not large because the model is expensive. They are large because the same tokens are sent again and again, at full price, for work nobody is waiting for.
+
+<InteractiveDiagram
+  title="Cost levers"
+  nodes={[
+    { id: 'cache', label: 'Prompt caching', icon: '🧊', detail: 'Mark a stable prefix with cache_control. Writes cost 1.25x (5-minute lifetime) or 2x (1 hour); reads cost 0.1x. Up to four breakpoints. The cache is a prefix: anything before a breakpoint must be identical, and a prefix below the model minimum is silently not cached.' },
+    { id: 'batch', label: 'Batches', icon: '📦', detail: 'The Message Batches API is 50% cheaper. Most batches finish within an hour and expire after 24. It stacks with caching. Use it whenever nobody is waiting.' },
+    { id: 'count', label: 'Token counting', icon: '🔢', detail: 'The count_tokens endpoint is free and tells you how big a request really is before you send it. Measure, then optimise.' },
+    { id: 'output', label: 'Output limits', icon: '✂️', detail: 'Output tokens cost several times more than input and dominate latency. Ask for the shortest useful answer, and set max tokens.' },
+    { id: 'model', label: 'Model tier', icon: '🎚️', detail: 'The cheapest model that clears your quality bar, proven with an eval set rather than a hunch.' },
+  ]}
+/>
+
+<ConceptCard title="Order decides whether caching is possible at all" icon="🧱">
+  Put tools, system prompt and documents first, conversation and the new message last. One volatile block near the front makes everything after it uncacheable.
+</ConceptCard>
+
+<ConceptReveal prompt="Your calls are 20 minutes apart. Which cache lifetime?">
+  The one-hour lifetime. Its write costs 2x instead of 1.25x, but with a five-minute lifetime the entry expires between calls, so you pay a write every single time and never get a 0.1x read. Match the lifetime to the traffic.
+</ConceptReveal>

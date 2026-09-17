@@ -1,0 +1,13 @@
+# Rolling out to everyone
+
+Once more than a handful of engineers use Claude Code, configuration becomes platform work.
+
+- **Managed settings** are delivered by file, MDM or the admin console and cannot be overridden by users. Useful keys: `availableModels`, `permissions.deny`, and `allowManagedPermissionRulesOnly`. This is where a security floor belongs.
+- **Gateways and cloud providers**: point Claude Code at your own endpoint with `ANTHROPIC_BASE_URL`, authenticate with `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_API_KEY` or an `apiKeyHelper` script for short-lived credentials. Claude is also available through Amazon Bedrock, Google Cloud's Agent Platform and Microsoft Foundry; pin model versions with the `ANTHROPIC_DEFAULT_*_MODEL` variables.
+- **Monitoring**: `CLAUDE_CODE_ENABLE_TELEMETRY=1` plus OpenTelemetry exporters gives you session, token and cost metrics in the tools you already run. Prompt text is only logged if you explicitly turn it on.
+- **CI**: `claude -p` runs headless. `--bare` skips hooks, CLAUDE.md and MCP loading, which is what you want in a pipeline, and `--allowedTools` plus a permission mode bound what it can do. For pull requests there is the `anthropics/claude-code-action@v1` GitHub Action.
+- **Building your own agents**: the Agent SDK exposes the same harness programmatically, in Python and TypeScript.
+
+<ConceptCard title="Make the paved road the easy road" icon="🛣️">
+  Teams route around policies that block their work. Ship a default configuration that is both safer and more convenient than what people would assemble themselves, and most of your governance problem disappears.
+</ConceptCard>
