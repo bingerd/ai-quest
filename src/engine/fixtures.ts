@@ -8,6 +8,8 @@ export function makeStubTraining(): Training {
     title: 'Stub training',
     description: 'For tests',
     estimatedMinutes: 5,
+    audience: 'everyone',
+    level: 'beginner',
     modules: [
       {
         id: 'm1',

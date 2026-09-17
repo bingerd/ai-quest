@@ -83,8 +83,8 @@ export const MODELS: ModelProfile[] = [
   },
 ]
 
-export function getModel(id: string): ModelProfile {
-  const m = MODELS.find((x) => x.id === id)
+export function getModel(id: string, catalogue: ModelProfile[] = MODELS): ModelProfile {
+  const m = catalogue.find((x) => x.id === id)
   if (!m) throw new Error(`Unknown model "${id}"`)
   return m
 }

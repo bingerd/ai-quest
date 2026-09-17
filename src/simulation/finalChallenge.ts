@@ -82,7 +82,7 @@ export function simulateFinalChallenge(scenario: FinalScenario, answer: FinalAns
   const latency = requestLatency(model, inputTokens, outputTokens) + toolLatency + (answer.useRetrieval ? scenario.retrievalLatencySeconds : 0)
 
   // Ideal for cost/latency comparison: cheapest allowed model, ideal context with retrieval, required tools, ideal output.
-  const idealModel = scenario.modelIds.map(getModel).sort((a, b) => a.inputCostPerMillion - b.inputCostPerMillion)[0] ?? model
+  const idealModel = scenario.modelIds.map((id) => getModel(id)).sort((a, b) => a.inputCostPerMillion - b.inputCostPerMillion)[0] ?? model
   const idealItems = effectiveContextItems(scenario, true)
   const idealCtx = simulateContextSelection({ items: idealItems, selectedIds: idealSelected(idealItems, scenario.tokenLimit), tokenLimit: scenario.tokenLimit, modelId: idealModel.id, outputTokens: scenario.idealOutputTokens, overheadTokens: 400 })
   const requiredTools = scenario.tools.filter((t) => t.required)

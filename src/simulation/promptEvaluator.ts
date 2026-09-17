@@ -1,5 +1,6 @@
-import type { ChallengeResult, Feedback, ScoreDimension } from '../engine/types'
-import { round, weightedTotal } from './scoring'
+import type { ChallengeResult } from '../engine/types'
+import { duplicateLines, fail, pass, runRules, sensitiveMatches, simpleRule, type Rule } from './ruleChecker'
+import { round } from './scoring'
 import { estimateTokens, formatTokens } from './tokens'
 
 /**
@@ -43,103 +44,89 @@ export function parseSections(text: string): PromptSections {
   return out
 }
 
-const SENSITIVE_PATTERNS: { label: string; re: RegExp }[] = [
-  { label: 'a password', re: /password\s*[:=]\s*\S+/i },
-  { label: 'an API key', re: /\b(sk|api|key|token)[-_][A-Za-z0-9]{12,}\b/i },
-  { label: 'an IBAN', re: /\b[A-Z]{2}\d{2}(?:\s?[A-Z0-9]{4}){3,7}\b/ },
-  { label: 'a card number', re: /\b(?:\d[ -]?){15,16}\b/ },
-]
-
 const FORMAT_WORDS = /\b(bullet|bullets|table|json|words|sentences|paragraph|paragraphs|list|format|number|one line|markdown|csv)\b/i
 
-export function evaluatePrompt(text: string, exercise: PromptExercise): ChallengeResult {
-  const s = parseSections(text)
-  const lower = text.toLowerCase()
-  const feedback: Feedback[] = []
-  const dims: ScoreDimension[] = []
+interface PromptInput {
+  text: string
+  lower: string
+  sections: PromptSections
+  exercise: PromptExercise
+}
 
-  const check = (id: string, label: string, ok: boolean, weight: number, good: Feedback, bad: Feedback) => {
-    dims.push({ id, label, score: ok ? 100 : 0, weight })
-    feedback.push(ok ? good : bad)
-  }
-
-  const missingRequired = exercise.requiredMarkers.filter((m) => !lower.includes(m.toLowerCase()))
-  check(
-    'retained',
-    'Relevant context kept',
-    missingRequired.length === 0,
-    3,
-    { tone: 'positive', title: 'The relevant source is still there', body: 'The one document that actually answers the question stayed in context.' },
-    { tone: 'warning', title: `Missing: ${missingRequired.join(', ')}`, body: 'Trimming is only a win if the answer is still in context. Put the relevant source back.', concept: 'completeness' },
-  )
-
-  const leftover = exercise.irrelevantMarkers.filter((m) => lower.includes(m.toLowerCase()))
-  check(
-    'irrelevant',
-    'Irrelevant context removed',
-    leftover.length === 0,
-    3,
-    { tone: 'positive', title: 'Irrelevant material removed', body: 'Nothing in the context is there "just in case".' },
-    { tone: 'warning', title: `Still included: ${leftover.join(', ')}`, body: 'These do not help answer the question. Every request would pay for them.', concept: 'context-pollution' },
-  )
-
-  check(
+const PROMPT_RULES: Rule<PromptInput>[] = [
+  {
+    id: 'retained',
+    label: 'Relevant context kept',
+    weight: 3,
+    run: ({ lower, exercise }) => {
+      const missing = exercise.requiredMarkers.filter((m) => !lower.includes(m.toLowerCase()))
+      return missing.length === 0
+        ? pass('The relevant source is still there', 'The one document that actually answers the question stayed in context.')
+        : fail(`Missing: ${missing.join(', ')}`, 'Trimming is only a win if the answer is still in context. Put the relevant source back.', 'completeness')
+    },
+  },
+  {
+    id: 'irrelevant',
+    label: 'Irrelevant context removed',
+    weight: 3,
+    run: ({ lower, exercise }) => {
+      const leftover = exercise.irrelevantMarkers.filter((m) => lower.includes(m.toLowerCase()))
+      return leftover.length === 0
+        ? pass('Irrelevant material removed', 'Nothing in the context is there "just in case".')
+        : fail(`Still included: ${leftover.join(', ')}`, 'These do not help answer the question. Every request would pay for them.', 'context-pollution')
+    },
+  },
+  simpleRule<PromptInput>(
     'task',
     'Task clearly specified',
-    s.task.replace(/\s+/g, ' ').length >= 40,
     2,
-    { tone: 'positive', title: 'The task is specific', body: 'A clear task keeps the answer on target and short.' },
-    { tone: 'warning', title: 'The task is vague or missing', body: 'Say exactly what you want answered. "Answer the user\'s question" leaves the model guessing.', concept: 'task-clarity' },
-  )
-
-  const hasOutput = s.output.length >= 8 || FORMAT_WORDS.test(s.task)
-  check(
+    ({ sections }) => sections.task.replace(/\s+/g, ' ').length >= 40,
+    ['The task is specific', 'A clear task keeps the answer on target and short.'],
+    ['The task is vague or missing', 'Say exactly what you want answered. "Answer the user\'s question" leaves the model guessing.'],
+    'task-clarity',
+  ),
+  simpleRule<PromptInput>(
     'output',
     'Output requirements set',
-    hasOutput,
     2,
-    { tone: 'positive', title: 'Output shape is defined', body: 'Constraining the answer length and format is the cheapest way to save output tokens.' },
-    { tone: 'warning', title: 'No output requirements', body: 'Add an OUTPUT section: how long, what format, what to include. Unbounded answers cost the most.', concept: 'output-tokens' },
-  )
+    ({ sections }) => sections.output.length >= 8 || FORMAT_WORDS.test(sections.task),
+    ['Output shape is defined', 'Constraining the answer length and format is the cheapest way to save output tokens.'],
+    ['No output requirements', 'Add an OUTPUT section: how long, what format, what to include. Unbounded answers cost the most.'],
+    'output-tokens',
+  ),
+  {
+    id: 'repetition',
+    label: 'No repetition',
+    weight: 1,
+    run: ({ text }) => {
+      const dupes = duplicateLines(text)
+      return dupes.length === 0
+        ? pass('Nothing is said twice', 'Repeated instructions add tokens, not emphasis.')
+        : fail('Repeated content', `"${dupes[0]?.slice(0, 60)}…" appears more than once. Say it once, clearly.`, 'repetition')
+    },
+  },
+  {
+    id: 'sensitive',
+    label: 'No sensitive data',
+    weight: 3,
+    run: ({ text }) => {
+      const found = sensitiveMatches(text)
+      return found.length === 0
+        ? pass('No secrets in the prompt', 'Credentials and personal data never belong in context.')
+        : fail(`The prompt contains ${found.join(' and ')}`, 'Anything you put in a prompt may be logged or retained. Remove secrets and personal identifiers.', 'security')
+    },
+  },
+]
 
-  const lines = text
-    .split(/\r?\n/)
-    .map((l) => l.trim().toLowerCase())
-    .filter((l) => l.length > 20)
-  const dupes = lines.filter((l, i) => lines.indexOf(l) !== i)
-  check(
-    'repetition',
-    'No repetition',
-    dupes.length === 0,
-    1,
-    { tone: 'positive', title: 'Nothing is said twice', body: 'Repeated instructions add tokens, not emphasis.' },
-    { tone: 'warning', title: 'Repeated content', body: `"${dupes[0]?.slice(0, 60)}…" appears more than once. Say it once, clearly.`, concept: 'repetition' },
-  )
-
-  const sensitive = SENSITIVE_PATTERNS.filter((p) => p.re.test(text))
-  check(
-    'sensitive',
-    'No sensitive data',
-    sensitive.length === 0,
-    3,
-    { tone: 'positive', title: 'No secrets in the prompt', body: 'Credentials and personal data never belong in context.' },
-    { tone: 'warning', title: `The prompt contains ${sensitive.map((p) => p.label).join(' and ')}`, body: 'Anything you put in a prompt may be logged or retained. Remove secrets and personal identifiers.', concept: 'security' },
-  )
-
+export function evaluatePrompt(text: string, exercise: PromptExercise): ChallengeResult {
   const before = estimateTokens(exercise.originalText)
   const after = estimateTokens(text)
-  const score = weightedTotal(dims)
-  feedback.sort((a, b) => Number(a.tone === 'positive') - Number(b.tone === 'positive'))
-
+  const result = runRules({ text, lower: text.toLowerCase(), sections: parseSections(text), exercise }, PROMPT_RULES, {
+    summary: (passed, total, score) =>
+      score === 100 ? `Clean prompt. ${formatTokens(before - after)} simulated tokens saved per request.` : `${passed} of ${total} checks passed.`,
+  })
   return {
-    score,
-    passed: score >= 60,
-    breakdown: dims,
-    feedback,
-    summary:
-      score === 100
-        ? `Clean prompt. ${formatTokens(before - after)} simulated tokens saved per request.`
-        : `${dims.filter((d) => d.score === 100).length} of ${dims.length} checks passed.`,
+    ...result,
     metrics: { tokensBefore: before, tokensAfter: after, tokensSaved: Math.max(0, before - after), savedPercent: before === 0 ? 0 : round(((before - after) / before) * 100) },
   }
 }

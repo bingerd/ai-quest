@@ -69,11 +69,11 @@ export function bestModel(scenario: ModelSelectionScenario, models: ModelProfile
   return viable[0] ?? null
 }
 
-export function simulateModelSelection(scenario: ModelSelectionScenario, modelId: string): ModelSelectionResult {
-  const model = getModel(modelId)
+export function simulateModelSelection(scenario: ModelSelectionScenario, modelId: string, catalogue: ModelProfile[] = MODELS): ModelSelectionResult {
+  const model = getModel(modelId, catalogue)
   const outcome = evaluateModel(scenario, model)
-  const all = MODELS.map((m) => evaluateModel(scenario, m))
-  const best = bestModel(scenario)
+  const all = catalogue.map((m) => evaluateModel(scenario, m))
+  const best = bestModel(scenario, catalogue)
 
   const qualityScore = outcome.fitsContext ? linearScore(outcome.quality, scenario.qualityTarget, scenario.qualityTarget - 0.3) : 0
   const budgetScore = outcome.meetsBudget ? 100 : linearScore(outcome.cost, scenario.budget, scenario.budget * 3)
@@ -90,7 +90,7 @@ export function simulateModelSelection(scenario: ModelSelectionScenario, modelId
   let score = weightedTotal(breakdown)
   if (!outcome.viable) score = Math.min(score, 50)
 
-  const feedback = buildFeedback(scenario, model, outcome, best)
+  const feedback = buildFeedback(scenario, model, outcome, best, catalogue)
   return {
     score: clamp(score),
     passed: score >= 60,
@@ -108,7 +108,7 @@ export function simulateModelSelection(scenario: ModelSelectionScenario, modelId
   }
 }
 
-function buildFeedback(scenario: ModelSelectionScenario, model: ModelProfile, o: ModelOutcome, best: ModelOutcome | null): Feedback[] {
+function buildFeedback(scenario: ModelSelectionScenario, model: ModelProfile, o: ModelOutcome, best: ModelOutcome | null, catalogue: ModelProfile[]): Feedback[] {
   const out: Feedback[] = []
   if (!o.fitsContext) {
     out.push({
@@ -143,7 +143,7 @@ function buildFeedback(scenario: ModelSelectionScenario, model: ModelProfile, o:
     })
   }
   if (o.viable && best && best.modelId !== model.id) {
-    const bestModel = getModel(best.modelId)
+    const bestModel = getModel(best.modelId, catalogue)
     out.push({
       tone: 'neutral',
       title: `${bestModel.name} would also have met every constraint for ${formatCurrency(best.cost)}`,
@@ -165,7 +165,7 @@ function buildFeedback(scenario: ModelSelectionScenario, model: ModelProfile, o:
   if (!o.viable && best) {
     out.push({
       tone: 'neutral',
-      title: `${getModel(best.modelId).name} was the fit here`,
+      title: `${getModel(best.modelId, catalogue).name} was the fit here`,
       body: `It meets the quality target, stays under budget and responds within the latency limit, for ${formatCurrency(best.cost)} in total.`,
       concept: 'model-selection',
     })

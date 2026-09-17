@@ -11,6 +11,8 @@ registerTraining({
   title: 'stub',
   description: '',
   estimatedMinutes: 1,
+  audience: 'everyone',
+  level: 'beginner',
   modules: [
     {
       id: 'm',

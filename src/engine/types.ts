@@ -110,11 +110,32 @@ export interface TrainingModule {
   lessons: Lesson[]
 }
 
+/** Who a training is written for. Drives catalogue filtering. */
+export type TrainingAudience = 'everyone' | 'power-user' | 'engineer'
+
+export type TrainingLevel = 'beginner' | 'intermediate' | 'advanced'
+
+export const AUDIENCE_LABEL: Record<TrainingAudience, string> = {
+  everyone: 'Everyday work',
+  'power-user': 'Power users',
+  engineer: 'Engineers',
+}
+
+export const LEVEL_LABEL: Record<TrainingLevel, string> = {
+  beginner: 'Beginner',
+  intermediate: 'Intermediate',
+  advanced: 'Advanced',
+}
+
 export interface Training {
   id: string
   title: string
   description: string
   estimatedMinutes: number
+  audience: TrainingAudience
+  level: TrainingLevel
+  /** Soft suggestion: ids of trainings worth doing first. Never locks anything. */
+  recommendedAfter?: string[]
   /** Short tagline shown on the catalogue card. */
   tagline?: string
   modules: TrainingModule[]

@@ -25,6 +25,8 @@ export const tokenManagementTraining: Training = {
   description:
     'Learn what tokens and context windows are, why more context is not always better, and how to choose the right model for the job. Hands-on, fully simulated.',
   estimatedMinutes: 20,
+  audience: 'everyone',
+  level: 'beginner',
   modules: [
     {
       id: 'foundations',

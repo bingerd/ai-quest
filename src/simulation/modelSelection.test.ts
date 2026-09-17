@@ -88,3 +88,21 @@ describe('simulateModelSelection', () => {
     expect(a.all).toHaveLength(4)
   })
 })
+
+describe('custom model catalogue', () => {
+  const catalogue = [
+    { ...getModel('sparrow'), id: 'tiny', name: 'Tiny' },
+    { ...getModel('albatross'), id: 'huge', name: 'Huge' },
+  ]
+  it('evaluates only the supplied models', () => {
+    const r = simulateModelSelection(contracts, 'huge', catalogue)
+    expect(r.all.map((o) => o.modelId)).toEqual(['tiny', 'huge'])
+    expect(r.bestModelId).toBe('huge')
+    expect(r.passed).toBe(true)
+  })
+  it('names catalogue models in feedback and rejects ids outside it', () => {
+    const r = simulateModelSelection(tickets, 'huge', catalogue)
+    expect(r.feedback.some((f) => f.title.startsWith('Tiny'))).toBe(true)
+    expect(() => simulateModelSelection(tickets, 'sparrow', catalogue)).toThrow(/Unknown model/)
+  })
+})
