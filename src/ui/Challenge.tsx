@@ -18,6 +18,13 @@ export interface ChallengeFrameProps {
   submitLabel?: string
   /** Extra content rendered inside the result panel (e.g. metrics table). */
   resultExtra?: ReactNode
+  /**
+   * When set, "Continue anyway" (skipping a failed attempt) stays disabled until
+   * the learner has made this many attempts or passed. Passing always unlocks it.
+   */
+  minAttemptsToContinue?: number
+  /** Shown next to the disabled continue button explaining why it is locked. */
+  continueLockHint?: string
 }
 
 /**
@@ -37,7 +44,12 @@ export function ChallengeFrame({
   onContinue,
   submitLabel = 'Run simulation',
   resultExtra,
+  minAttemptsToContinue,
+  continueLockHint,
 }: ChallengeFrameProps) {
+  const canContinue = result ? result.passed || (minAttemptsToContinue ?? 0) <= attempts : true
+  const remaining = result ? Math.max(0, (minAttemptsToContinue ?? 0) - attempts) : 0
+
   return (
     <div className="space-y-6">
       <header className="space-y-2">
@@ -63,10 +75,15 @@ export function ChallengeFrame({
             <button type="button" className="btn btn-secondary" onClick={onRetry}>
               Try again
             </button>
-            <button type="button" className="btn btn-primary" onClick={onContinue}>
+            <button type="button" className="btn btn-primary" onClick={onContinue} disabled={result && !canContinue}>
               {result.passed ? 'Continue' : 'Continue anyway'}
             </button>
           </div>
+          {result && !result.passed && !canContinue && continueLockHint && (
+            <p className="text-xs ink-3">
+              {continueLockHint} {remaining > 0 && `(${remaining} more ${remaining === 1 ? 'attempt' : 'attempts'} to skip)`}
+            </p>
+          )}
         </div>
       ) : (
         <div className="flex justify-end">

@@ -37,6 +37,8 @@ export function PromptSurgery({ submit, result, attempts, bestScore, retry, onCo
       onRetry={retry}
       onContinue={onContinue}
       submitLabel="Check prompt"
+      minAttemptsToContinue={3}
+      continueLockHint="Pass the check, or make three attempts before you can skip."
       resultExtra={
         result?.metrics ? (
           <MetricsTable
