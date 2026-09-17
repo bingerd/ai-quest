@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { useEngageable } from '../lessons/EngagementContext'
 
 export interface DiagramNode {
   id: string
@@ -9,8 +10,21 @@ export interface DiagramNode {
 
 /** A horizontal flow of nodes. Clicking (or focusing) a node reveals its detail. Reflows vertically on phones. */
 export function InteractiveDiagram({ nodes, title }: { nodes: DiagramNode[]; title: string }) {
+  const { present, satisfied, mark } = useEngageable()
   const [active, setActive] = useState<string>(nodes[0]?.id ?? '')
+  const seen = useRef<Set<string>>(new Set())
+  const [seenCount, setSeenCount] = useState(0)
   const current = nodes.find((n) => n.id === active)
+
+  const visit = (id: string) => {
+    setActive(id)
+    if (!seen.current.has(id)) {
+      seen.current.add(id)
+      setSeenCount(seen.current.size)
+      if (seen.current.size === nodes.length) mark()
+    }
+  }
+
   return (
     <figure className="my-6 card p-4 space-y-4" aria-label={title}>
       <ol className="flex flex-col gap-2 sm:flex-row sm:items-stretch" role="tablist" aria-label={title}>
@@ -20,8 +34,8 @@ export function InteractiveDiagram({ nodes, title }: { nodes: DiagramNode[]; tit
               type="button"
               role="tab"
               aria-selected={active === n.id}
-              onClick={() => setActive(n.id)}
-              onFocus={() => setActive(n.id)}
+              onClick={() => visit(n.id)}
+              onFocus={() => visit(n.id)}
               className={`flex w-full items-center gap-2 rounded-xl border px-3 py-2 text-left text-sm font-semibold transition-colors ${
                 active === n.id ? 'border-brand-500 bg-brand-500/10 ink-1' : 'line ink-2 hover:surface-2'
               }`}
@@ -41,6 +55,11 @@ export function InteractiveDiagram({ nodes, title }: { nodes: DiagramNode[]; tit
           </li>
         ))}
       </ol>
+      {present && (
+        <p className="text-xs ink-3" role="status">
+          {satisfied ? '✓ All steps explored' : `${seenCount} of ${nodes.length} steps explored`}
+        </p>
+      )}
       {current && (
         <figcaption role="tabpanel" className="rounded-xl surface-2 p-3 text-sm ink-2 animate-rise" key={current.id}>
           <span className="font-semibold ink-1">{current.label}: </span>

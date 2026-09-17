@@ -10,6 +10,7 @@ import {
   type Lesson,
 } from '../engine'
 import { ChallengeLesson } from '../lessons/ChallengeLesson'
+import { EngagementContinue, EngagementProvider } from '../lessons/Engagement'
 import { mdxComponents } from '../lessons/MdxComponents'
 import { QuizLesson } from '../lessons/QuizLesson'
 import { ProgressBar } from '../ui/ProgressBar'
@@ -138,16 +139,14 @@ function LessonBody({ lesson, completed, attempts, bestScore, onComplete, submit
     case 'explanation': {
       const Content = lesson.component
       return (
-        <article className="space-y-4">
-          <MDXProvider components={mdxComponents}>
-            <Content />
-          </MDXProvider>
-          <div className="flex justify-end pt-2">
-            <button type="button" className="btn btn-primary" onClick={onComplete}>
-              {completed ? 'Next' : 'Got it, continue'}
-            </button>
-          </div>
-        </article>
+        <EngagementProvider>
+          <article className="space-y-4">
+            <MDXProvider components={mdxComponents}>
+              <Content />
+            </MDXProvider>
+            <EngagementContinue completed={completed} onComplete={onComplete} />
+          </article>
+        </EngagementProvider>
       )
     }
     case 'interactive':
