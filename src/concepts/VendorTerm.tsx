@@ -1,16 +1,10 @@
-import { useEffect, useState } from 'react'
-import { useEngageable } from '../lessons/EngagementContext'
+import { useState } from 'react'
 import { CONCEPT_LABEL, mappingsFor, VENDOR_LABEL, type ConceptId } from './vendors'
 
 /** Inline "how vendors call this" popover. Neutral term stays primary. */
 export function VendorTerm({ concept }: { concept: ConceptId }) {
-  const { mark } = useEngageable()
   const [open, setOpen] = useState(false)
   const rows = mappingsFor(concept)
-
-  useEffect(() => {
-    if (open) mark()
-  }, [open, mark])
 
   return (
     <span className="inline-block align-baseline">

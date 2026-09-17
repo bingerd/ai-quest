@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import {
   EngagementContext,
   useEngagementSummary,
@@ -28,9 +28,31 @@ export function EngagementProvider({ children }: { children: ReactNode }) {
 export function EngagementContinue({ completed, onComplete }: { completed: boolean; onComplete: () => void }) {
   const { allSatisfied, remaining } = useEngagementSummary()
   const ready = completed || allSatisfied
+  const [nudge, setNudge] = useState(false)
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+
+  useEffect(() => () => clearTimeout(timer.current), [])
+
+  const handleClick = () => {
+    if (ready) {
+      onComplete()
+      return
+    }
+    clearTimeout(timer.current)
+    setNudge(true)
+    timer.current = setTimeout(() => setNudge(false), 700)
+  }
+
   return (
     <div className="flex justify-end pt-2">
-      <button type="button" className="btn btn-primary" onClick={onComplete} disabled={!ready}>
+      <button
+        type="button"
+        aria-disabled={!ready}
+        className={`btn btn-primary ${ready ? '' : 'cursor-not-allowed opacity-60'} ${
+          nudge ? 'animate-shake ring-2 ring-bad' : ''
+        }`}
+        onClick={handleClick}
+      >
         {completed ? 'Next' : ready ? 'Got it, continue' : `Explore everything first (${remaining} left)`}
       </button>
     </div>

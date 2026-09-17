@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { MDXProvider } from '@mdx-js/react'
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { VendorTerm } from '../concepts/VendorTerm'
 import { BeforeAfter } from '../ui/BeforeAfter'
@@ -28,21 +28,26 @@ function harness(children: React.ReactNode) {
   return onComplete
 }
 
+function lockedButton() {
+  const button = screen.getByRole('button', { name: /explore everything first/i })
+  expect(button).toHaveAttribute('aria-disabled', 'true')
+  return button
+}
+
 describe('Engagement gating', () => {
   it('locks InteractiveDiagram until every node is visited', () => {
     const onComplete = harness(<InteractiveDiagram nodes={NODES} title="t" />)
     expect(screen.getByRole('status')).toHaveTextContent('0 of 2 steps explored')
-    const locked = screen.getByRole('button', { name: /explore everything first \(1 left\)/i }) as HTMLButtonElement
-    expect(locked.disabled).toBe(true)
+    expect(lockedButton()).toHaveTextContent('Explore everything first (1 left)')
 
     fireEvent.click(screen.getByRole('tab', { name: 'A' }))
     expect(screen.getByRole('status')).toHaveTextContent('1 of 2 steps explored')
-    expect((screen.getByRole('button', { name: /explore everything first \(1 left\)/i }) as HTMLButtonElement).disabled).toBe(true)
+    expect(lockedButton()).toHaveTextContent('Explore everything first (1 left)')
 
     fireEvent.click(screen.getByRole('tab', { name: 'B' }))
     expect(screen.getByRole('status')).toHaveTextContent('✓ All steps explored')
-    const ready = screen.getByRole('button', { name: /got it, continue/i }) as HTMLButtonElement
-    expect(ready.disabled).toBe(false)
+    const ready = screen.getByRole('button', { name: /got it, continue/i })
+    expect(ready).toHaveAttribute('aria-disabled', 'false')
     fireEvent.click(ready)
     expect(onComplete).toHaveBeenCalledTimes(1)
   })
@@ -53,28 +58,19 @@ describe('Engagement gating', () => {
         <p>body</p>
       </ConceptCard>,
     )
-    expect((screen.getByRole('button', { name: /explore everything first \(1 left\)/i }) as HTMLButtonElement).disabled).toBe(true)
+    lockedButton()
 
     fireEvent.click(screen.getByRole('button', { name: 'Mark as read' }))
     expect(screen.getByRole('button', { name: '✓ Read' })).not.toBeNull()
-    const ready = screen.getByRole('button', { name: /got it, continue/i }) as HTMLButtonElement
-    expect(ready.disabled).toBe(false)
+    expect(screen.getByRole('button', { name: /got it, continue/i })).toHaveAttribute('aria-disabled', 'false')
   })
 
   it('locks ConceptReveal until revealed', () => {
     harness(<ConceptReveal prompt="Q">answer</ConceptReveal>)
-    expect((screen.getByRole('button', { name: /explore everything first \(1 left\)/i }) as HTMLButtonElement).disabled).toBe(true)
+    lockedButton()
 
     fireEvent.click(screen.getByRole('button', { name: 'Reveal answer' }))
-    expect((screen.getByRole('button', { name: /got it, continue/i }) as HTMLButtonElement).disabled).toBe(false)
-  })
-
-  it('locks VendorTerm until opened', () => {
-    harness(<VendorTerm concept="conversation" />)
-    expect((screen.getByRole('button', { name: /explore everything first \(1 left\)/i }) as HTMLButtonElement).disabled).toBe(true)
-
-    fireEvent.click(screen.getByRole('button', { name: /conversation/i }))
-    expect((screen.getByRole('button', { name: /got it, continue/i }) as HTMLButtonElement).disabled).toBe(false)
+    expect(screen.getByRole('button', { name: /got it, continue/i })).toHaveAttribute('aria-disabled', 'false')
   })
 
   it('locks BeforeAfter until the After panel is acknowledged', () => {
@@ -84,16 +80,27 @@ describe('Engagement gating', () => {
         after={<p>a</p>}
       />,
     )
-    expect((screen.getByRole('button', { name: /explore everything first \(1 left\)/i }) as HTMLButtonElement).disabled).toBe(true)
+    lockedButton()
 
     fireEvent.click(screen.getByRole('button', { name: 'Mark as read' }))
     expect(screen.getByRole('button', { name: '✓ Read' })).not.toBeNull()
-    expect((screen.getByRole('button', { name: /got it, continue/i }) as HTMLButtonElement).disabled).toBe(false)
+    expect(screen.getByRole('button', { name: /got it, continue/i })).toHaveAttribute('aria-disabled', 'false')
   })
 
-  it('locks a lesson page until every element has been clicked through', () => {
-    // Mirrors the engaged surface of 01-what-is-an-llm.mdx: one diagram,
-    // one concept card and two vendor terms.
+  it('does not gate on vendor terminology expandables', () => {
+    harness(
+      <p>
+        A <VendorTerm concept="conversation" /> in one product, a <VendorTerm concept="projectContext" /> in another.
+      </p>,
+    )
+    const ready = screen.getByRole('button', { name: /got it, continue/i })
+    expect(ready).toHaveAttribute('aria-disabled', 'false')
+    expect(screen.queryByRole('button', { name: /explore everything first/i })).toBeNull()
+  })
+
+  it('locks a lesson page until every meaningful element has been clicked through', () => {
+    // Mirrors the engaged surface of 01-what-is-an-llm.mdx: one diagram, one
+    // concept card and two vendor terms (which intentionally do not count).
     const onComplete = vi.fn()
     const lesson = (
       <MDXProvider components={mdxComponents}>
@@ -113,25 +120,40 @@ describe('Engagement gating', () => {
       </EngagementProvider>,
     )
 
-    const locked = screen.getByRole('button', { name: /explore everything first \(4 left\)/i }) as HTMLButtonElement
-    expect(locked.disabled).toBe(true)
+    expect(lockedButton()).toHaveTextContent('Explore everything first (2 left)')
 
     for (const label of ['A', 'B']) {
       fireEvent.click(screen.getByRole('tab', { name: label }))
     }
     fireEvent.click(screen.getByRole('button', { name: 'Mark as read' }))
-    fireEvent.click(screen.getByRole('button', { name: /conversation/i }))
-    fireEvent.click(screen.getByRole('button', { name: /project context/i }))
 
-    const go = screen.getByRole('button', { name: /got it, continue/i }) as HTMLButtonElement
-    expect(go.disabled).toBe(false)
+    const go = screen.getByRole('button', { name: /got it, continue/i })
+    expect(go).toHaveAttribute('aria-disabled', 'false')
     fireEvent.click(go)
     expect(onComplete).toHaveBeenCalledTimes(1)
   })
 })
 
-describe('without a provider', () => {
-  it('passes through ungated', () => {
+describe('EngagementContinue', () => {
+  it('shakes and flashes red when clicked while locked, without continuing', () => {
+    vi.useFakeTimers()
+    try {
+      const onComplete = harness(<ConceptReveal prompt="Q">a</ConceptReveal>)
+      const button = lockedButton()
+
+      fireEvent.click(button)
+      expect(onComplete).not.toHaveBeenCalled()
+      expect(button.className).toMatch(/animate-shake/)
+      expect(button.className).toMatch(/ring-bad/)
+
+      act(() => vi.advanceTimersByTime(700))
+      expect(button.className).not.toMatch(/animate-shake/)
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('passes through ungated without a provider', () => {
     const onComplete = vi.fn()
     render(
       <>
@@ -142,12 +164,12 @@ describe('without a provider', () => {
       </>,
     )
     expect(screen.queryByRole('button', { name: 'Mark as read' })).toBeNull()
-    const go = screen.getByRole('button', { name: /got it, continue/i }) as HTMLButtonElement
-    expect(go.disabled).toBe(false)
+    const go = screen.getByRole('button', { name: /got it, continue/i })
+    expect(go).toHaveAttribute('aria-disabled', 'false')
+    fireEvent.click(go)
+    expect(onComplete).toHaveBeenCalledTimes(1)
   })
-})
 
-describe('EngagementContinue', () => {
   it('lets a completed lesson through without exploring', () => {
     render(
       <EngagementProvider>
@@ -155,7 +177,7 @@ describe('EngagementContinue', () => {
         <EngagementContinue completed onComplete={() => {}} />
       </EngagementProvider>,
     )
-    const next = screen.getByRole('button', { name: 'Next' }) as HTMLButtonElement
-    expect(next.disabled).toBe(false)
+    const next = screen.getByRole('button', { name: 'Next' })
+    expect(next).toHaveAttribute('aria-disabled', 'false')
   })
 })
