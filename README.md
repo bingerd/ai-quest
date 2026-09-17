@@ -63,30 +63,36 @@ Design rules:
 - **No network at runtime.** Monaco is bundled locally instead of loaded from a CDN. Phaser and Monaco are
   lazy chunks that load only on the lessons that use them.
 
-## The first training: Token & Context Management
+## The trainings
 
-About 30 minutes across five modules:
+| Training | For | Level | About |
+| --- | --- | --- | --- |
+| **Token & Context Management** (~30 min) | Everyone | Beginner | Tokens, context windows, context selection, model choice, retrieval, enterprise trade-offs. Token Heist, Context Surgeon, Prompt Surgery, Model Selection, AI Adoption Lead. |
+| **Claude for Everyday Work** (~20 min) | Everyone | Beginner | Decks and documents without code: chats vs projects, briefing well, usage limits, data safety. Brief Builder, Deck Doctor, Where does it go?, a board-meeting deck. |
+| **Claude Code Power User** (~35 min) | Power users | Intermediate | CLAUDE.md, settings layers and permission rules, hooks, skills and subagents, MCP, model routing, long-session hygiene. CLAUDE.md Surgery, Permission Puzzle, Hook Lab, team repo setup. |
+| **Building on Claude** (~35 min) | Engineers | Advanced | Prompt caching and batching, agent tool design and least privilege, eval suites, enterprise rollout. Cache Architect, Agent Toolbox, Eval Lab, ship an AI feature. |
 
-| Module | Lessons |
-| --- | --- |
-| Foundations | Welcome · What is an LLM? · What is a token? · Token visualizer · Quick check |
-| The context window | What is a context window? · Make it fit · Pollution, repetition and caching · **Context Surgeon** |
-| Budgets | **Token Heist** (Phaser board or list) · Why efficiency matters at scale · **Prompt Surgery** (Monaco editor) |
-| Models and tools | Match the tool to the task · **Model Selection** (three workloads) · Tools and retrieval · Retrieval lab |
-| Enterprise scale | From one prompt to five thousand people · **AI Adoption Lead** scenario · **Final Challenge** |
+The catalogue filters by audience, and the filter is kept in the URL (`/?for=engineer`).
 
-To add another training, see `docs/ADDING_A_TRAINING.md`.
+Claude-specific content is written from `docs/sources/claude-facts.md`, a dated fact sheet with a source
+link for every claim. Anything that could not be verified is left out. To add a training, see
+`docs/ADDING_A_TRAINING.md`.
 
 ## Testing
 
 `npm test` runs Vitest. Coverage focuses on the deterministic core:
 
 - **Engine:** progression, unlocking, XP and badges, restart, reconciliation, invalid ids, quiz scoring, store.
-- **Simulations:** token estimation, context composition, context selection, model selection, retrieval,
-  prompt evaluation, scenarios and the final challenge. Each covers ideal, partial and failing inputs, edge
-  cases and determinism.
-- **Challenge definitions:** every real challenge with malformed answers and expected pass/fail outcomes.
-- **Components:** engagement gating and the enterprise scenario flow (jsdom).
+- **Simulations:** tokens, context windows and selection, model selection, retrieval, prompt and CLAUDE.md
+  rule checks, conversations, briefs, sorting, settings layering, permission matching, hooks, prompt caching,
+  workloads, agent runs, eval suites, scenarios and composed final challenges. Each covers ideal, partial and
+  failing inputs, edge cases, malformed input and determinism.
+- **Challenge definitions:** every challenge in every training with malformed answers and expected
+  pass/fail outcomes, including model answers for the editor exercises.
+- **Components:** engagement gating, the scenario flow, bucket sorting and ordering keyboard use, and the
+  catalogue filter (jsdom).
+- **Training data:** every registered training is checked for duplicate lesson ids, quiz answers that exist,
+  a scored final lesson and an honest time estimate.
 
 ## Deployment
 

@@ -30,9 +30,22 @@ Each phase ends with `npm test`, `npm run typecheck`, `npm run build` and one co
 See the checklist in the original spec (platform, token training, technical, architecture). The
 architecture goal is that adding Training #2 means adding a folder under `src/trainings` and one import line.
 
+## Role-based trainings (later phase)
+
+Three more trainings were added for specific audiences, plus the platform work they needed:
+
+1. **Shared foundations** — `audience` / `level` / `recommendedAfter` on trainings, catalogue filtering,
+   `ruleChecker` and `sorting` simulations, `BucketSort` and `OrderList`, a pluggable model catalogue,
+   Monaco markdown and JSON highlighting, and `docs/sources/claude-facts.md`.
+2. **Claude for Everyday Work** (`audience: everyone`) — conversation, brief and deck-workflow simulations.
+3. **Claude Code Power User** (`audience: power-user`) — settings layering, permission matching, hooks and
+   CLAUDE.md simulations, plus scenario/sorting/model-selection/composite factories.
+4. **Building on Claude** (`audience: engineer`) — prompt caching, workload planning, agent runs and eval
+   suites, including the agent simulation the original spec deferred.
+
 ## Status
 
-All nine phases are implemented. Beyond the original plan, the repository also has engagement gating for
+All nine phases are implemented, plus the three role-based trainings above. Beyond the original plan, the repository also has engagement gating for
 explanation lessons, an attempt gate on Prompt Surgery, and GitHub Pages deployment.
 
 ## Known limitations
@@ -41,5 +54,7 @@ explanation lessons, an attempt gate on Prompt Surgery, and GitHub Pages deploym
   vendor figures.
 - Prompt Surgery is rule-based: it checks structure, markers and patterns, not meaning.
 - The Phaser board is pointer-driven. Keyboard and screen-reader users get the equivalent list view.
-- The agent simulation from the spec is not built. Tool selection is covered inside the Final Challenge.
+- Claude-specific content is accurate as of the date in `docs/sources/claude-facts.md` and will need
+  re-checking: these products change quickly.
+- Model tiers in the Claude Code training use real alias names with simulated relative numbers.
 - Progress lives in one browser's localStorage. There is no sync, no accounts and no analytics.

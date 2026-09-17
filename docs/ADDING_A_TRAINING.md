@@ -28,6 +28,9 @@ export const agentBasicsTraining: Training = {
   tagline: 'Agents',
   description: 'How agents choose tools, and what each call costs.',
   estimatedMinutes: 15,
+  audience: 'power-user',        // 'everyone' | 'power-user' | 'engineer' — drives the catalogue filter
+  level: 'intermediate',          // 'beginner' | 'intermediate' | 'advanced'
+  recommendedAfter: ['token-management'], // optional, a soft hint only: nothing is locked
   modules: [
     {
       id: 'intro',
@@ -55,6 +58,28 @@ registerTraining(agentBasicsTraining)
 
 The catalogue, progress tracking, XP, badges, results page and persistence pick it up automatically.
 If you later add or remove lessons, stored learner progress is reconciled on the next visit.
+
+Keep `estimatedMinutes` close to the sum of the lesson estimates: a test enforces it.
+
+## Ready-made challenge factories
+
+Most challenges need no new component. Build them from data:
+
+| Factory | Use it for |
+| --- | --- |
+| `makeSortingChallenge` | "Which bucket does this belong in?" (`src/lessons/factories/sortingChallenge.tsx`) |
+| `makeScenarioChallenge` | Decision points with consequences (`scenarioChallenge.tsx`) |
+| `makeModelSelectionChallenge` | Pick a model per workload, with your own model catalogue (`modelSelectionChallenge.tsx`) |
+| `makeCompositeChallenge` | "Assemble the setup": single choices plus include/exclude checklists, with caps (`compositeChallenge.tsx`) |
+
+```ts
+export const whereDoesItGo = makeSortingChallenge({
+  title: 'Where does it go?',
+  brief: 'Place each item.',
+  buckets: [{ id: 'a', label: 'Alpha' }, { id: 'b', label: 'Beta' }],
+  items: [{ id: '1', label: 'One', correctBucket: 'a', explanation: 'Because…' }],
+})
+```
 
 ## Lesson types
 
@@ -125,6 +150,12 @@ Existing simulations you can reuse:
 | Module | Use it for |
 | --- | --- |
 | `contextSelection` | choosing which items go into a limited context |
+| `sorting` | items into buckets, with partial credit and a confusion summary |
+| `ruleChecker` | data-driven text checks (prompts, briefs, CLAUDE.md), with partial credit |
+| `composite` | weighted choices and checklists with caps, for final challenges |
+| `conversation` | how re-sent history and cached project files add up |
+| `claudeSettings`, `permissions`, `hooks` | Claude Code settings layering, rule matching, hook events |
+| `caching`, `workload`, `agent`, `evals` | prompt caching, batch vs realtime, agent runs, eval suites |
 | `modelSelection` | choosing a model under budget, latency and quality constraints |
 | `retrieval` | chunking, top-k, thresholds and reranking |
 | `promptEvaluator` | rule-based checks on a structured prompt |
@@ -135,10 +166,19 @@ Existing simulations you can reuse:
 
 ## Reusable components
 
-`src/ui` holds the component library: `TokenMeter`, `ContextWindow`, `ContextItem`, `ModelCard`, `ToolChain`,
-`DecisionPoint`, `Scenario`, `ScoreBreakdown`, `Feedback`, `MetricsTable`, `SimulationPanel`, `MultipleChoice`,
-`ProgressBar`, `CodeEditor` (Monaco, lazy) and the MDX components above. Components take props and hold no
-training state.
+`src/ui` holds the component library: `TokenMeter`, `ContextWindow`, `ContextItem`, `ConversationMeter`,
+`ModelCard`, `ToolChain`, `BucketSort`, `OrderList`, `CompositeForm`, `DecisionPoint`, `Scenario`,
+`ScoreBreakdown`, `Feedback`, `MetricsTable`, `SimulationPanel`, `MultipleChoice`, `ProgressBar`,
+`CodeEditor` (Monaco, lazy, with `markdown` and `json` highlighting) and the MDX components above.
+Components take props and hold no training state. `BucketSort` and `OrderList` are keyboard-first: no
+interaction requires dragging.
+
+## Vendor-specific content
+
+Anything you state about a Claude feature must trace to `docs/sources/claude-facts.md`, which carries a
+source link and the date it was checked. If you cannot verify it, leave it out, and re-check the facts
+before editing this kind of content: these products change every few months. End such a training with a
+cheat-sheet lesson that links its sources.
 
 ## Phaser games
 
