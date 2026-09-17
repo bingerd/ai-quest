@@ -6,6 +6,7 @@ import WhatIsAContextWindow from './lessons/03-context-window.mdx'
 import ContextPollution from './lessons/04-context-pollution.mdx'
 import Models from './lessons/05-models.mdx'
 import ToolsAndRetrieval from './lessons/06-tools-and-retrieval.mdx'
+import Enterprise from './lessons/07-enterprise.mdx'
 import { RetrievalLab } from './lessons/RetrievalLab'
 import { ScaleCalculator } from './lessons/ScaleCalculator'
 import { InteractiveContextWindow } from './lessons/InteractiveContextWindow'
@@ -14,6 +15,8 @@ import { foundationsQuiz } from './data/quizzes'
 import { contextSurgeonChallenge, tokenHeistChallenge } from './challenges/contextChallenges'
 import { modelSelectionChallenge } from './challenges/modelSelectionDefinition'
 import { promptSurgeryChallenge } from './challenges/promptSurgeryDefinition'
+import { enterpriseChallenge } from './challenges/enterpriseDefinition'
+import { finalChallenge } from './challenges/finalDefinition'
 
 export const tokenManagementTraining: Training = {
   id: 'token-management',
@@ -65,6 +68,16 @@ export const tokenManagementTraining: Training = {
         { id: 'model-selection', title: 'Simulation: Model Selection', type: 'challenge', challenge: modelSelectionChallenge, estimatedMinutes: 4 },
         { id: 'tools-and-retrieval', title: 'Tools and retrieval grow context', type: 'explanation', component: ToolsAndRetrieval, estimatedMinutes: 1 },
         { id: 'retrieval-lab', title: 'Retrieval lab', type: 'interactive', component: RetrievalLab, estimatedMinutes: 3 },
+      ],
+    },
+    {
+      id: 'enterprise',
+      title: 'Enterprise scale',
+      description: 'The same ideas as policy, then the final mission.',
+      lessons: [
+        { id: 'enterprise', title: 'From one prompt to five thousand people', type: 'explanation', component: Enterprise, estimatedMinutes: 1 },
+        { id: 'enterprise-scenario', title: 'Scenario: AI Adoption Lead', type: 'challenge', challenge: enterpriseChallenge, estimatedMinutes: 4 },
+        { id: 'final-challenge', title: 'Final Challenge', type: 'challenge', challenge: finalChallenge, estimatedMinutes: 5 },
       ],
     },
   ],
