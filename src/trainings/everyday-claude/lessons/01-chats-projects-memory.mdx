@@ -1,0 +1,19 @@
+# Chats, projects and memory
+
+Claude gives you three places to work. Click through them:
+
+<InteractiveDiagram
+  title="Where your work lives"
+  nodes={[
+    { id: 'chat', label: 'Chat', icon: '💬', detail: 'One conversation. Everything said so far, plus any files you attached, is processed again every time you send a message.' },
+    { id: 'project', label: 'Project', icon: '📁', detail: 'A workspace with its own knowledge (files you reuse) and instructions (how Claude should always work there). Every chat in the project can use them. On Team and Enterprise plans you can share a project with colleagues.' },
+    { id: 'memory', label: 'Memory', icon: '🧠', detail: 'Claude can remember useful things about your work between chats. Each project has its own memory. You can view, edit, pause or reset it in Settings › Memory, and incognito chats are never remembered.' },
+    { id: 'limits', label: 'Usage limits', icon: '⏳', detail: 'Your plan has a limit that resets every five hours, plus weekly caps. Long chats, big files and extra tools like Research use more of it.' },
+  ]}
+/>
+
+<ConceptCard title="Claude re-reads the whole chat every time" icon="🔁">
+  When you send message 40 in a chat, Claude processes messages 1 to 39 again, plus any attached files. That is why long chats slow down and use up your limit faster.
+</ConceptCard>
+
+Next, you will see exactly how much that adds up.

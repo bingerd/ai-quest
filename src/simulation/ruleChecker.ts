@@ -9,6 +9,8 @@ import { weightedTotal } from './scoring'
 export interface RuleOutcome {
   ok: boolean
   feedback: Feedback
+  /** Optional partial credit 0..100. Defaults to 100 when ok, 0 otherwise. */
+  score?: number
 }
 
 export interface Rule<TInput> {
@@ -31,6 +33,11 @@ export function pass(title: string, body: string, concept?: string): RuleOutcome
 
 export function fail(title: string, body: string, concept?: string): RuleOutcome {
   return { ok: false, feedback: { tone: 'warning', title, body, ...(concept ? { concept } : {}) } }
+}
+
+/** Not wrong, not right: half credit by default. */
+export function partial(title: string, body: string, score = 50, concept?: string): RuleOutcome {
+  return { ok: false, score, feedback: { tone: 'neutral', title, body, ...(concept ? { concept } : {}) } }
 }
 
 /** Build a rule from a boolean test plus fixed pass/fail messages. */
@@ -56,7 +63,7 @@ export function runRules<TInput>(input: TInput, rules: Rule<TInput>[], options: 
   const breakdown: ScoreDimension[] = outcomes.map(({ rule, outcome }) => ({
     id: rule.id,
     label: rule.label,
-    score: outcome.ok ? 100 : 0,
+    score: outcome.score ?? (outcome.ok ? 100 : 0),
     weight: rule.weight ?? 1,
   }))
   const score = weightedTotal(breakdown)

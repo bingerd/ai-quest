@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { duplicateLines, fail, pass, runRules, sensitiveMatches, simpleRule, type Rule } from './ruleChecker'
+import { duplicateLines, fail, partial, pass, runRules, sensitiveMatches, simpleRule, type Rule } from './ruleChecker'
 
 const rules: Rule<string>[] = [
   simpleRule<string>('long', 'Long enough', 3, (t) => t.length >= 10, ['Long', 'ok'], ['Too short', 'add more']),
@@ -20,6 +20,11 @@ describe('runRules', () => {
     expect(r.score).toBe(100)
     expect(r.passed).toBe(true)
     expect(r.summary).toBe('2/2/100')
+  })
+  it('supports partial credit', () => {
+    const r = runRules('x', [{ id: 'p', label: 'Partial', run: () => partial('Half', 'meh') }])
+    expect(r.score).toBe(50)
+    expect(r.feedback[0]?.tone).toBe('neutral')
   })
   it('handles an empty rule list', () => {
     expect(runRules('x', []).score).toBe(0)

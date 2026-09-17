@@ -1,0 +1,23 @@
+# The anatomy of a good brief
+
+A request to Claude is a brief, like one you would give a new colleague. The same six ingredients make the difference every time:
+
+1. **Goal**: what the output has to achieve, not just the topic
+2. **Audience**: who reads it, what they know, how much time they have
+3. **Length and shape**: how many slides, how dense
+4. **Sources**: the documents to use, and a request to cite them
+5. **Storyline**: a simple structure to follow
+6. **Format**: the file you actually need
+
+<BeforeAfter
+  beforeLabel="Vague"
+  afterLabel="Briefed"
+  beforeCaption="Twelve generic slides you will rewrite."
+  afterCaption="Seven slides that make a case."
+  before={<p>"Make a presentation about our Q3 results."</p>}
+  after={<p>"Help the leadership team decide whether to expand the EMEA sales team, based on our Q3 results. They are not finance specialists and have 15 minutes. Maximum 8 slides, one message per slide. Use only the attached Q3 report and cite page numbers. Create it as a PowerPoint file using our template."</p>}
+/>
+
+<ConceptReveal prompt="Isn't a longer request more expensive?">
+  A few extra sentences in your request cost almost nothing. A vague request that produces a 25-slide deck you have to regenerate three times costs far more, in time and in usage. Be specific up front.
+</ConceptReveal>

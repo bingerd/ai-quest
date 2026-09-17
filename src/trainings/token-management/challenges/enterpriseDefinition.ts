@@ -1,16 +1,4 @@
-import { defineChallenge } from '../../../engine/types'
-import { evaluateScenario } from '../../../simulation/scenario'
+import { makeScenarioChallenge } from '../../../lessons/factories/scenarioChallenge'
 import { enterpriseScenario } from '../data/enterpriseScenario'
-import { EnterpriseScenario, type ScenarioAnswer } from './EnterpriseScenario'
 
-export const enterpriseChallenge = defineChallenge<ScenarioAnswer>({
-  kind: 'scenario',
-  component: EnterpriseScenario,
-  evaluate(answer) {
-    const raw = typeof answer === 'object' && answer !== null ? (answer as ScenarioAnswer).choices : null
-    const choices = typeof raw === 'object' && raw !== null ? raw : {}
-    const clean: Record<string, string> = {}
-    for (const [k, v] of Object.entries(choices)) if (typeof v === 'string') clean[k] = v
-    return evaluateScenario(enterpriseScenario, clean)
-  },
-})
+export const enterpriseChallenge = makeScenarioChallenge({ scenario: enterpriseScenario, replayLabel: 'Replay the week' })

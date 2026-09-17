@@ -65,7 +65,7 @@ Design rules:
 
 ## The first training: Token & Context Management
 
-About 20 minutes across five modules:
+About 30 minutes across five modules:
 
 | Module | Lessons |
 | --- | --- |

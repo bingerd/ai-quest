@@ -4,6 +4,8 @@
  * and import its `training.ts` here.
  */
 import { registerTraining } from '../engine/registry'
+import { everydayClaudeTraining } from './everyday-claude/training'
 import { tokenManagementTraining } from './token-management/training'
 
 registerTraining(tokenManagementTraining)
+registerTraining(everydayClaudeTraining)

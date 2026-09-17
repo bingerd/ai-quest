@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 /** Framed area that visually separates "the simulator" from explanatory prose. */
 export function SimulationPanel({ title, children, aside }: { title: string; children: ReactNode; aside?: ReactNode }) {
   return (
-    <section className="card overflow-hidden" aria-label={title}>
+    <section className="card overflow-clip" aria-label={title}>
       <header className="flex items-center justify-between gap-3 border-b line surface-2 px-4 py-2">
         <h3 className="text-sm font-semibold">{title}</h3>
         <span className="chip surface-1 ink-3">Simulated</span>
