@@ -27,8 +27,8 @@ export function ScoreBreakdown({
       {dimensions.length > 0 && (
         <dl className="space-y-2">
           {dimensions.map((d) => (
-            <div key={d.id} className="grid grid-cols-[8rem_1fr_2.5rem] items-center gap-3 text-sm">
-              <dt className="ink-2 truncate">{d.label}</dt>
+            <div key={d.id} className="grid grid-cols-[minmax(6rem,11rem)_1fr_2.5rem] items-center gap-3 text-sm">
+              <dt className="ink-2 leading-tight">{d.label}</dt>
               <dd className="h-2 overflow-hidden rounded-full surface-3" aria-hidden>
                 <div className={`h-full rounded-full transition-[width] duration-700 ${tone(d.score)}`} style={{ width: `${d.score}%` }} />
               </dd>

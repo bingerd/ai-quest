@@ -1,0 +1,17 @@
+# Match the tool to the task
+
+Vendors ship <VendorTerm concept="model" /> in tiers: small and fast, balanced, and large "reasoning" models. The tiers differ in three ways that matter to you:
+
+| | Small | Balanced | Large |
+| --- | --- | --- | --- |
+| Handles complex tasks | poorly | well | very well |
+| Cost per token | lowest | mid | highest |
+| Speed | fastest | mid | slowest |
+
+<ConceptReveal prompt="Is the cheapest model the right default?">
+  No. Neither is the most capable one. The right model is the **cheapest one that clears your quality bar** within your latency and budget limits. For trivial bulk work that is often the small model. For nuanced, high-stakes work it may be the large one, and paying for it is the efficient choice.
+</ConceptReveal>
+
+<ConceptCard title="Constraints first, model second" icon="🎯">
+  Write down the quality target, the latency limit and the budget before you look at models. Then test candidates against those constraints. In the next screen you will do exactly that for three workloads.
+</ConceptCard>

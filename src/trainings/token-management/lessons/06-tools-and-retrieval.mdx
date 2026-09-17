@@ -1,0 +1,13 @@
+# Tools and retrieval grow context
+
+So far you chose context by hand. In real systems, **tools** do it for you: a search over your documents, a database lookup, a web fetch. Each tool call returns text, and that text goes straight into the context window.
+
+- <VendorTerm concept="retrieval" /> finds the passages most similar to the question and sends only those.
+- <VendorTerm concept="tools" /> return whatever they return. A broad search can dump thousands of tokens into context in one step.
+- <VendorTerm concept="agents" /> chain many tool calls, so context grows with every step.
+
+<ConceptCard title="Three dials on retrieval" icon="🎚️">
+  **Chunk size**: how documents are split. **Top-k**: how many chunks are sent. **Threshold and reranking**: how strictly the chunks are filtered and ordered. Together they decide both how much you pay and whether the answer is actually in context.
+</ConceptCard>
+
+Next: a small retrieval lab where you tune those dials against a real question.

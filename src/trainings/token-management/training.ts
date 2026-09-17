@@ -4,10 +4,16 @@ import WhatIsAnLlm from './lessons/01-what-is-an-llm.mdx'
 import WhatIsAToken from './lessons/02-what-is-a-token.mdx'
 import WhatIsAContextWindow from './lessons/03-context-window.mdx'
 import ContextPollution from './lessons/04-context-pollution.mdx'
+import Models from './lessons/05-models.mdx'
+import ToolsAndRetrieval from './lessons/06-tools-and-retrieval.mdx'
+import { RetrievalLab } from './lessons/RetrievalLab'
+import { ScaleCalculator } from './lessons/ScaleCalculator'
 import { InteractiveContextWindow } from './lessons/InteractiveContextWindow'
 import { TokenVisualizer } from './lessons/TokenVisualizer'
 import { foundationsQuiz } from './data/quizzes'
 import { contextSurgeonChallenge, tokenHeistChallenge } from './challenges/contextChallenges'
+import { modelSelectionChallenge } from './challenges/modelSelectionDefinition'
+import { promptSurgeryChallenge } from './challenges/promptSurgeryDefinition'
 
 export const tokenManagementTraining: Training = {
   id: 'token-management',
@@ -46,6 +52,19 @@ export const tokenManagementTraining: Training = {
       description: 'Choosing what goes in when you cannot have everything.',
       lessons: [
         { id: 'token-heist', title: 'Challenge: Token Heist', type: 'challenge', challenge: tokenHeistChallenge, estimatedMinutes: 4 },
+        { id: 'scale-calculator', title: 'Why efficiency matters at scale', type: 'interactive', component: ScaleCalculator, estimatedMinutes: 2 },
+        { id: 'prompt-surgery', title: 'Editor: Prompt Surgery', type: 'editor', challenge: promptSurgeryChallenge, estimatedMinutes: 3 },
+      ],
+    },
+    {
+      id: 'models-and-tools',
+      title: 'Models and tools',
+      description: 'Choosing the engine, and what tools do to your context.',
+      lessons: [
+        { id: 'models', title: 'Match the tool to the task', type: 'explanation', component: Models, estimatedMinutes: 1 },
+        { id: 'model-selection', title: 'Simulation: Model Selection', type: 'challenge', challenge: modelSelectionChallenge, estimatedMinutes: 4 },
+        { id: 'tools-and-retrieval', title: 'Tools and retrieval grow context', type: 'explanation', component: ToolsAndRetrieval, estimatedMinutes: 1 },
+        { id: 'retrieval-lab', title: 'Retrieval lab', type: 'interactive', component: RetrievalLab, estimatedMinutes: 3 },
       ],
     },
   ],

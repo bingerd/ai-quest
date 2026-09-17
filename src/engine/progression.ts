@@ -24,7 +24,7 @@ const DEFAULT_XP: Record<LessonType, number> = {
   editor: 40,
 }
 
-const SCORED_TYPES: ReadonlySet<LessonType> = new Set(['challenge', 'editor', 'quiz', 'simulation'])
+const SCORED_TYPES: ReadonlySet<LessonType> = new Set(['challenge', 'editor', 'quiz'])
 
 export function flattenLessons(training: Training): FlatLesson[] {
   const out: FlatLesson[] = []

@@ -1,0 +1,40 @@
+import type { ModelSelectionScenario } from '../../../simulation/modelSelection'
+
+export const modelScenarios: ModelSelectionScenario[] = [
+  {
+    id: 'tickets',
+    title: 'Classify 50,000 support tickets',
+    description: 'Tag each short ticket with one of 12 categories. Volume is high, each item is trivial.',
+    requests: 50_000,
+    avgInputTokens: 150,
+    avgOutputTokens: 10,
+    complexity: 0.3,
+    budget: 20,
+    maxLatencySeconds: 2,
+    qualityTarget: 0.9,
+  },
+  {
+    id: 'contracts',
+    title: 'Summarise 200 supplier contracts into risk memos',
+    description: 'Each contract is about 60,000 tokens. Legal will act on the memos, so mistakes are expensive.',
+    requests: 200,
+    avgInputTokens: 60_000,
+    avgOutputTokens: 1_500,
+    complexity: 0.85,
+    budget: 300,
+    maxLatencySeconds: 120,
+    qualityTarget: 0.9,
+  },
+  {
+    id: 'hr-assistant',
+    title: 'Internal HR assistant, 20,000 questions a month',
+    description: 'Employees ask about leave, expenses and benefits. Answers come from a 3,000-token policy excerpt. People are waiting in chat.',
+    requests: 20_000,
+    avgInputTokens: 3_000,
+    avgOutputTokens: 300,
+    complexity: 0.5,
+    budget: 60,
+    maxLatencySeconds: 5,
+    qualityTarget: 0.85,
+  },
+]
