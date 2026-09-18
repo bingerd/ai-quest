@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 import mdx from '@mdx-js/rollup'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+import remarkGfm from 'remark-gfm'
 import { defineConfig, type Plugin } from 'vite'
 
 /**
@@ -27,7 +28,7 @@ function spaFallback(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    { enforce: 'pre', ...mdx({ providerImportSource: '@mdx-js/react' }) },
+    { enforce: 'pre', ...mdx({ providerImportSource: '@mdx-js/react', remarkPlugins: [remarkGfm] }) },
     react({ include: /\.(mdx|jsx|tsx|ts|js)$/ }),
     tailwindcss(),
     spaFallback(),

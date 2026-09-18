@@ -23,6 +23,9 @@ export const mdxComponents: MDXComponents = {
   strong: (p) => <strong className="font-semibold ink-1" {...p} />,
   code: (p) => <code className="rounded surface-2 px-1.5 py-0.5 font-mono text-[0.9em]" {...p} />,
   pre: (p) => <pre className="overflow-x-auto rounded-xl surface-2 p-4 font-mono text-sm" {...p} />,
+  // Tailwind's preflight resets anchors to inherit colour and decoration, so
+  // without this the source links on the cheat-sheet lessons look like prose.
+  a: (p) => <a className="text-brand-600 underline underline-offset-2 hover:no-underline" {...p} />,
   blockquote: (p) => <blockquote className="border-l-4 border-brand-400 pl-4 italic ink-2" {...p} />,
   table: (p) => (
     <div className="overflow-x-auto">
