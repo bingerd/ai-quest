@@ -35,12 +35,12 @@ function lockedButton() {
 }
 
 describe('Engagement gating', () => {
-  it('locks InteractiveDiagram until every node is visited', () => {
+  it('counts the pre-selected first node as explored, and locks until the rest are visited', () => {
     const onComplete = harness(<InteractiveDiagram nodes={NODES} title="t" />)
-    expect(screen.getByRole('status')).toHaveTextContent('0 of 2 steps explored')
-    expect(lockedButton()).toHaveTextContent('Explore everything first (1 left)')
-
-    fireEvent.click(screen.getByRole('tab', { name: 'A' }))
+    // Node A renders selected with its detail already visible, so asking the
+    // learner to click it would be asking them to click what they are reading.
+    expect(screen.getByRole('tab', { name: 'A' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByText(/da/)).not.toBeNull()
     expect(screen.getByRole('status')).toHaveTextContent('1 of 2 steps explored')
     expect(lockedButton()).toHaveTextContent('Explore everything first (1 left)')
 
@@ -50,6 +50,12 @@ describe('Engagement gating', () => {
     expect(ready).toHaveAttribute('aria-disabled', 'false')
     fireEvent.click(ready)
     expect(onComplete).toHaveBeenCalledTimes(1)
+  })
+
+  it('satisfies a one-node diagram on mount, since its only step is already shown', () => {
+    harness(<InteractiveDiagram nodes={[NODES[0]!]} title="t" />)
+    expect(screen.getByRole('status')).toHaveTextContent('✓ All steps explored')
+    expect(screen.getByRole('button', { name: /got it, continue/i })).toHaveAttribute('aria-disabled', 'false')
   })
 
   it('locks ConceptCard until marked as read', () => {
@@ -122,9 +128,8 @@ describe('Engagement gating', () => {
 
     expect(lockedButton()).toHaveTextContent('Explore everything first (2 left)')
 
-    for (const label of ['A', 'B']) {
-      fireEvent.click(screen.getByRole('tab', { name: label }))
-    }
+    // Only B needs a click: A is selected, and shown, from the start.
+    fireEvent.click(screen.getByRole('tab', { name: 'B' }))
     fireEvent.click(screen.getByRole('button', { name: 'Mark as read' }))
 
     const go = screen.getByRole('button', { name: /got it, continue/i })

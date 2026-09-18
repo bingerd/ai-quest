@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useEngageable } from '../lessons/EngagementContext'
 
 export interface DiagramNode {
@@ -11,10 +11,18 @@ export interface DiagramNode {
 /** A horizontal flow of nodes. Clicking (or focusing) a node reveals its detail. Reflows vertically on phones. */
 export function InteractiveDiagram({ nodes, title }: { nodes: DiagramNode[]; title: string }) {
   const { present, satisfied, mark } = useEngageable()
-  const [active, setActive] = useState<string>(nodes[0]?.id ?? '')
-  const seen = useRef<Set<string>>(new Set())
-  const [seenCount, setSeenCount] = useState(0)
+  // The first node renders selected with its detail already showing, so it counts
+  // as explored on mount. Only the remaining nodes need a click.
+  const firstId = nodes[0]?.id ?? ''
+  const [active, setActive] = useState<string>(firstId)
+  const seen = useRef<Set<string>>(new Set(firstId ? [firstId] : []))
+  const [seenCount, setSeenCount] = useState(firstId ? 1 : 0)
   const current = nodes.find((n) => n.id === active)
+
+  // A one-node diagram is fully explored on mount and would otherwise never satisfy its gate.
+  useEffect(() => {
+    if (nodes.length === 1) mark()
+  }, [nodes.length, mark])
 
   const visit = (id: string) => {
     setActive(id)
