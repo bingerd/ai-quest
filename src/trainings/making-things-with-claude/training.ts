@@ -16,7 +16,7 @@ export const makingThingsTraining: Training = {
   title: 'Making Things with Claude',
   tagline: 'Decks, reports and designs',
   description:
-    'The deliverables, in depth. Structure an argument before you build it, use Claude Design without spending your week on it, write memos people act on, and keep every number defensible.',
+    'The client deliverables, in depth. Structure an argument before you build it, use Claude Design without spending your week on it, write decision memos partners act on, and keep every number defensible in front of a client.',
   estimatedMinutes: 37,
   audience: 'everyone',
   level: 'intermediate',

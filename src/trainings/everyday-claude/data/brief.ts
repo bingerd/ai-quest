@@ -1,7 +1,7 @@
 import type { BriefSpec } from '../../../simulation/brief'
 
-/** The Q3 leadership deck brief used by Brief Builder and the final challenge. */
-export const q3DeckBrief: BriefSpec = {
+/** The Meridian Retail steering deck brief, used by Brief Builder and the final challenge. */
+export const accountReviewBrief: BriefSpec = {
   passScore: 70,
   blocks: [
     {
@@ -11,12 +11,12 @@ export const q3DeckBrief: BriefSpec = {
       concept: 'brief-goal',
       options: [
         { id: 'none', text: 'Make a presentation.', quality: 'missing' },
-        { id: 'topic', text: 'Make a presentation about our Q3 results.', quality: 'weak' },
-        { id: 'decision', text: 'Help the leadership team decide whether to expand the EMEA sales team, based on our Q3 results.', quality: 'strong' },
+        { id: 'topic', text: 'Make a presentation about the Meridian Retail account.', quality: 'weak' },
+        { id: 'decision', text: 'Help Meridian’s steering committee decide whether to commit to phase two, based on the Q3 delivery review.', quality: 'strong' },
       ],
-      strong: ['The deck has a job to do', 'A decision to support gives every slide a reason to exist. Claude can leave out anything that does not serve it.'],
-      weak: ['A topic, not a goal', '"About Q3" tells Claude what to cover, not what the deck should achieve. You will get a tour of every number.'],
-      missing: ['No goal at all', 'Without a goal Claude guesses, and guesses produce generic slides you will rewrite.'],
+      strong: ['The deck has a job to do', 'A client decision to support gives every slide a reason to exist. Claude can leave out anything that does not serve it.'],
+      weak: ['A topic, not a goal', '"About the account" tells Claude what to cover, not what the deck should achieve. You will get a tour of the engagement.'],
+      missing: ['No goal at all', 'Without a goal Claude guesses, and guesses produce generic slides you will rewrite on the train to the client.'],
     },
     {
       id: 'audience',
@@ -25,12 +25,12 @@ export const q3DeckBrief: BriefSpec = {
       concept: 'brief-audience',
       options: [
         { id: 'none', text: '', quality: 'missing' },
-        { id: 'team', text: 'It is for the team.', quality: 'weak' },
-        { id: 'leadership', text: 'The audience is the leadership team: not finance specialists, and they have 15 minutes.', quality: 'strong' },
+        { id: 'team', text: 'It is for the client.', quality: 'weak' },
+        { id: 'leadership', text: 'The audience is Meridian’s steering committee: their CIO and two business sponsors, not technical, with 15 minutes.', quality: 'strong' },
       ],
       strong: ['Pitched at the right people', 'Knowing who is in the room and how much time they have sets the level of detail and the jargon.'],
-      weak: ['"The team" could be anyone', 'Name who will read it and what they already know.'],
-      missing: ['No audience', 'The same numbers need very different slides for a board, a sales team or a customer.'],
+      weak: ['"The client" could be anyone', 'Name who will be in the room and what they already know. A sponsor and a procurement lead need different slides.'],
+      missing: ['No audience', 'The same numbers need very different slides for a steering committee, a delivery team or your own partner.'],
     },
     {
       id: 'length',
@@ -53,12 +53,12 @@ export const q3DeckBrief: BriefSpec = {
       concept: 'brief-sources',
       options: [
         { id: 'none', text: '', quality: 'missing' },
-        { id: 'memory', text: 'Use what you know about our company.', quality: 'weak' },
-        { id: 'attached', text: 'Use only the attached Q3 report and regional targets, and say which page each number comes from.', quality: 'strong' },
+        { id: 'memory', text: 'Use what you know about the client.', quality: 'weak' },
+        { id: 'attached', text: 'Use only the attached Q3 delivery review and the signed statement of work, and say which page each number comes from.', quality: 'strong' },
       ],
-      strong: ['Grounded in your real numbers', 'Naming the sources, and asking where each number comes from, makes the deck checkable.'],
-      weak: ['Claude does not know your Q3 numbers', 'Without your documents it can only produce plausible-looking placeholders. Those are dangerous in a board deck.'],
-      missing: ['No sources', 'Attach the report. Otherwise every figure is a guess.'],
+      strong: ['Grounded in the engagement’s real numbers', 'Naming the sources, and asking where each number comes from, makes the deck checkable before the client checks it for you.'],
+      weak: ['Claude does not know your delivery numbers', 'Without your documents it can only produce plausible-looking placeholders. In front of a client those are worse than blank slides.'],
+      missing: ['No sources', 'Attach the delivery review. Otherwise every figure is a guess with your firm’s name on it.'],
     },
     {
       id: 'structure',
@@ -67,9 +67,9 @@ export const q3DeckBrief: BriefSpec = {
       concept: 'brief-structure',
       options: [
         { id: 'none', text: '', quality: 'missing' },
-        { id: 'story', text: 'Structure: situation, what we found, recommendation, what we need from you.', quality: 'strong' },
+        { id: 'story', text: 'Structure: where we started, what we found, recommendation, what we need from you.', quality: 'strong' },
       ],
-      strong: ['A storyline to follow', 'A simple arc keeps the deck moving towards the decision.'],
+      strong: ['A storyline to follow', 'A simple arc keeps the deck moving towards the decision instead of touring the workstreams.'],
       weak: ['', ''],
       missing: ['No storyline', 'Optional, but a one-line structure makes the first draft much closer to what you want.'],
     },
@@ -80,7 +80,7 @@ export const q3DeckBrief: BriefSpec = {
       concept: 'brief-format',
       options: [
         { id: 'none', text: '', quality: 'missing' },
-        { id: 'pptx', text: 'Create it as a PowerPoint file using our company template.', quality: 'strong' },
+        { id: 'pptx', text: 'Create it as a PowerPoint file using the firm’s template.', quality: 'strong' },
       ],
       strong: ['Ask for the real file', 'Claude can create an actual .pptx. Starting from your template saves the restyling afterwards.'],
       weak: ['', ''],
@@ -90,10 +90,10 @@ export const q3DeckBrief: BriefSpec = {
   outline: {
     generic: [
       '1. Introduction',
-      '2. About Our Company',
-      '3. Overview of Q3',
+      '2. About Our Firm',
+      '3. Overview of the Engagement',
       '4. Key Highlights',
-      '5. Revenue',
+      '5. Workstreams',
       '6. Costs',
       '7. Market Trends',
       '8. Challenges',
@@ -103,20 +103,20 @@ export const q3DeckBrief: BriefSpec = {
       '12. Questions?',
     ],
     partial: [
-      '1. Q3 at a glance',
-      '2. Revenue by region',
-      '3. EMEA performance',
-      '4. Pipeline and forecast',
-      '5. Hiring overview',
+      '1. Phase one at a glance',
+      '2. Delivery by workstream',
+      '3. Adoption across the business units',
+      '4. Benefits and forecast',
+      '5. Proposed phase two',
       '6. Risks',
       '7. Summary',
     ],
     specific: [
-      '1. The decision: expand EMEA sales now or in Q1?',
-      '2. EMEA beat target by 12% with the same headcount (report p. 3)',
-      '3. Pipeline covers 1.8× next quarter’s target (report p. 7)',
-      '4. Two regions are capacity-limited, not demand-limited',
-      '5. Recommendation: hire 4 account executives in Q4',
+      '1. The decision: commit to phase two now or in Q1?',
+      '2. Phase one landed 12% ahead of the SOW baseline (review p. 3)',
+      '3. Two of three business units are live; the third is blocked on data (review p. 7)',
+      '4. The blocker is client-side ownership, not our capacity',
+      '5. Recommendation: extend with a team of four from January',
       '6. Cost, payback and risks',
       '7. What we need from you today',
     ],

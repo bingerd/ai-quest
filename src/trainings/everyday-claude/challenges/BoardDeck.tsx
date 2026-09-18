@@ -18,7 +18,7 @@ export function BoardDeck({ submit, result, attempts, bestScore, retry, onContin
 
   return (
     <ChallengeFrame
-      title="Final Challenge: the board-meeting deck"
+      title="Final Challenge: the client steering deck"
       brief={<p>{spec.task}</p>}
       result={result}
       attempts={attempts}

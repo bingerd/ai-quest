@@ -3,7 +3,7 @@
 The most expensive mistake in a deck is not a bad font. It is discovering on Thursday that the
 story was wrong, after twenty slides have been designed around it.
 
-Consultants have used the same fix for decades: settle the argument in plain text first. It is
+Your profession has used the same fix for decades: settle the argument in plain text first. It is
 called the Pyramid Principle, after Barbara Minto, who taught it at McKinsey. Two parts of it do
 almost all the work.
 
@@ -12,9 +12,9 @@ almost all the work.
 <InteractiveDiagram
   title="The four lines that open a deck"
   nodes={[
-    { id: 's', label: 'Situation', icon: '🧭', detail: 'Something everyone in the room already accepts. "We set out to grow mid-market accounts this year." Nobody argues, so it costs nothing and buys you their attention.' },
-    { id: 'c', label: 'Complication', icon: '⚡', detail: 'What changed. "Two of our three largest accounts have not renewed." This is the reason the meeting exists.' },
-    { id: 'q', label: 'Question', icon: '❓', detail: 'The question the complication forces. "Do we keep investing in mid-market?" Saying it out loud means the room is answering your question, not four different ones.' },
+    { id: 's', label: 'Situation', icon: '🧭', detail: 'Something everyone in the room already accepts. "You engaged us to cut order-to-cash time across the three business units." Nobody argues, so it costs nothing and buys you their attention.' },
+    { id: 'c', label: 'Complication', icon: '⚡', detail: 'What changed. "Two of the three units are live; the third has not started." This is the reason the meeting exists.' },
+    { id: 'q', label: 'Question', icon: '❓', detail: 'The question the complication forces. "Do we commit to phase two, or close out here?" Saying it out loud means the room is answering your question, not four different ones.' },
     { id: 'a', label: 'Answer', icon: '✅', detail: 'Your recommendation, before the evidence rather than after it. Everything that follows exists to support this sentence.' },
   ]}
 />
@@ -25,29 +25,31 @@ three slides should be allowed to stop.
 
 ## Two: make every title carry the message
 
-A slide called **"Pipeline coverage"** tells you what the slide is about. A slide called
-**"Pipeline covers 2.1× of target, below the 3× we plan against"** tells you what to think.
+A slide called **"Benefits tracking"** tells you what the slide is about. A slide called
+**"Benefits are tracking at 2.1× programme cost, ahead of the 1.5× business case"** tells you what
+to think.
 
 The second kind is an *action title*. When all of them are action titles, someone can read only
-the titles and get the whole argument — which is exactly what a busy executive does.
+the titles and get the whole argument — which is exactly what a partner does on the way into the
+room, and what a client sponsor does afterwards when they forward it on.
 
 <BeforeAfter
   beforeLabel="Topic labels"
   afterLabel="Action titles"
   before={
     <ul>
-      <li>Q3 overview</li>
-      <li>Regional performance</li>
-      <li>Churn analysis</li>
+      <li>Q3 engagement overview</li>
+      <li>Delivery by workstream</li>
+      <li>Adoption analysis</li>
       <li>Recommendations</li>
     </ul>
   }
   after={
     <ul>
-      <li>Q3 revenue grew 12%, entirely from existing accounts</li>
-      <li>Three of five regions beat target; EMEA missed by 12%</li>
-      <li>Churn rose to 9%, concentrated in two accounts</li>
-      <li>Move both at-risk accounts to named owners by November</li>
+      <li>Phase one landed 12% ahead of the SOW baseline</li>
+      <li>Two of three business units are live; the third has not started</li>
+      <li>Adoption stalled at 61%, concentrated in one unit</li>
+      <li>Give the third unit a named client owner by November</li>
     </ul>
   }
   beforeCaption="You have to open every slide to find out what it says."
@@ -61,6 +63,7 @@ the titles and get the whole argument — which is exactly what a busy executive
 </ConceptCard>
 
 <ConceptReveal prompt="You give Claude the storyline and it writes decent titles. Whose job is the governing thought — the one sentence the whole deck defends?">
-  Yours. It is the one part that requires knowing what you actually want to happen in that room,
-  which is not in any of the files you attached. Write it yourself, then let Claude build under it.
+  Yours. It is the one part that requires knowing what you actually want to happen in that room —
+  and what your firm is prepared to stand behind — which is not in any of the files you attached.
+  Write it yourself, then let Claude build under it.
 </ConceptReveal>

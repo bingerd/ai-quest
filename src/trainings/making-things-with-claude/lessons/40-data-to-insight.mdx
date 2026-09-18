@@ -15,14 +15,15 @@ which numbers matter enough to check.
   afterLabel="Attached as a file"
   before={
     <p>
-      "Our Q3 revenue was around 4.2 million, up about 12% I think, and churn was somewhere near
-      9%. Can you make a chart?"
+      "Benefits delivered were around 4.2 million I think, up about 12% on the business case, and
+      adoption was somewhere near 61%. Can you make a chart?"
     </p>
   }
   after={
     <p>
-      "The Q3 finance export is attached. Chart revenue by region, and give me the churn rate
-      calculated from the deals tab. Tell me which figures you could not find in the file."
+      "The client's Q3 finance export is attached. Chart benefits by business unit, and give me the
+      adoption rate calculated from the licences tab. Tell me which figures you could not find in
+      the file."
     </p>
   }
   beforeCaption="Every number is already an approximation before the work starts."
@@ -34,16 +35,17 @@ which numbers matter enough to check.
 <InteractiveDiagram
   title="Before a number goes in front of anyone"
   nodes={[
-    { id: 'recompute', label: 'Recompute it', icon: '🧮', detail: 'Work the headline figures out a second way — a spreadsheet formula, the source system, a colleague. Asking Claude whether it is sure gets you another confident answer from the same place, which is not an independent check.' },
-    { id: 'reconcile', label: 'Reconcile it', icon: '⚖️', detail: 'Does it match the official number the finance team already circulated? If your deck and the board pack disagree by £40k, that is the only thing anyone will discuss.' },
+    { id: 'recompute', label: 'Recompute it', icon: '🧮', detail: 'Work the headline figures out a second way — a spreadsheet formula, the client’s source system, a colleague. Asking Claude whether it is sure gets you another confident answer from the same place, which is not an independent check.' },
+    { id: 'reconcile', label: 'Reconcile it', icon: '⚖️', detail: 'Does it match the number the client already has in their own reporting? If your deck and their programme report disagree by €40k, that is the only thing the steering committee will discuss.' },
     { id: 'context', label: 'Give it its context', icon: '🔍', detail: '"87% satisfied" from eleven respondents is true and misleading. Put the sample size, the period and the source next to the figure, or leave the figure out.' },
   ]}
 />
 
 <ConceptCard title="Suspect the reasonable-sounding ones" icon="🎯" tone="warn">
   An obviously mad number gets caught by everyone. The dangerous figure is the plausible one with
-  no source — "industry churn averages 7%" — because nobody questions it until it is in front of a
-  client. Plausible is not the same as verified.
+  no source — "industry adoption averages 70%" — because nobody questions it internally, and the
+  first person who does is the client who lives in that industry. Plausible is not the same as
+  verified.
 </ConceptCard>
 
 <ConceptCard title="What costs you, and what does not" icon="⏳">

@@ -18,7 +18,7 @@ export function LongChatTax({ onComplete, completed }: InteractiveLessonProps) {
   return (
     <div className="space-y-6">
       <p className="ink-2">
-        You are working on a deck with an 80-page report attached. Every time you send a message, Claude processes the <strong className="ink-1">file and the whole conversation again</strong>. Watch the bars grow, then try the two habits that shrink them.
+        You are working on a client deck with an 80-page delivery review attached. Every time you send a message, Claude processes the <strong className="ink-1">file and the whole conversation again</strong>. Watch the bars grow, then try the two habits that shrink them.
       </p>
 
       <SimulationPanel

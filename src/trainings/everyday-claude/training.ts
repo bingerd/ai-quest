@@ -15,7 +15,7 @@ export const everydayClaudeTraining: Training = {
   id: 'everyday-claude',
   title: 'Claude for Everyday Work',
   tagline: 'No code needed',
-  description: 'Make decks and documents with Claude that are right the first time. Chats vs projects, briefing well, staying within limits and keeping data safe.',
+  description: 'Make client-ready decks and documents that are right the first time. For sales, HR, account managers, delivery teams and partners: chats vs projects, briefing well, staying within limits and keeping client data safe.',
   estimatedMinutes: 25,
   audience: 'everyone',
   level: 'beginner',
@@ -55,11 +55,11 @@ export const everydayClaudeTraining: Training = {
     {
       id: 'safe-and-smart',
       title: 'Safe and smart at work',
-      description: 'Data, checking, limits, and the final deck.',
+      description: 'Client data, checking, limits, and the final deck.',
       lessons: [
-        { id: 'monday-at-the-office', title: 'Scenario: Monday at the office', type: 'challenge', challenge: mondayChallenge, estimatedMinutes: 3 },
+        { id: 'monday-at-the-office', title: 'Scenario: Monday on the account', type: 'challenge', challenge: mondayChallenge, estimatedMinutes: 3 },
         { id: 'everyday-cheat-sheet', title: 'Cheat sheet', type: 'explanation', component: CheatSheet, estimatedMinutes: 1 },
-        { id: 'board-deck', title: 'Final Challenge: the board-meeting deck', type: 'challenge', challenge: boardDeckChallenge, estimatedMinutes: 3 },
+        { id: 'board-deck', title: 'Final Challenge: the client steering deck', type: 'challenge', challenge: boardDeckChallenge, estimatedMinutes: 3 },
       ],
     },
   ],

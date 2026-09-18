@@ -3,7 +3,7 @@ import type { QuizQuestion } from '../../../engine/types'
 export const numbersQuiz: QuizQuestion[] = [
   {
     id: 'q-chart',
-    prompt: 'You ask Claude for a chart of regional revenue to drop into a board deck. What do you get?',
+    prompt: 'You ask Claude for a chart of benefits by business unit to drop into the client steering deck. What do you get?',
     options: [
       { id: 'a', label: 'A description of what the chart would look like' },
       { id: 'b', label: 'A real file you can download — .xlsx, .pptx, .docx or PDF' },
@@ -15,7 +15,7 @@ export const numbersQuiz: QuizQuestion[] = [
   },
   {
     id: 'q-recompute',
-    prompt: 'A summary says the average deal size is €41k. The spreadsheet you gave it has the raw deals. What is the safe move before this goes in front of the board?',
+    prompt: 'A summary says the average deal size is €41k. The spreadsheet you gave it has the raw deals. What is the safe move before this goes in front of the client?',
     options: [
       { id: 'a', label: 'Trust it — it had the actual data, so the arithmetic will be right' },
       { id: 'b', label: 'Recompute it yourself from the same column and check the two agree' },
@@ -23,11 +23,11 @@ export const numbersQuiz: QuizQuestion[] = [
     ],
     correctOptionId: 'b',
     explanation:
-      'Asking a model to check its own arithmetic gets you another confident answer, not an independent one. Any number that carries a decision gets recomputed by a second method — a spreadsheet formula, a colleague, the source system.',
+      'Asking a model to check its own arithmetic gets you another confident answer, not an independent one. Any number that carries a decision gets recomputed by a second method — a spreadsheet formula, a colleague, the client’s own source system.',
   },
   {
     id: 'q-limits',
-    prompt: 'Your usage limit resets in two hours and you still have a deck to finish. Which of these actually helps?',
+    prompt: 'Your usage limit resets in two hours and you still have a client deck to finish. Which of these actually helps?',
     options: [
       { id: 'a', label: 'Switch from claude.ai to the desktop app to get a separate allowance' },
       { id: 'b', label: 'Turn off tools you are not using and drop the effort level for routine edits' },

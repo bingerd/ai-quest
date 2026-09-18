@@ -8,7 +8,7 @@ const challenges: [string, ChallengeDefinition][] = [
   ['Deck Doctor', deckDoctorChallenge],
   ['Monday at the office', mondayChallenge],
   ['Where does it go?', whereDoesItGoChallenge],
-  ['Board-meeting deck', boardDeckChallenge],
+  ['Client steering deck', boardDeckChallenge],
 ]
 
 const garbage: unknown[] = [undefined, null, 42, 'text', [], {}, { choices: null }, { placements: 'x' }, { selectedIds: 'nope', briefChoices: 3 }, { workspace: 1, review: {} }]
@@ -26,7 +26,7 @@ describe.each(challenges)('%s definition', (_name, challenge) => {
 const bestBrief = { goal: 'decision', audience: 'leadership', length: 'tight', sources: 'attached', structure: 'story', format: 'pptx' }
 const ideal = { workspace: 'project', selectedIds: ['report', 'targets', 'last-deck'], briefChoices: bestBrief, review: 'verify' }
 
-describe('Board-meeting deck outcomes', () => {
+describe('Client steering deck outcomes', () => {
   it('passes the ideal workflow with a high score', () => {
     const r = boardDeckChallenge.evaluate(ideal)
     expect(r.score).toBeGreaterThanOrEqual(90)
@@ -35,8 +35,8 @@ describe('Board-meeting deck outcomes', () => {
   it('caps the score when the salary sheet is included', () => {
     const r = boardDeckChallenge.evaluate({ ...ideal, selectedIds: [...ideal.selectedIds, 'salaries'] })
     expect(r.score).toBeLessThanOrEqual(40)
-    expect(r.feedback[0]?.title).toContain('Team salary spreadsheet')
-    expect(r.feedback.filter((f) => `${f.title} ${f.body}`.includes('Team salary spreadsheet'))).toHaveLength(1)
+    expect(r.feedback[0]?.title).toContain('Team rate card and salaries')
+    expect(r.feedback.filter((f) => `${f.title} ${f.body}`.includes('Team rate card and salaries'))).toHaveLength(1)
     expect(r.feedback.some((f) => f.body.includes('€'))).toBe(false)
   })
   it('fails without a real review, even when everything else is perfect', () => {

@@ -15,7 +15,7 @@ export function MemoBuilder({ onComplete, completed }: InteractiveLessonProps) {
   return (
     <div className="space-y-6">
       <p className="ink-2">
-        The Rotterdam warehouse contract expires in December and the COO wants a one-page memo.
+        The Meridian engagement runs out in December and your engagement partner wants a one-page memo.
         Build the request block by block. The preview on the right shows the kind of memo a request
         like yours tends to produce. Reach <strong className="ink-1">80</strong> to continue.
       </p>

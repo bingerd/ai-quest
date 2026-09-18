@@ -24,7 +24,7 @@ export function StorylineBuilder({ onComplete, completed }: InteractiveLessonPro
   return (
     <div className="space-y-6">
       <p className="ink-2">
-        You are opening a board deck about the mid-market accounts. Put the four opening lines in
+        You are opening the Meridian steering deck. Put the four opening lines in
         order, then pick the one sentence the rest of the deck has to defend. Both have to be right
         before you go on — this is the part you do before Claude makes anything.
       </p>

@@ -3,7 +3,7 @@ import type { QuizQuestion } from '../../../engine/types'
 export const basicsQuiz: QuizQuestion[] = [
   {
     id: 'long-chat',
-    prompt: 'Your chat about the Q3 deck is now 60 messages long and answers are getting slow. What helps most?',
+    prompt: 'Your chat about the Meridian steering deck is now 60 messages long and answers are getting slow. What helps most?',
     options: [
       { id: 'a', label: 'Keep going, Claude remembers everything anyway' },
       { id: 'b', label: 'Ask Claude for a short summary, then continue in a fresh chat with that summary' },
@@ -14,7 +14,7 @@ export const basicsQuiz: QuizQuestion[] = [
   },
   {
     id: 'project-vs-chat',
-    prompt: 'You make a sales deck every month from the same brand guide and pricing sheet. Where should those files live?',
+    prompt: 'You write a proposal most months from the same firm template, credentials deck and rate card. Where should those files live?',
     options: [
       { id: 'a', label: 'In a project, as project knowledge' },
       { id: 'b', label: 'Uploaded fresh into each new chat' },

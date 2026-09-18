@@ -1,23 +1,23 @@
 import type { CompositeSpec } from '../../../simulation/composite'
 
 /**
- * Final challenge: the quarterly business review pack.
- * Constraint that drives the surface choice: it must match the corporate
- * template exactly, and finance must be able to edit it in PowerPoint afterwards.
+ * Final challenge: the quarterly business review pack for a client.
+ * Constraint that drives the surface choice: it must match the firm's template
+ * exactly, and the client's own team must be able to edit it after handover.
  */
 export const qbrPackSpec: CompositeSpec = {
   passScore: 70,
   summaries: {
-    excellent: 'A pack the CFO can present, built without burning the week.',
+    excellent: 'A pack the partner can put in front of the client, built without burning the week.',
     pass: 'This would go out, with a couple of habits worth tightening.',
-    fail: 'This pack would come back to you, and not politely.',
+    fail: 'This pack would come back from the partner, and not politely.',
   },
   parts: [
     {
       kind: 'choice',
       id: 'storyline',
       label: 'Where you start',
-      question: 'Friday: the CFO wants a QBR pack for the board. What do you do first?',
+      question: 'Friday: your engagement partner wants a QBR pack for Meridian’s steering committee. What do you do first?',
       weight: 3,
       options: [
         {
@@ -46,12 +46,12 @@ export const qbrPackSpec: CompositeSpec = {
       kind: 'choice',
       id: 'surface',
       label: 'Where you build it',
-      question: 'It has to match the corporate template exactly, and finance must be able to edit it in PowerPoint next quarter.',
+      question: 'It has to match the firm’s template exactly, and the client’s own team must be able to edit it in PowerPoint after handover.',
       weight: 2,
       options: [
         {
           id: 'addin',
-          label: 'Claude for PowerPoint, working on the corporate template.',
+          label: 'Claude for PowerPoint, working on the firm’s template.',
           score: 100,
           explanation: 'It reads the slide master, layouts, fonts and colour scheme, edits single slides without regenerating the deck, and produces native editable charts. Both constraints are met by construction.',
         },
@@ -65,13 +65,13 @@ export const qbrPackSpec: CompositeSpec = {
           id: 'filecreation',
           label: 'Ask Claude in a normal chat to produce a .pptx.',
           score: 70,
-          explanation: 'Gives you a real file finance can edit. You are on your own for template compliance, and file creation uses more of your limit than a normal chat.',
+          explanation: 'Gives you a real file the client can edit. You are on your own for template compliance, and file creation uses more of your limit than a normal chat.',
         },
         {
           id: 'html',
           label: 'Build it in Claude Design and share the interactive HTML.',
           score: 25,
-          explanation: 'Lovely to present, impossible for finance to edit in PowerPoint next quarter. Match the format to who has to maintain it.',
+          explanation: 'Lovely to present, impossible for the client’s team to edit in PowerPoint after handover. Match the format to who has to maintain it once you have rolled off.',
         },
       ],
     },
@@ -79,7 +79,7 @@ export const qbrPackSpec: CompositeSpec = {
       kind: 'choice',
       id: 'changes',
       label: 'Handling the review',
-      question: 'Fourteen comments come back from three people, and two of them contradict each other.',
+      question: 'Fourteen comments come back from three people — two of yours and the client sponsor — and two of them contradict each other.',
       weight: 2,
       options: [
         {
@@ -109,29 +109,29 @@ export const qbrPackSpec: CompositeSpec = {
       question: 'Which of these go into the project?',
       weight: 3,
       items: [
-        { id: 'finance', label: 'The Q3 finance export', shouldInclude: true, explanation: 'The numbers the pack is about. Keep it in the project so it is reused rather than re-uploaded.' },
-        { id: 'lastqbr', label: 'Last quarter’s QBR deck', shouldInclude: true, explanation: 'Useful for continuity and for the questions the board asked last time.' },
-        { id: 'template', label: 'The corporate template', shouldInclude: true, explanation: 'Apply the template before generating content, not after. Retrofitting a template is most of the rework people complain about.' },
+        { id: 'finance', label: 'The Q3 delivery and finance export for the account', shouldInclude: true, explanation: 'The numbers the pack is about. Keep it in the project so it is reused rather than re-uploaded.' },
+        { id: 'lastqbr', label: 'Last quarter’s QBR pack for this client', shouldInclude: true, explanation: 'Useful for continuity and for the questions the steering committee asked last time.' },
+        { id: 'template', label: 'The firm’s corporate template', shouldInclude: true, explanation: 'Apply the template before generating content, not after. Retrofitting a template is most of the rework people complain about.' },
         {
           id: 'salaries',
-          label: 'The salary spreadsheet, to explain the cost base',
+          label: 'The consultant rate and salary sheet, to explain the cost base',
           shouldInclude: false,
           cap: 40,
-          explanation: 'The cost base is a total. Individual pay never has to leave HR to make that point, and once it is in a chat you cannot take it back.',
+          explanation: 'The cost base is a blended rate. What each named consultant earns never has to leave your firm to make that point, and once it is in a chat you cannot take it back.',
         },
         {
           id: 'customers',
-          label: 'The full customer list, with names and email addresses',
+          label: 'The client’s full user list, with names and email addresses',
           shouldInclude: false,
           cap: 40,
-          explanation: 'Personal data that the deck does not need. Aggregate it first: counts and segments make the same argument.',
+          explanation: 'Personal data that the deck does not need, and it is the client’s to protect, not yours to spend. Aggregate it first: counts and segments make the same argument.',
         },
         {
           id: 'competitor',
-          label: 'A competitor’s deck a contact forwarded you',
+          label: 'A rival firm’s proposal a contact at the client forwarded you',
           shouldInclude: false,
           cap: 55,
-          explanation: 'Files from outside can carry hidden instructions aimed at the assistant. Anthropic warns about exactly this. Treat an unknown deck like an unknown email attachment.',
+          explanation: 'Two problems at once. It may carry hidden instructions aimed at the assistant — Anthropic warns about exactly this — and you should not be holding it in the first place. Decline it and say so.',
         },
       ],
     },
@@ -139,7 +139,7 @@ export const qbrPackSpec: CompositeSpec = {
       kind: 'checklist',
       id: 'before',
       label: 'Before it goes out',
-      question: 'What happens between "it looks done" and "the CFO presents it"?',
+      question: 'What happens between "it looks done" and "the partner presents it to the client"?',
       weight: 3,
       items: [
         {
@@ -147,10 +147,10 @@ export const qbrPackSpec: CompositeSpec = {
           label: 'Recompute the headline numbers from the source yourself',
           shouldInclude: true,
           cap: 55,
-          explanation: 'Every number that carries a decision gets checked by a second method. This is the step that stops a wrong figure reaching a board.',
+          explanation: 'Every number that carries a decision gets checked by a second method. This is the step that stops a wrong figure reaching a client.',
         },
         { id: 'read', label: 'Read every slide yourself before it goes', shouldInclude: true, explanation: 'Anthropic is explicit that these tools are not for final deliverables without human review.' },
-        { id: 'brand', label: 'Check it against the brand and template rules', shouldInclude: true, explanation: 'Cheap to do, embarrassing to skip.' },
+        { id: 'brand', label: 'Check it against the brand and template rules', shouldInclude: true, explanation: 'Cheap to do, embarrassing to skip in front of the people paying for it.' },
         {
           id: 'askclaude',
           label: 'Ask Claude to confirm the numbers are correct',

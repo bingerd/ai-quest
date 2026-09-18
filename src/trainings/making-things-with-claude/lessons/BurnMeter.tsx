@@ -30,7 +30,7 @@ export function BurnMeter({ onComplete, completed }: InteractiveLessonProps) {
   return (
     <div className="space-y-6">
       <p className="ink-2">
-        The same twenty-slide deck, the same three rounds of feedback, done four different ways. The
+        The same twenty-slide client deck, the same three rounds of feedback, done four different ways. The
         deck size and the number of reviewers are usually not yours to choose. The other three are.
         Get the work down by <strong className="ink-1">60%</strong> to continue.
       </p>

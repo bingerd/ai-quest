@@ -10,7 +10,7 @@ has to edit it afterwards.
 | Plans | Pro, Max, Team, Enterprise | Free and every paid plan | Pro, Max, Team, Enterprise |
 | Where you work | A canvas in Claude | An ordinary chat | Inside PowerPoint itself |
 | Follows your template | Via your design system | Not by itself | Reads the slide master directly |
-| Best when | You are still exploring the look | You want a file and you want it now | The corporate template is non-negotiable |
+| Best when | You are still exploring the look | You want a file and you want it now | The firm's template is non-negotiable |
 
 <InteractiveDiagram
   title="Which one, when"
@@ -23,21 +23,24 @@ has to edit it afterwards.
 
 ## The rule that survives all three
 
-Whichever surface you use, the corporate template goes on **first**. Anthropic's own guidance for
+Whichever surface you use, the firm's template goes on **first**. Anthropic's own guidance for
 the PowerPoint add-in is to apply your template before generating content, be specific about which
 slide or element you are changing, and review every change against your brand before it goes out.
 
 <ConceptCard title="Match the format to whoever maintains it" icon="🔑">
-  Interactive HTML is the best way to present a deck and the worst way to hand one over. If finance
-  has to update it next quarter in PowerPoint, the deliverable is a .pptx, however good the HTML
-  looks in the room.
+  Interactive HTML is the best way to present a deck and the worst way to hand one over. If the
+  client's own team has to maintain it in PowerPoint after you roll off, the deliverable is a .pptx,
+  however good the HTML looks in the room.
 </ConceptCard>
 
-<ConceptReveal prompt="Someone forwards you a deck from outside the company and asks Claude to tidy it up. What is the risk?">
-  Files from outside can carry instructions aimed at the assistant rather than at you. Anthropic is
-  explicit about it for the PowerPoint add-in: use it with trusted files, because external files
-  can contain hidden instructions that try to make it extract data or change records. Treat an
-  unknown deck the way you would treat an unknown email attachment.
+<ConceptReveal prompt="Nearly every file you touch came from outside your firm. So what is the actual risk, and what is the actual rule?">
+  Not "outside", which would rule out your whole working day — client exports, vendor decks,
+  candidate CVs. The risk is narrower: a document can contain instructions aimed at the assistant
+  rather than at you. Anthropic is explicit about it for the PowerPoint add-in — use it with trusted
+  files, because external files can contain hidden instructions that try to make it extract data or
+  change records. So the rule is about trust and review, not origin: know where a file came from and
+  why you have it, treat instructions found inside it as content rather than orders, and read what
+  actually changed.
 </ConceptReveal>
 
 <ConceptCard title="Not for final deliverables on their own" icon="👀" tone="warn">

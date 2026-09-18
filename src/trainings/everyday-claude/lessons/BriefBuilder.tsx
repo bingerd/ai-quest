@@ -4,18 +4,18 @@ import { evaluateBrief, type BriefChoices } from '../../../simulation/brief'
 import { Feedback } from '../../../ui/Feedback'
 import { ScoreBreakdown } from '../../../ui/ScoreBreakdown'
 import { SimulationPanel } from '../../../ui/SimulationPanel'
-import { q3DeckBrief } from '../data/brief'
+import { accountReviewBrief } from '../data/brief'
 import { BriefBlocks } from '../../../ui/BriefBlocks'
 
 export function BriefBuilder({ onComplete, completed }: InteractiveLessonProps) {
   const [choices, setChoices] = useState<BriefChoices>({})
-  const r = evaluateBrief(q3DeckBrief, choices)
+  const r = evaluateBrief(accountReviewBrief, choices)
   const ready = r.score >= 80
 
   return (
     <div className="space-y-6">
       <p className="ink-2">
-        Build the request for your Q3 leadership deck from the blocks below. The preview shows the kind of outline a request like yours tends to get. Aim for a brief that scores at least 80.
+        Build the request for the Meridian steering deck from the blocks below. The preview shows the kind of outline a request like yours tends to get. Aim for a brief that scores at least 80.
       </p>
 
       <SimulationPanel
@@ -37,7 +37,7 @@ export function BriefBuilder({ onComplete, completed }: InteractiveLessonProps) 
         }
       >
         <div className="space-y-4">
-          <BriefBlocks spec={q3DeckBrief} choices={choices} onChange={setChoices} />
+          <BriefBlocks spec={accountReviewBrief} choices={choices} onChange={setChoices} />
           <div className="rounded-xl surface-2 p-3 text-sm">
             <p className="text-xs font-semibold uppercase tracking-wide ink-3">Your message to Claude</p>
             <p className="mt-1 ink-1">{r.text || '…'}</p>

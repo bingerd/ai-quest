@@ -6,8 +6,8 @@ import type { Scenario } from '../../../simulation/scenario'
  */
 export const designRunScenario: Scenario = {
   id: 'design-run',
-  title: 'A week on the customer-story deck',
-  intro: 'Marketing needs a twenty-slide customer story by Friday. You have Claude Design switched on and a usage limit shared with everything else you do this week.',
+  title: 'A week on the pitch deck',
+  intro: 'The sales lead needs a twenty-slide case study for Friday’s pitch to Northwind Logistics. You have Claude Design switched on and a usage limit shared with everything else you do this week.',
   dimensions: [
     { id: 'quality', label: 'Quality of the result', weight: 2 },
     { id: 'usage', label: 'Usage spent', weight: 2 },
@@ -17,7 +17,7 @@ export const designRunScenario: Scenario = {
     {
       id: 'start',
       title: 'Monday: the first prompt',
-      situation: 'You have the brief and last year’s version of the deck. Nothing has been agreed about the story yet.',
+      situation: 'You have the brief and last year’s version of the case study. Nothing has been agreed about the story yet.',
       question: 'What do you ask for first?',
       options: [
         {
@@ -35,7 +35,7 @@ export const designRunScenario: Scenario = {
           label: 'A plain outline: one line per slide, no styling at all.',
           outcome: {
             score: 100,
-            consequence: 'Cheap to produce and cheap to argue with. Marketing rewrites four slides in the outline, which costs almost nothing, and the structure is agreed before anything is made to look good.',
+            consequence: 'Cheap to produce and cheap to argue with. The sales lead rewrites four slides in the outline, which costs almost nothing, and the structure is agreed before anything is made to look good.',
             dimensions: ['quality', 'usage', 'judgement'],
             concept: 'fidelity',
           },
@@ -130,8 +130,8 @@ export const designRunScenario: Scenario = {
     },
     {
       id: 'handover',
-      title: 'Friday: marketing wants to keep editing',
-      situation: 'The deck is signed off. Marketing do not use Claude Design and want to work on it themselves next quarter.',
+      title: 'Friday: the pitch team wants to keep editing',
+      situation: 'The deck is signed off. The pitch team do not use Claude Design and want to reuse it for the next prospect themselves.',
       question: 'How do you hand it over?',
       options: [
         {

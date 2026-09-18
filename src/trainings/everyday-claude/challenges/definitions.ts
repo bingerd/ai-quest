@@ -13,7 +13,7 @@ export const mondayChallenge = makeScenarioChallenge({ scenario: mondayScenario,
 
 export const whereDoesItGoChallenge = makeSortingChallenge({
   title: 'Where does it go?',
-  brief: 'You are setting up a project for your team’s quarterly reporting. Decide where each thing belongs. Use the buttons on each item; arrow keys work too.',
+  brief: 'You are setting up a project for the Meridian Retail account. Decide where each thing belongs. Use the buttons on each item; arrow keys work too.',
   buckets: placeBuckets,
   items: placeItems,
   passScore: 70,
