@@ -1,0 +1,54 @@
+# Numbers you can defend
+
+A wrong number in a deck is not like a typo. A typo makes you look careless for a second. A wrong
+number gets decided on, and then someone finds it.
+
+Claude can genuinely help with data work. With *Code execution and file creation* switched on, it
+creates real .xlsx, .pptx, .docx and PDF files, up to 30 MB, on every plan including Free. It can
+take a messy export and give you back a clean sheet and a chart. What it cannot do is tell you
+which numbers matter enough to check.
+
+## Give it the data, not a description of the data
+
+<BeforeAfter
+  beforeLabel="Pasted into the chat"
+  afterLabel="Attached as a file"
+  before={
+    <p>
+      "Our Q3 revenue was around 4.2 million, up about 12% I think, and churn was somewhere near
+      9%. Can you make a chart?"
+    </p>
+  }
+  after={
+    <p>
+      "The Q3 finance export is attached. Chart revenue by region, and give me the churn rate
+      calculated from the deals tab. Tell me which figures you could not find in the file."
+    </p>
+  }
+  beforeCaption="Every number is already an approximation before the work starts."
+  afterCaption="The file is the source, and gaps come back as gaps."
+/>
+
+## The three checks
+
+<InteractiveDiagram
+  title="Before a number goes in front of anyone"
+  nodes={[
+    { id: 'recompute', label: 'Recompute it', icon: '🧮', detail: 'Work the headline figures out a second way — a spreadsheet formula, the source system, a colleague. Asking Claude whether it is sure gets you another confident answer from the same place, which is not an independent check.' },
+    { id: 'reconcile', label: 'Reconcile it', icon: '⚖️', detail: 'Does it match the official number the finance team already circulated? If your deck and the board pack disagree by £40k, that is the only thing anyone will discuss.' },
+    { id: 'context', label: 'Give it its context', icon: '🔍', detail: '"87% satisfied" from eleven respondents is true and misleading. Put the sample size, the period and the source next to the figure, or leave the figure out.' },
+  ]}
+/>
+
+<ConceptCard title="Suspect the reasonable-sounding ones" icon="🎯" tone="warn">
+  An obviously mad number gets caught by everyone. The dangerous figure is the plausible one with
+  no source — "industry churn averages 7%" — because nobody questions it until it is in front of a
+  client. Plausible is not the same as verified.
+</ConceptCard>
+
+<ConceptCard title="What costs you, and what does not" icon="⏳">
+  Creating files uses more of your limit than a normal chat, and all your surfaces — claude.ai,
+  Claude Code, Claude Desktop — share one limit, so switching apps saves nothing. What does help:
+  keep reference files in a project rather than re-uploading, turn off tools you are not using, and
+  drop the effort level for routine work.
+</ConceptCard>

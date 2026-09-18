@@ -7,6 +7,7 @@ import { BeforeAfter } from '../ui/BeforeAfter'
 import { ConceptCard } from '../ui/ConceptCard'
 import { ConceptReveal } from '../ui/ConceptReveal'
 import { InteractiveDiagram } from '../ui/InteractiveDiagram'
+import { UiMockup } from '../ui/UiMockup'
 import { EngagementContinue, EngagementProvider } from './Engagement'
 import { mdxComponents } from './MdxComponents'
 
@@ -184,5 +185,48 @@ describe('EngagementContinue', () => {
     )
     const next = screen.getByRole('button', { name: 'Next' })
     expect(next).toHaveAttribute('aria-disabled', 'false')
+  })
+})
+
+describe('UiMockup gating', () => {
+  const ROWS = [
+    [
+      { id: 'sidebar', label: 'Sidebar', detail: 'chats and projects' },
+      { id: 'main', label: 'Conversation', detail: 'the chat itself' },
+    ],
+    [{ id: 'composer', label: 'Composer', detail: 'attach, tools, model' }],
+  ]
+
+  it('counts the pre-selected first region as explored, and counts regions across every row', () => {
+    const onComplete = harness(<UiMockup title="Claude" rows={ROWS} />)
+    expect(screen.getByRole('tab', { name: /Sidebar/ })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByText(/chats and projects/)).not.toBeNull()
+    expect(screen.getByRole('status')).toHaveTextContent('1 of 3 parts explored')
+
+    fireEvent.click(screen.getByRole('tab', { name: /Conversation/ }))
+    expect(lockedButton()).toHaveTextContent('Explore everything first (1 left)')
+
+    // The region on the second row must count too: a row is layout, not a boundary.
+    fireEvent.click(screen.getByRole('tab', { name: /Composer/ }))
+    expect(screen.getByRole('status')).toHaveTextContent('✓ All parts explored')
+    fireEvent.click(screen.getByRole('button', { name: /got it, continue/i }))
+    expect(onComplete).toHaveBeenCalledTimes(1)
+  })
+
+  it('treats a keyboard tab stop as a visit, so the gate is reachable without a mouse', () => {
+    harness(<UiMockup title="Claude" rows={ROWS} />)
+    fireEvent.focus(screen.getByRole('tab', { name: /Conversation/ }))
+    fireEvent.focus(screen.getByRole('tab', { name: /Composer/ }))
+    expect(screen.getByRole('status')).toHaveTextContent('✓ All parts explored')
+  })
+
+  it('satisfies a single-region mockup on mount, since its only part is already shown', () => {
+    harness(<UiMockup title="Claude" rows={[[{ id: 'only', label: 'Only', detail: 'd' }]]} />)
+    expect(screen.getByRole('button', { name: /got it, continue/i })).toHaveAttribute('aria-disabled', 'false')
+  })
+
+  it('does not lock a lesson when a mockup has no regions at all', () => {
+    harness(<UiMockup title="Claude" rows={[]} />)
+    expect(screen.getByRole('button', { name: /got it, continue/i })).toHaveAttribute('aria-disabled', 'false')
   })
 })

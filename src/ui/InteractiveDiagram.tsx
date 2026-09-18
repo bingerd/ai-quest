@@ -21,7 +21,7 @@ export function InteractiveDiagram({ nodes, title }: { nodes: DiagramNode[]; tit
 
   // A one-node diagram is fully explored on mount and would otherwise never satisfy its gate.
   useEffect(() => {
-    if (nodes.length === 1) mark()
+    if (nodes.length <= 1) mark()
   }, [nodes.length, mark])
 
   const visit = (id: string) => {

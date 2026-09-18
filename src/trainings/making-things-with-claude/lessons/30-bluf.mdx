@@ -1,0 +1,57 @@
+# Put the answer in the first line
+
+Most work memos are written the way we were taught to write essays: set out the background, weigh
+the evidence, arrive at a conclusion. It is a good structure for a reader who has agreed to read to
+the end. Nobody at work has agreed to that.
+
+**Bottom Line Up Front** inverts it. The recommendation is the first sentence. Everything after it
+is support, arranged so a reader can stop as soon as they are convinced.
+
+<BeforeAfter
+  beforeLabel="Building up to it"
+  afterLabel="Bottom line up front"
+  before={
+    <p>
+      As you know, our Rotterdam warehouse contract expires in December. We have been reviewing the
+      logistics costs for 2025 and speaking to suppliers. There are several considerations,
+      including floor utilisation, the possible Antwerp move, and current market pricing. On
+      balance, having weighed these factors, we believe a two-year renewal may be preferable.
+    </p>
+  }
+  after={
+    <p>
+      <strong>Recommend: renew Rotterdam for two years, signed by 30 October.</strong> Two years is
+      €180k cheaper over the term (2025 logistics costs, p.4), the one-year quote reprices in a
+      rising market (supplier quote B, p.2), and a break clause at 12 months covers the Antwerp
+      risk. Do nothing and we roll onto monthly terms at a 15% premium.
+    </p>
+  }
+  beforeCaption="Four sentences before the reader learns what you want."
+  afterCaption="The decision, the evidence, the risk, the cost of delay."
+/>
+
+## What this changes about briefing Claude
+
+A model will happily write you the first version. It reads as thorough, it has no obvious faults,
+and it buries the point. If you want the second version, ask for it:
+
+- **Say that the recommendation goes first.** Not "write a memo about X" but "write a memo
+  recommending X, and open with that recommendation".
+- **Name who decides.** A COO signing alone and a committee of six need different memos from the
+  same facts.
+- **Ask for citations, and for gaps to be flagged.** "Cite the file and page for every figure, and
+  say explicitly where a number is not in the sources." The second half matters more than the
+  first — it is what surfaces the numbers it could not find.
+- **Say what you need back.** A memo that ends in "next steps" gets agreed with and filed.
+
+<ConceptCard title="One page is a constraint, not a style" icon="📄">
+  Naming the shape — recommendation, three supporting points, the main risk, what happens if we do
+  nothing — gets you that structure instead of an essay you then restructure. And skip the
+  executive summary: if the first line is the summary, a second one is just a longer document.
+</ConceptCard>
+
+<ConceptReveal prompt="Claude gives you a memo where every claim has a citation. How much checking is left?">
+  All of the important checking. A citation shows where a number was supposed to come from, not
+  that it was read correctly. Recompute anything that carries a decision, and be most suspicious of
+  the figures that sound most reasonable — those are the ones nobody queries.
+</ConceptReveal>

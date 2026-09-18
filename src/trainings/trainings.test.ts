@@ -7,7 +7,7 @@ describe('registered trainings', () => {
   const trainings = listTrainings()
 
   it('registers every training folder', () => {
-    expect(trainings.map((t) => t.id)).toEqual(expect.arrayContaining(['token-management', 'everyday-claude', 'claude-code-power-user', 'building-on-claude']))
+    expect(trainings.map((t) => t.id)).toEqual(expect.arrayContaining(['token-management', 'everyday-claude', 'making-things-with-claude', 'claude-code-power-user', 'building-on-claude']))
   })
 
   it.each(trainings.map((t) => [t.id, t]))('%s is internally consistent', (_id, training) => {

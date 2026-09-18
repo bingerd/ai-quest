@@ -2,6 +2,7 @@ import type { Training } from '../../engine/types'
 import { basicsQuiz } from './data/quizzes'
 import { boardDeckChallenge, deckDoctorChallenge, mondayChallenge, whereDoesItGoChallenge } from './challenges/definitions'
 import Welcome from './lessons/00-welcome.mdx'
+import DesktopTour from './lessons/06-desktop-tour.mdx'
 import ChatsProjectsMemory from './lessons/01-chats-projects-memory.mdx'
 import AnatomyOfABrief from './lessons/02-anatomy-of-a-brief.mdx'
 import Projects from './lessons/03-projects.mdx'
@@ -15,16 +16,17 @@ export const everydayClaudeTraining: Training = {
   title: 'Claude for Everyday Work',
   tagline: 'No code needed',
   description: 'Make decks and documents with Claude that are right the first time. Chats vs projects, briefing well, staying within limits and keeping data safe.',
-  estimatedMinutes: 20,
+  estimatedMinutes: 25,
   audience: 'everyone',
   level: 'beginner',
   modules: [
     {
       id: 'how-claude-reads',
       title: 'How Claude reads your request',
-      description: 'Chats, projects, memory and why long chats cost more.',
+      description: 'Where things are, and why long chats cost more.',
       lessons: [
         { id: 'everyday-welcome', title: 'Welcome', type: 'explanation', component: Welcome, estimatedMinutes: 1 },
+        { id: 'desktop-tour', title: 'A quick tour of the window', type: 'explanation', component: DesktopTour, estimatedMinutes: 3 },
         { id: 'chats-projects-memory', title: 'Chats, projects and memory', type: 'explanation', component: ChatsProjectsMemory, estimatedMinutes: 2 },
         { id: 'long-chat-tax', title: 'The long-chat tax', type: 'interactive', component: LongChatTax, estimatedMinutes: 2 },
         { id: 'everyday-quiz', title: 'Quick check', type: 'quiz', questions: basicsQuiz, estimatedMinutes: 1 },

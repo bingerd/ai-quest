@@ -1,4 +1,4 @@
-import type { BriefChoices, BriefSpec } from '../../../simulation/brief'
+import type { BriefChoices, BriefSpec } from '../simulation/brief'
 
 /** One radio group per brief block. Shared by Brief Builder and the final challenge. */
 export function BriefBlocks({ spec, choices, onChange, disabled }: { spec: BriefSpec; choices: BriefChoices; onChange: (next: BriefChoices) => void; disabled?: boolean }) {

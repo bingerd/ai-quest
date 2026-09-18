@@ -1,29 +1,31 @@
 import { useState } from 'react'
 import type { InteractiveLessonProps } from '../../../engine/types'
 import { evaluateBrief, type BriefChoices } from '../../../simulation/brief'
+import { BriefBlocks } from '../../../ui/BriefBlocks'
 import { Feedback } from '../../../ui/Feedback'
 import { ScoreBreakdown } from '../../../ui/ScoreBreakdown'
 import { SimulationPanel } from '../../../ui/SimulationPanel'
-import { q3DeckBrief } from '../data/brief'
-import { BriefBlocks } from '../../../ui/BriefBlocks'
+import { decisionMemoBrief } from '../data/brief'
 
-export function BriefBuilder({ onComplete, completed }: InteractiveLessonProps) {
+export function MemoBuilder({ onComplete, completed }: InteractiveLessonProps) {
   const [choices, setChoices] = useState<BriefChoices>({})
-  const r = evaluateBrief(q3DeckBrief, choices)
+  const r = evaluateBrief(decisionMemoBrief, choices)
   const ready = r.score >= 80
 
   return (
     <div className="space-y-6">
       <p className="ink-2">
-        Build the request for your Q3 leadership deck from the blocks below. The preview shows the kind of outline a request like yours tends to get. Aim for a brief that scores at least 80.
+        The Rotterdam warehouse contract expires in December and the COO wants a one-page memo.
+        Build the request block by block. The preview on the right shows the kind of memo a request
+        like yours tends to produce. Reach <strong className="ink-1">80</strong> to continue.
       </p>
 
       <SimulationPanel
-        title="Brief Builder"
+        title="Memo Builder"
         aside={
           <div className="space-y-3 md:sticky md:top-20">
             <div className="card p-3" aria-live="polite">
-              <p className="text-xs font-semibold uppercase tracking-wide ink-3">Likely first outline</p>
+              <p className="text-xs font-semibold uppercase tracking-wide ink-3">Likely memo</p>
               <ol className="mt-2 space-y-1 text-sm" key={r.outline[0]}>
                 {r.outline.map((line) => (
                   <li key={line} className="animate-rise ink-1">
@@ -37,7 +39,7 @@ export function BriefBuilder({ onComplete, completed }: InteractiveLessonProps) 
         }
       >
         <div className="space-y-4">
-          <BriefBlocks spec={q3DeckBrief} choices={choices} onChange={setChoices} />
+          <BriefBlocks spec={decisionMemoBrief} choices={choices} onChange={setChoices} />
           <div className="rounded-xl surface-2 p-3 text-sm">
             <p className="text-xs font-semibold uppercase tracking-wide ink-3">Your message to Claude</p>
             <p className="mt-1 ink-1">{r.text || '…'}</p>

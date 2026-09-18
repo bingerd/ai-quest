@@ -1,0 +1,52 @@
+# A quick tour of the window
+
+Most of what this training asks you to do lives in three places. Click each numbered part to see
+what it is for.
+
+<UiMockup
+  title="The Claude app"
+  caption="A simplified drawing of the app, not a screenshot. Your version may look a little different."
+  rows={[
+    [
+      { id: 'sidebar', label: 'Chats and projects', icon: '🗂️', detail: 'Down the side: your conversations, and your projects. A project is a workspace with its own knowledge files and its own instructions, which every chat inside it can use.' },
+      { id: 'conversation', label: 'The conversation', icon: '💬', wide: true, detail: 'The chat itself. Everything said so far is processed again each time you send a message, which is why long chats get more expensive.' },
+    ],
+    [
+      { id: 'artifact', label: 'The panel beside the chat', icon: '📄', wide: true, detail: 'When Claude makes something for you to put in front of someone — a document, a deck, a small tool — it opens here as an artifact. You can edit it and share it by link.' },
+      { id: 'composer', label: 'Where you type', icon: '⌨️', detail: 'Your message box, with the attach button and the menu that picks the model. The next drawing zooms into this row.' },
+    ],
+  ]}
+/>
+
+## The row under the message box
+
+<UiMockup
+  title="The composer"
+  rows={[
+    [
+      { id: 'attach', label: 'Attach', icon: '📎', detail: 'Add a file to this one chat. If you will use the same file again next week, put it in a project instead — project content is cached, so reusing it does not cost you the way re-uploading does.' },
+      { id: 'connectors', label: 'Connectors', icon: '🔌', detail: 'Connectors reach other apps, such as Google Drive, Slack or Linear. In the desktop app, desktop extensions can also reach local apps and files.' },
+      { id: 'research', label: 'Research', icon: '🔎', detail: 'On paid plans, with web search on, Research gives you an answer with citations. It uses up your limit faster than a normal reply, so save it for when you need sources.' },
+      { id: 'model', label: 'Model and effort', icon: '🎚️', detail: 'The menu next to send chooses the model, the effort level, and whether thinking is on. Lower effort is fine for routine work and uses less of your limit.' },
+    ],
+  ]}
+/>
+
+## Settings, when something is switched off
+
+<UiMockup
+  title="Settings"
+  rows={[
+    [
+      { id: 'capabilities', label: 'Capabilities', icon: '⚙️', detail: 'Where "Code execution and file creation" lives. It has to be on before Claude can hand you a real .pptx, .docx, .xlsx or PDF. It is on by default on Free, Pro and Max.' },
+      { id: 'memory', label: 'Memory', icon: '🧠', detail: 'View, edit, pause or reset what Claude remembers. Each project has its own memory. Incognito chats are never remembered.' },
+      { id: 'usage', label: 'Usage', icon: '⏳', detail: 'Check how much of your limit you have used. Worth a look before you start something big, rather than at three in the afternoon when it runs out.' },
+    ],
+  ]}
+/>
+
+<ConceptCard title="Three habits, three places" icon="🧭">
+  Reference files you will use again go in a **project**, not an attachment. File creation is turned
+  on under **Settings › Capabilities**. And when a routine job does not need it, turn the effort
+  level **down** in the menu next to send.
+</ConceptCard>

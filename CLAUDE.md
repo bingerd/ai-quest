@@ -43,7 +43,7 @@ gates, so do not skip them.
 | `src/simulation/` | Pure simulation modules, each with a `*.test.ts` sibling |
 | `src/ui/` | Stateless presentational components (props in, events out) |
 | `src/lessons/` | Lesson renderers, MDX component map, engagement gate, challenge factories |
-| `src/trainings/` | The four trainings: `training.ts` + `lessons/` + `challenges/` + `data/` |
+| `src/trainings/` | The five trainings: `training.ts` + `lessons/` + `challenges/` + `data/` |
 | `src/concepts/` | Vendor-neutral vocabulary (`vendors.ts`) and `<VendorTerm>` |
 | `src/games/token-heist/` | Phaser scene, React owner, and an accessible list fallback |
 | `docs/` | `ADDING_A_TRAINING.md`, `IMPLEMENTATION_PLAN.md`, `sources/claude-facts.md` |
@@ -117,6 +117,6 @@ end the training with a `challenge` or `editor` lesson. Challenge `evaluate()`
 receives `answer` as `unknown` — validate it and never throw. Cap the score when a
 hard constraint fails, so a cheap but useless answer cannot pass.
 
-`ConceptCard`, `ConceptReveal`, `BeforeAfter` and `InteractiveDiagram` are
-available in MDX without importing them, and all four gate Continue. `VendorTerm`
-does not gate.
+`ConceptCard`, `ConceptReveal`, `BeforeAfter`, `InteractiveDiagram` and
+`UiMockup` are available in MDX without importing them, and all five gate
+Continue. `VendorTerm` does not gate.

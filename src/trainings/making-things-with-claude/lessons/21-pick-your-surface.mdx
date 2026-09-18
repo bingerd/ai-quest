@@ -1,0 +1,47 @@
+# When you do not have Claude Design
+
+Claude Design is in beta and, on Enterprise plans, off until an owner switches it on. That is not a
+dead end. There are three ways to get a real deck out of Claude, and the right one depends on who
+has to edit it afterwards.
+
+| | Claude Design | A created .pptx | Claude for PowerPoint |
+| --- | --- | --- | --- |
+| Status | Beta | Generally available | Generally available |
+| Plans | Pro, Max, Team, Enterprise | Free and every paid plan | Pro, Max, Team, Enterprise |
+| Where you work | A canvas in Claude | An ordinary chat | Inside PowerPoint itself |
+| Follows your template | Via your design system | Not by itself | Reads the slide master directly |
+| Best when | You are still exploring the look | You want a file and you want it now | The corporate template is non-negotiable |
+
+<InteractiveDiagram
+  title="Which one, when"
+  nodes={[
+    { id: 'design', label: 'Claude Design', icon: '🎨', detail: 'Best while the look is still moving. Iterate on a canvas, comment on single elements, then export to PPTX, PDF, HTML or a zip when it is settled. Needs your plan to have it switched on.' },
+    { id: 'files', label: 'File creation', icon: '📄', detail: 'Ask in a normal chat and get a real .pptx, .docx, .xlsx or PDF back, up to 30 MB. Available on every plan including Free, and on by default. Needs Code execution and file creation under Settings › Capabilities. Uses more of your limit than a normal chat.' },
+    { id: 'addin', label: 'Claude for PowerPoint', icon: '🏢', detail: 'An add-in that runs inside PowerPoint. It reads your slide master, layouts, fonts and colour scheme, edits one slide without regenerating the deck, and turns bullets into native editable charts — not pictures of charts. Generally available on Pro, Max, Team and Enterprise.' },
+  ]}
+/>
+
+## The rule that survives all three
+
+Whichever surface you use, the corporate template goes on **first**. Anthropic's own guidance for
+the PowerPoint add-in is to apply your template before generating content, be specific about which
+slide or element you are changing, and review every change against your brand before it goes out.
+
+<ConceptCard title="Match the format to whoever maintains it" icon="🔑">
+  Interactive HTML is the best way to present a deck and the worst way to hand one over. If finance
+  has to update it next quarter in PowerPoint, the deliverable is a .pptx, however good the HTML
+  looks in the room.
+</ConceptCard>
+
+<ConceptReveal prompt="Someone forwards you a deck from outside the company and asks Claude to tidy it up. What is the risk?">
+  Files from outside can carry instructions aimed at the assistant rather than at you. Anthropic is
+  explicit about it for the PowerPoint add-in: use it with trusted files, because external files
+  can contain hidden instructions that try to make it extract data or change records. Treat an
+  unknown deck the way you would treat an unknown email attachment.
+</ConceptReveal>
+
+<ConceptCard title="Not for final deliverables on their own" icon="👀" tone="warn">
+  Anthropic lists three things Claude for PowerPoint is not for: final client deliverables without
+  human review, presentations with highly sensitive or regulated data without proper controls, and
+  replacing your own judgement on design and narrative flow. The same applies to any of the three.
+</ConceptCard>

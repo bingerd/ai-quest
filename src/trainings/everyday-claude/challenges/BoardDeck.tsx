@@ -5,7 +5,7 @@ import { formatTokens } from '../../../simulation/tokens'
 import { ChallengeFrame } from '../../../ui/Challenge'
 import { ContextItem } from '../../../ui/ContextItem'
 import { boardDeckWorkflow as spec } from '../data/workflow'
-import { BriefBlocks } from '../lessons/BriefBlocks'
+import { BriefBlocks } from '../../../ui/BriefBlocks'
 
 const initial: DeckWorkflowAnswer = { workspace: '', selectedIds: [], briefChoices: {}, review: '' }
 

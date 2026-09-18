@@ -1,0 +1,44 @@
+# Claude Design, and what it costs you
+
+Claude Design lets you make visual work — designs, prototypes, one-pagers, slides — by talking
+about it. It is in **beta**, on Pro, Max, Team and Enterprise, and not on Free.
+
+Whether it is switched on depends on your plan. On Pro, Max and Team it is on by default. **On
+Enterprise it is off until an owner turns it on** in Organization settings › Artifacts. If you
+cannot find it, that is the first thing to check, and the next lesson covers what to do instead.
+
+<InteractiveDiagram
+  title="What it does"
+  nodes={[
+    { id: 'where', label: 'Where it lives', icon: '📍', detail: 'In an ordinary conversation, in the Artifacts tab, in Claude Code, in the mobile apps, and on its own at claude.ai/design — which has its own separate setting.' },
+    { id: 'in', label: 'What you can bring', icon: '📥', detail: 'Screenshots and images, existing design files, documents (DOCX, PPTX, XLSX), raw uploads, or a codebase from a GitHub repo.' },
+    { id: 'out', label: 'What you get out', icon: '📤', detail: 'PPTX, PDF, standalone HTML or a zip; send to tools like Canva and Figma; or hand off to Claude Code. Slides are built as interactive HTML in the canvas, so HTML keeps the animations and PPTX is what you hand to someone else.' },
+    { id: 'system', label: 'Your design system', icon: '🎨', detail: 'A project inherits your organisation’s design system, so brand colours, fonts and components are already there without uploading anything. Claude checks its own output against it and corrects before you see it. Worth knowing: "design system import is only as good as its source."' },
+    { id: 'edit', label: 'Changing things', icon: '✏️', detail: 'Comment inline on one element, edit text directly, drag and resize on the canvas, or just say what you want in chat. Naming the slide — "on slide 3, change…" — is the reliable way to keep a change from spreading.' },
+  ]}
+/>
+
+## The part people get wrong
+
+There is a widely repeated belief that Claude Design has its own budget, so you can burn through it
+without touching the rest of your work. That used to be true. It is not any more:
+
+> Claude Design previously had its own weekly allowance, separate from your other usage limits. All
+> Claude Design activity now counts toward your plan's shared limits.
+
+Everything draws from one pool — claude.ai, Claude Code, Claude Desktop, Design. So a long
+afternoon of design iterations is an afternoon taken out of everything else you needed to do.
+
+<ConceptCard title="What actually drives the cost" icon="🔥" tone="warn">
+  Anthropic does not publish numbers, but it is explicit about the mechanism: *"complex projects
+  with large codebases or many iterations consume more usage."* Two things you control, then —
+  **how much** you are making, and **how many times** you ask for it to change. The next lesson
+  lets you push both.
+</ConceptCard>
+
+<ConceptReveal prompt="You hit your usage limit halfway through a design. What happens to the work?">
+  The work is fine; you are the one who stops. Claude Design becomes unavailable until your limits
+  reset. If your plan has usage credits enabled you can carry on past the included limits. The
+  practical lesson is to check Settings › Usage *before* starting something big, not at four
+  o'clock when it stops.
+</ConceptReveal>

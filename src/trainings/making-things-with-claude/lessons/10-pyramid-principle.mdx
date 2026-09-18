@@ -1,0 +1,66 @@
+# Decide the argument before you make anything
+
+The most expensive mistake in a deck is not a bad font. It is discovering on Thursday that the
+story was wrong, after twenty slides have been designed around it.
+
+Consultants have used the same fix for decades: settle the argument in plain text first. It is
+called the Pyramid Principle, after Barbara Minto, who taught it at McKinsey. Two parts of it do
+almost all the work.
+
+## One: open with S-C-Q-A
+
+<InteractiveDiagram
+  title="The four lines that open a deck"
+  nodes={[
+    { id: 's', label: 'Situation', icon: '🧭', detail: 'Something everyone in the room already accepts. "We set out to grow mid-market accounts this year." Nobody argues, so it costs nothing and buys you their attention.' },
+    { id: 'c', label: 'Complication', icon: '⚡', detail: 'What changed. "Two of our three largest accounts have not renewed." This is the reason the meeting exists.' },
+    { id: 'q', label: 'Question', icon: '❓', detail: 'The question the complication forces. "Do we keep investing in mid-market?" Saying it out loud means the room is answering your question, not four different ones.' },
+    { id: 'a', label: 'Answer', icon: '✅', detail: 'Your recommendation, before the evidence rather than after it. Everything that follows exists to support this sentence.' },
+  ]}
+/>
+
+That last one is what people find hardest. The instinct is to build up to the recommendation, the
+way you would in an essay. In a business deck it goes first, because a reader who agrees after
+three slides should be allowed to stop.
+
+## Two: make every title carry the message
+
+A slide called **"Pipeline coverage"** tells you what the slide is about. A slide called
+**"Pipeline covers 2.1× of target, below the 3× we plan against"** tells you what to think.
+
+The second kind is an *action title*. When all of them are action titles, someone can read only
+the titles and get the whole argument — which is exactly what a busy executive does.
+
+<BeforeAfter
+  beforeLabel="Topic labels"
+  afterLabel="Action titles"
+  before={
+    <ul>
+      <li>Q3 overview</li>
+      <li>Regional performance</li>
+      <li>Churn analysis</li>
+      <li>Recommendations</li>
+    </ul>
+  }
+  after={
+    <ul>
+      <li>Q3 revenue grew 12%, entirely from existing accounts</li>
+      <li>Three of five regions beat target; EMEA missed by 12%</li>
+      <li>Churn rose to 9%, concentrated in two accounts</li>
+      <li>Move both at-risk accounts to named owners by November</li>
+    </ul>
+  }
+  beforeCaption="You have to open every slide to find out what it says."
+  afterCaption="The titles alone are the argument."
+/>
+
+<ConceptCard title="Why this matters more when Claude is drafting" icon="🏗️">
+  Claude will happily produce twenty well-designed slides from a vague brief. Structure is the
+  cheapest thing to change and the most expensive thing to get wrong, so settle it in plain text,
+  where a rewrite costs a sentence rather than a redesign.
+</ConceptCard>
+
+<ConceptReveal prompt="You give Claude the storyline and it writes decent titles. Whose job is the governing thought — the one sentence the whole deck defends?">
+  Yours. It is the one part that requires knowing what you actually want to happen in that room,
+  which is not in any of the files you attached. Write it yourself, then let Claude build under it.
+</ConceptReveal>

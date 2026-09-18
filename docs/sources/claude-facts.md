@@ -157,3 +157,58 @@ Simulated numbers in the app (tokens, costs, latency, quality) are teaching mode
 - Define specific, measurable success criteria. Mirror real traffic including edge cases. Prefer many automatically graded cases. Grading preference: code-based, then LLM-based (validated), then human.
 
 **Not verified, excluded:** LiteLLM specifics, Bedrock/Vertex env var names, Agent SDK package names.
+
+---
+
+## Making Things with Claude (decks, designs, reports)
+
+Verified **2026-09-18**. These surfaces are moving quickly — re-check before editing this content.
+
+**Claude Design: what it is and where it runs** — https://support.claude.com/en/articles/14604416-get-started-with-claude-design
+- Create designs, interactive prototypes, one-pagers and other visual work by having a conversation with Claude.
+- Available in beta on Pro, Max, Team and Enterprise. Not available on Free.
+- On by default on Pro, Max and Team. **Off by default on Enterprise until an owner turns it on in Organization settings › Artifacts.** Pro and Max can turn it off in Settings › Capabilities.
+- Reachable in a normal conversation, in the Artifacts tab, in Claude Code, in the iOS and Android apps, and standalone at claude.ai/design (which has its own separate setting).
+- Imports: screenshots and images, existing design files, raw uploads, a codebase (GitHub repo or `/design-sync`). Announcement adds DOCX, PPTX and XLSX.
+- Exports: .zip, PDF, PPTX, standalone HTML; hand off to Claude Code; integrations including Canva and Figma.
+- Design systems: a project inherits the organisation's design system, so brand colours, fonts and components are already in place without uploading anything. Claude checks its own output against the design system and corrects before you see it. "Design system import is only as good as its source."
+- Editing: inline comments on specific elements, direct text editing, on-canvas drag/resize/align, chat-based refinement.
+
+**Claude Design: usage** — https://support.claude.com/en/articles/14604416-get-started-with-claude-design
+- "Claude Design counts toward the same usage limits as the rest of Claude. Design activity draws from the same pool as the rest of your work with Claude, including Claude Code, so there's no separate Claude Design allowance to track."
+- "Claude Design previously had its own weekly allowance, separate from your other usage limits. All Claude Design activity now counts toward your plan's shared limits."
+- "Complex projects with large codebases or many iterations consume more usage."
+- If you reach your usage limits, Claude Design is unavailable until they reset. Usage credits let you keep working past the included limits.
+
+**Claude Design for slide decks** — https://academy.claude.com/tutorials/using-claude-design-for-presentations-and-slide-decks
+- Presentations are generated as interactive HTML rendered in the canvas. Export as HTML (keeps interactivity and animations), PPTX, PDF, .zip, send to Canva, or hand off to Claude Code.
+- If the organisation has a design system, slides pick up its colours, typography and visual style automatically.
+- Ask for changes by naming the slide ("On slide 3, change…"). You can request new slides, expand sections, describe data to get a visualisation, and include images and logos.
+- Sharing: private by default; organisation link access with view, comment or edit permissions.
+
+**Claude for PowerPoint** — https://claude.com/docs/office-agents/powerpoint
+- **Generally available** to Pro, Max, Team and Enterprise — unlike Claude Design, which is in beta.
+- An add-in that runs inside PowerPoint, not in claude.ai. PowerPoint on the web; on Windows with Microsoft 365, build 16.0.13127.20296 or later; on Mac 16.46 or later. Installed from Microsoft AppSource or deployed by an admin.
+- Builds slides from existing corporate templates, makes pinpoint edits to a single slide without regenerating the deck, generates deck structures from natural language, and converts bullets into diagrams and **native, editable PowerPoint charts — not static images**.
+- Reads the slide master, layouts, fonts and colour scheme and uses them when generating or editing.
+- Instructions set in PowerPoint apply only to PowerPoint; they are separate from Excel and Word. Context is shared with Claude for Excel, Word and Outlook.
+- Long conversations are automatically compacted into new conversations to avoid running out of context.
+- Same usage limits as the rest of your Claude account.
+- Not recommended for: "Final client deliverables without human review"; presentations with highly sensitive or regulated data without proper controls; "Replacing your judgment on design and narrative flow."
+- "Only use Claude for PowerPoint with trusted files. Files from external sources can contain hidden instructions that manipulate the add-in into extracting data, modifying records, or performing destructive actions."
+
+**File creation** — https://support.claude.com/en/articles/12111783
+- Creates .xlsx, .pptx, .docx and PDF. Available to Free, Pro, Max, Team and Enterprise on web, Claude Desktop and mobile; on by default for all of them.
+- "Use of this capability draws from the same usage limits offered by your plan. Note that creating files will use more of your limit compared to normal chats with Claude."
+- Maximum 30 MB per file, for both uploads and downloads.
+
+**Usage limits** — https://support.claude.com/en/articles/11647753-understanding-usage-and-length-limits
+- Usage is affected by conversation length and complexity, which features you use, which model, and the effort level. Higher effort uses more tokens.
+- "Longer conversations that trigger automatic context management consume more of your usage limit."
+- "Tools and connectors are token-intensive, so managing them helps both maximize your available context window and optimize your usage limits."
+- "Note that your usage of all different Claude product surfaces (claude.ai, Claude Code, Claude Desktop) counts towards the same usage limit."
+- Advice on the page: start a new conversation when a long chat nears the limit, use projects, reduce effort level, disable unused tools.
+
+**Not verified, excluded:** any separate Claude Design allowance (explicitly retired — see above); any published number, ratio or benchmark for how much usage Claude Design consumes; a single status word for Claude Design (the support article says "beta", the announcement says "research preview" from "Anthropic Labs", and claude.com/product/design says only that it is included in paid plans — so plan behaviour is cited from the support article and the Labs framing from the announcement, and no one word is stated as fact); an official head-to-head comparison of Claude Design and Claude for PowerPoint.
+
+**Re-verify:** the "five-hour session limit plus weekly caps" line in the Everyday Work section above cites https://support.claude.com/en/articles/9797557, which was not re-checked on 2026-09-18. The newer limits article does not state reset windows.

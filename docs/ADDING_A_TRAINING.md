@@ -95,7 +95,7 @@ export const whereDoesItGo = makeSortingChallenge({
 ## Writing MDX lessons
 
 These components are available in MDX without imports: `ConceptCard`, `ConceptReveal`, `BeforeAfter`,
-`InteractiveDiagram`, `VendorTerm`. The first four register with the engagement gate. The learner must
+`InteractiveDiagram`, `UiMockup`, `VendorTerm`. The first five register with the engagement gate. The learner must
 mark, reveal, compare or click through them before Continue unlocks. `VendorTerm` is optional reading and
 does not gate.
 
@@ -151,9 +151,11 @@ Existing simulations you can reuse:
 | --- | --- |
 | `contextSelection` | choosing which items go into a limited context |
 | `sorting` | items into buckets, with partial credit and a confusion summary |
+| `ordering` | steps into a sequence, scored on exact positions and on pairs that still follow on |
 | `ruleChecker` | data-driven text checks (prompts, briefs, CLAUDE.md), with partial credit |
 | `composite` | weighted choices and checklists with caps, for final challenges |
 | `conversation` | how re-sent history and cached project files add up |
+| `designBurn` | how scope and the number of iterations drive usage on a run of visual work |
 | `claudeSettings`, `permissions`, `hooks` | Claude Code settings layering, rule matching, hook events |
 | `caching`, `workload`, `agent`, `evals` | prompt caching, batch vs realtime, agent runs, eval suites |
 | `modelSelection` | choosing a model under budget, latency and quality constraints |
@@ -162,16 +164,19 @@ Existing simulations you can reuse:
 | `scenario` | branching decision points with consequences (no code needed, just data) |
 | `finalChallenge` | composing several of the above |
 
-`src/simulation/agent.ts` does not exist yet. An agent training is the natural place to add it.
-
 ## Reusable components
 
 `src/ui` holds the component library: `TokenMeter`, `ContextWindow`, `ContextItem`, `ConversationMeter`,
 `ModelCard`, `ToolChain`, `BucketSort`, `OrderList`, `CompositeForm`, `DecisionPoint`, `Scenario`,
+`BriefBlocks` (one radio group per brief block, over any `BriefSpec`),
 `ScoreBreakdown`, `Feedback`, `MetricsTable`, `SimulationPanel`, `MultipleChoice`, `ProgressBar`,
 `CodeEditor` (Monaco, lazy, with `markdown` and `json` highlighting) and the MDX components above.
 Components take props and hold no training state. `BucketSort` and `OrderList` are keyboard-first: no
 interaction requires dragging.
+
+`UiMockup` draws a piece of Claude's interface with numbered, clickable regions. Layout comes from
+`rows: MockupRegion[][]`, so every region is rendered and the engagement count always matches what is
+on screen. Label regions only with things `docs/sources/claude-facts.md` records.
 
 ## Vendor-specific content
 

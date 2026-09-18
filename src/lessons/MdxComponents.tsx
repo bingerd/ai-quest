@@ -3,6 +3,7 @@ import { BeforeAfter } from '../ui/BeforeAfter'
 import { ConceptCard } from '../ui/ConceptCard'
 import { ConceptReveal } from '../ui/ConceptReveal'
 import { InteractiveDiagram } from '../ui/InteractiveDiagram'
+import { UiMockup } from '../ui/UiMockup'
 import { VendorTerm } from '../concepts/VendorTerm'
 
 /** Components available inside every MDX lesson without imports. */
@@ -10,6 +11,7 @@ export const mdxComponents: MDXComponents = {
   ConceptCard,
   ConceptReveal,
   InteractiveDiagram,
+  UiMockup,
   BeforeAfter,
   VendorTerm,
   // Lesson titles come from the training definition; an MDX h1 is a lead-in line.
