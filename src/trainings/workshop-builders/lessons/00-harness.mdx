@@ -1,0 +1,22 @@
+# The harness around the model
+
+This morning you built Claude's environment by hand: instructions, files, design rules, a skill. A **harness** is that environment made systematic. It's the code that runs the loop around the model. Open each part.
+
+<InteractiveDiagram
+  title="The agent loop"
+  nodes={[
+    { id: 'prompt', label: 'Prompt + context', icon: '📥', detail: 'The task, plus everything loaded with it: CLAUDE.md, skill descriptions, earlier turns. Context does not reset between turns; it builds up, and is compacted when it nears the limit.' },
+    { id: 'model', label: 'Model', icon: '🧠', detail: 'Reads the context and answers with text, tool calls, or both. This is the only part that is "the AI".' },
+    { id: 'tools', label: 'Tools', icon: '🛠️', detail: 'The harness runs the tool calls (read, edit, search, run a command, start a subagent) and feeds the results back in. Then the model goes again.' },
+    { id: 'permissions', label: 'Permissions and hooks', icon: '🚦', detail: 'Before a tool runs, rules decide: allow, ask a person, or deny. Hooks can block or check actions every time, not just when the model remembers.' },
+    { id: 'stop', label: 'Stop', icon: '🏁', detail: 'The loop ends when the model answers without a tool call, or when a limit on turns or budget is hit.' },
+  ]}
+/>
+
+<ConceptReveal prompt="Claude Code, Cowork and the Agent SDK: what do they have in common?">
+  The same kind of harness. Cowork uses the agentic architecture that powers Claude Code, without a terminal. The Agent SDK gives you Claude Code's tools, agent loop and context management as a library in Python and TypeScript, so you can build your own agent on it.
+</ConceptReveal>
+
+<ConceptReveal prompt="When is an agent the wrong answer?">
+  Often. Anthropic's own advice is to find the simplest solution that works and add complexity only when needed. A fixed workflow (step one, then two, then three) is cheaper and more predictable. An agent decides its own steps, which suits open-ended problems at the price of cost and errors that can compound.
+</ConceptReveal>

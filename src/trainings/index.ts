@@ -9,9 +9,13 @@ import { claudeCodePowerUserTraining } from './claude-code-power-user/training'
 import { everydayClaudeTraining } from './everyday-claude/training'
 import { makingThingsTraining } from './making-things-with-claude/training'
 import { tokenManagementTraining } from './token-management/training'
+import { workshopAtWorkTraining } from './workshop-at-work/training'
+import { workshopBuildersTraining } from './workshop-builders/training'
 
 registerTraining(tokenManagementTraining)
 registerTraining(everydayClaudeTraining)
 registerTraining(makingThingsTraining)
 registerTraining(claudeCodePowerUserTraining)
 registerTraining(buildingOnClaudeTraining)
+registerTraining(workshopAtWorkTraining)
+registerTraining(workshopBuildersTraining)

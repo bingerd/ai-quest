@@ -71,8 +71,14 @@ Design rules:
 | **Claude for Everyday Work** (~20 min) | Everyone | Beginner | Decks and documents without code: chats vs projects, briefing well, usage limits, data safety. Brief Builder, Deck Doctor, Where does it go?, a board-meeting deck. |
 | **Claude Code Power User** (~35 min) | Power users | Intermediate | CLAUDE.md, settings layers and permission rules, hooks, skills and subagents, MCP, model routing, long-session hygiene. CLAUDE.md Surgery, Permission Puzzle, Hook Lab, team repo setup. |
 | **Building on Claude** (~35 min) | Engineers | Advanced | Prompt caching and batching, agent tool design and least privilege, eval suites, enterprise rollout. Cache Architect, Agent Toolbox, Eval Lab, ship an AI feature. |
+| **Making Things with Claude** (~37 min) | Everyone | Intermediate | Decks, Claude Design, reports and numbers. Storyline Builder, Burn Meter, Fact-check Pass, a QBR pack. |
+| **Workshop 1: Claude at work** (~76 min, facilitated) | Everyone | Beginner | Exercise track for the morning of the onboarding workshop: policy calls, Be the Model, live project setup, four rounds of context, design systems, workflows. |
+| **Workshop 2: Building with agents** (~49 min, facilitated) | Power users | Intermediate | Exercise track for the afternoon: assistants vs agents, the harness, an AI-assisted SDLC, built-in vs custom vs community skills, a skills breakout. |
 
 The catalogue filters by audience, and the filter is kept in the URL (`/?for=engineer`).
+
+The two workshop tracks belong to a one-day facilitated Claude onboarding. The run sheet, key points, live
+exercises and materials are in [`docs/workshop/README.md`](docs/workshop/README.md).
 
 Claude-specific content is written from `docs/sources/claude-facts.md`, a dated fact sheet with a source
 link for every claim. Anything that could not be verified is left out. To add a training, see

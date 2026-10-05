@@ -156,7 +156,7 @@ Simulated numbers in the app (tokens, costs, latency, quality) are teaching mode
 **Evals** — https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 - Define specific, measurable success criteria. Mirror real traffic including edge cases. Prefer many automatically graded cases. Grading preference: code-based, then LLM-based (validated), then human.
 
-**Not verified, excluded:** LiteLLM specifics, Bedrock/Vertex env var names, Agent SDK package names.
+**Not verified, excluded:** LiteLLM specifics, Bedrock/Vertex env var names. (Agent SDK package names are now verified in the Workshop section.)
 
 ---
 
@@ -212,3 +212,259 @@ Verified **2026-09-18**. These surfaces are moving quickly — re-check before e
 **Not verified, excluded:** any separate Claude Design allowance (explicitly retired — see above); any published number, ratio or benchmark for how much usage Claude Design consumes; a single status word for Claude Design (the support article says "beta", the announcement says "research preview" from "Anthropic Labs", and claude.com/product/design says only that it is included in paid plans — so plan behaviour is cited from the support article and the Labs framing from the announcement, and no one word is stated as fact); an official head-to-head comparison of Claude Design and Claude for PowerPoint.
 
 **Re-verify:** the "five-hour session limit plus weekly caps" line in the Everyday Work section above cites https://support.claude.com/en/articles/9797557, which was not re-checked on 2026-09-18. The newer limits article does not state reset windows.
+
+---
+
+## Claude Onboarding Workshop (verified 2026-10-05)
+
+Verified **2026-10-05** against official Anthropic pages only (anthropic.com, claude.com, support/privacy.claude.com,
+code.claude.com, academy.claude.com). These surfaces change weekly; Cowork in particular changes again on
+2026-10-06 (see below). Re-verify before editing content.
+
+Already covered above and reused here (do not duplicate): Projects, Artifacts, File creation, Connectors and
+desktop extensions, Memory, Research, Model picker, Usage limits (§ Everyday Work); Claude Code Skills,
+Subagents, Settings/permissions (§ Claude Code Power User); "Agent SDK ... same harness" (§ Building on Claude).
+
+### Skills on claude.ai / Desktop
+
+**Skills (support)** — https://support.claude.com/en/articles/12512180
+- "Skills extend Claude's capabilities by giving it access to specialized knowledge and workflows."
+- Anthropic-provided skills: Excel spreadsheet creation and manipulation, Word document creation, PowerPoint
+  generation, PDF creation and processing.
+- Custom skills: package as a ZIP and upload under Customize › Skills (private until shared — see existing line).
+- Org-provisioned: "Owners of Team and Enterprise organizations can provision skills for all users." They show with a
+  team indicator in the user's skills list.
+- Plans: "Skills are available for users on Free, Pro, Max, Team, and Enterprise plans." Requires code execution
+  to be enabled.
+- Loading: "Claude will automatically use these tools when relevant. You don't need to explicitly invoke them —
+  Claude determines when each skill is needed based on your request."
+
+**Skills (announcement, 2025-10-16)** — https://claude.com/blog/skills (anthropic.com/news/skills redirects here)
+- "Skills are folders that include instructions, scripts, and resources that Claude can load when needed."
+- "Claude will only access a skill when it's relevant to the task at hand."
+- Skills work across Claude apps, the Claude Developer Platform (API) and Claude Code.
+- NOTE: the 2025 announcement listed Pro, Max, Team, Enterprise; the current support article adds Free. Cite the
+  support article for plans.
+
+**Skills in Claude Code: progressive disclosure** — https://code.claude.com/docs/en/skills
+- The `description` is always in context; the full body loads only when the skill is invoked, by Claude
+  automatically or by the user with `/skill-name`. "a skill's body loads only when it's used, so long reference
+  material costs almost nothing until you need it."
+- `disable-model-invocation: true` makes a skill manual-only. Plugins can bundle skills under `skills/`.
+- Claude Code implements the open Agent Skills specification (https://agentskills.io).
+
+**Plugins in Claude apps** — https://support.claude.com/en/articles/13837440-use-plugins-in-claude
+- All paid plans (Pro, Max, Team, Enterprise). Customize › Plugins › Discover › Add.
+- Usable in web chat, the Desktop Chat tab and Cowork; plugins added to the account are also available in
+  Claude Code when signed in with the same account. Type "/" or "+" to see plugin skills.
+- Org management: https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization (not read in detail).
+
+### Claude Desktop / claude.ai features
+
+Projects, artifacts, file creation, connectors, desktop extensions, memory, Research: see existing lines above.
+
+**Incognito chats** — https://support.claude.com/en/articles/12260368-use-incognito-chats
+- "temporary conversations that aren't saved to your chat history or to Claude's memory." All plans (Free, Pro,
+  Max, Team, Enterprise). Start via the ghost icon on a new chat outside a project.
+- "Incognito chats are not used for training." They don't use existing memory and aren't added to it.
+- Team/Enterprise: retained 30 days for safety (or longer per org retention policy) and included in org data
+  exports available to Owners.
+
+**Claude Cowork** — https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork
+- "Claude Cowork uses the same agentic architecture that powers Claude Code, with no terminal required."
+- Paid plans only: Pro, Max, Team, Enterprise.
+- Surfaces: Desktop (macOS, Windows), web, iOS/Android, Chrome side panel. Local file access, browser use and
+  computer use need the Desktop app open and connected.
+- Capabilities listed: multi-step tasks, local file access (desktop), browser actions, sub-agent coordination,
+  scheduled tasks, connectors, spreadsheet/presentation generation. Cloud sessions are labelled beta.
+
+**Cowork and chat merged** — https://support.claude.com/en/articles/16761823-claude-cowork-and-chat-are-one-claude
+- "these are merged into a single conversation, so you don't need to decide which option better suits your task".
+  "everything Claude Cowork does is available from any conversation."
+- Rolling out in stages, starting with Pro and Max on web, desktop and mobile; "even accounts on the same plan will
+  see the changes at different times." Enterprise gets at least 30 days' notice. Existing Cowork tasks, projects,
+  connectors and files carry over.
+- Teach both names: some learners will still see a separate Cowork tab.
+
+**Cowork on Team/Enterprise** — https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans
+- "Claude Cowork is on by default, but organization owners can manually disable it" (Organization settings › Cowork).
+- Cloud sessions toggle: on by default for Team, off by default for Enterprise.
+- Local session data "is not subject to Anthropic's standard data retention policies, and admins cannot centrally
+  manage or delete it." OpenTelemetry event streaming "doesn't replace audit logging for compliance purposes."
+
+**Scheduled tasks** — https://support.claude.com/en/articles/13854387-schedule-recurring-tasks-in-claude-cowork
+- All paid plans. Frequencies: hourly, daily, weekly, on weekdays, or manually. Each task has a name, prompt,
+  approval mode and frequency.
+- "Scheduled tasks run remotely, so they run on their cadence even when your computer is asleep or the Claude
+  Desktop app is closed." They use connectors and files saved to the Claude account and "can't be tied to a folder
+  on your computer."
+- "On October 6, 2026, new Cowork tasks run in the cloud and the Only on your computer option in Settings › General
+  will be removed." (Pro/Max)
+
+**Use Cowork safely** — https://support.claude.com/en/articles/13364135-use-claude-cowork-safely
+- Be selective about which local files Claude can access: it can read, write and permanently delete them.
+- Permanent deletion always needs an explicit "Allow".
+- Prompt injection: malicious instructions hidden in websites, emails or documents. "Only give Claude internet
+  access to sites you trust." Use verified extensions from the Claude Desktop directory.
+- Don't schedule tasks that access sensitive files, send messages on your behalf, make purchases, or take other
+  hard-to-undo actions.
+
+**Claude in Chrome** — https://claude.com/blog/claude-in-chrome-generally-available · admin: https://support.claude.com/en/articles/13065128-claude-in-chrome-admin-controls
+- Generally available on every paid plan (announced 2026-08-26). Views the current page and can read, type, click,
+  navigate and fill forms.
+- Can auto-approve actions it judges safe; safeguards include probes that screen web content and a classifier that
+  checks actions against the original request. "prompt injection remains a moving target."
+- Not on other Chromium browsers or mobile yet. Team/Enterprise owners have admin controls.
+
+### Data terms: consumer vs commercial
+
+**Consumer (Free, Pro, Max)** — https://www.anthropic.com/news/updates-to-our-consumer-terms · https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training · https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-settings
+- Since the 2025 Consumer Terms update, Free, Pro and Max users choose whether their chats and coding sessions
+  (including Claude Code on those accounts) are used to train models. Users had to choose by 2025-10-08.
+- Setting: Settings › Privacy › "Help improve our AI models" toggle (claude.ai/settings/data-privacy-controls).
+- Turning it off is not retroactive: data stays in training runs already started and models already trained.
+- Safety-flagged conversations may be used for trust & safety work regardless. Thumbs up/down feedback is stored
+  up to 5 years.
+- Incognito chats are never used for training.
+
+**Consumer retention** — https://privacy.claude.com/en/articles/10023548-how-long-do-you-store-my-data · https://code.claude.com/docs/en/data-usage
+- Training on: de-identified data kept up to 5 years. Training off: 30-day retention.
+- Deleted conversations leave history immediately and back-end storage within 30 days.
+- Usage-policy violations: inputs/outputs up to 2 years, classifier scores up to 7 years.
+
+**Commercial (Team, Enterprise, API, Gov, Education, Bedrock/Vertex)** — https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training · https://code.claude.com/docs/en/data-usage
+- "By default, we will not use your inputs or outputs from our commercial products (e.g. Claude for Work,
+  Anthropic API, Claude Gov, etc.) to train our models." Exceptions: explicit feedback/bug reports, or opting in
+  (e.g. the Development Partner Program, which an org admin opts into; first-party API only).
+- The consumer-terms change "do[es] not apply to services under our Commercial Terms".
+- Claude Code data on commercial plans: standard 30-day retention; Zero Data Retention only for qualified
+  Enterprise accounts, enabled per org.
+
+**Enterprise admin retention** — https://support.claude.com/en/articles/10440198-configure-custom-data-retention-controls-for-enterprise-plans
+- Enterprise only. Primary Owner/Owner sets it under Organization settings › Data and Privacy.
+- "By default, data is retained indefinitely unless a custom retention period is set." Minimum 30 days. Changes
+  are in audit logs.
+
+### Agent harness, Agent SDK, Claude Code concepts
+
+**Agent SDK** — https://code.claude.com/docs/en/agent-sdk/overview · https://code.claude.com/docs/en/agent-sdk/agent-loop
+- "Build production AI agents with Claude Code as a library." Gives "the same tools, agent loop, and context
+  management that power Claude Code, programmable in Python and TypeScript."
+- An agent is "an application that completes a task by planning its own steps and calling tools".
+- Loop: Claude receives the prompt → evaluates and responds with text and/or tool calls → the SDK runs tools and
+  feeds results back → repeat until a response has no tool calls → result with text, usage, cost, session ID.
+- Built-in tools: Read/Edit/Write, Glob/Grep, Bash, WebSearch/WebFetch, Agent (subagents), Skill, AskUserQuestion.
+  Also hooks, MCP, permissions, sessions (resume/fork), skills/CLAUDE.md, plugins.
+- Context: does not reset between turns; everything accumulates; automatic compaction summarizes older history near
+  the limit; skill descriptions load at start, full content only when invoked.
+- Permission modes in the SDK: `default`, `acceptEdits`, `plan`, `dontAsk`, `auto`, `bypassPermissions`.
+  Limits: `maxTurns`, `maxBudgetUsd`.
+- Package names now verified: `claude_agent_sdk` (Python), `@anthropic-ai/claude-agent-sdk` (TypeScript).
+  (This resolves the "Agent SDK package names" exclusion in § Building on Claude.)
+- Third-party products may not offer claude.ai login or rate limits unless approved; use API keys. Governed by the
+  Commercial Terms.
+- Related, not the same thing: Managed Agents = Anthropic-hosted harness via the Claude API.
+
+**Subagents** — https://code.claude.com/docs/en/sub-agents
+- "Each subagent runs in its own context window with a custom system prompt, specific tool access, and independent
+  permissions." Uses: preserve context, enforce tool constraints, specialize, route to cheaper models.
+- Built-ins: Explore (fast, read-only search), Plan (research during plan mode), general-purpose.
+- Only the subagent's final response returns to the parent (agent-loop page).
+
+**Plan mode** — https://code.claude.com/docs/en/permission-modes
+- "Plan mode tells Claude to research and propose changes without making them." It reads files and runs shell
+  commands to explore, but edits stay blocked until you approve the plan.
+- Enter with Shift+Tab (cycles modes) or prefix a prompt with `/plan`; `--permission-mode plan` from the CLI;
+  `defaultMode: "plan"` in `.claude/settings.json`. Approving a plan exits plan mode.
+
+**Building effective agents** — https://www.anthropic.com/engineering/building-effective-agents
+- Workflows: "systems where LLMs and tools are orchestrated through predefined code paths."
+- Agents: "systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how
+  they accomplish tasks."
+- "Find the simplest solution possible, and only increasing complexity when needed." Agents fit open-ended problems
+  where the number of steps can't be predicted, at "higher costs, and the potential for compounding errors".
+- Workflow patterns: prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer.
+
+### Community skills (not Anthropic)
+
+Not Anthropic products. Claims about savings or quality are the authors' own, not verified by us or by Anthropic.
+Teach these as "examples of what the community builds", with install commands from each repo README (checked
+2026-10-05).
+
+- **Superpowers** — https://github.com/obra/superpowers — Jesse Vincent (obra) / Prime Radiant, MIT.
+  "An agentic skills framework & software development methodology": composable skills for brainstorming,
+  writing-plans, test-driven-development, subagent-driven-development, systematic-debugging, git worktrees, code
+  review. Install in Claude Code: `/plugin install superpowers@claude-plugins-official` (README says it is in the
+  official Claude plugin marketplace), or `/plugin marketplace add obra/superpowers-marketplace` then
+  `/plugin install superpowers@superpowers-marketplace`.
+- **Caveman** — https://github.com/JuliusBrussee/caveman — Julius Brussee, Apache-2.0. Skill (+ optional proxy) that
+  makes the agent answer in terse, stripped-down "caveman" sentences. Code, paths, numbers and negations stay
+  exact; it switches back to full sentences for security warnings and irreversible actions. Levels `/caveman`,
+  `/ultracave`, `/megacave`; "stop caveman" to exit. Install: `npx skills add JuliusBrussee/caveman -g`, or
+  `claude plugin marketplace add JuliusBrussee/caveman && claude plugin install caveman@caveman`. The README
+  claims 33.2% fewer input tokens via its proxy; treat that as the author's claim.
+- **Ponytail** — https://github.com/DietrichGebert/ponytail — Dietrich Gebert, MIT. "Makes your AI agent think like
+  the laziest senior dev in the room": YAGNI first, then stdlib, native platform features, existing dependencies,
+  one line before fifty. Levels lite / full (default) / ultra. Install: `/plugin marketplace add DietrichGebert/ponytail`
+  then `/plugin install ponytail@ponytail`, or `npx skills add dietrichgebert/ponytail`. The README claims 54% less code and 20% lower cost (author's claim).
+- **Spec Kit (spec-driven development)** — https://github.com/github/spec-kit — GitHub, MIT. "Toolkit to help you get
+  started with SDD": write a spec, then plan, then tasks, then implement. Install the CLI with `uv tool install specify-cli`,
+  then run `specify init <project> --integration <agent>` (Claude Code is supported). Workflow skills:
+  `/speckit-constitution` → `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement` →
+  `/speckit-converge`. NOTE: older tutorials show dotted `/speckit.specify`; the current README uses hyphens.
+- Alternatives (one line each, not deeply checked):
+  - **OpenSpec**: https://github.com/Fission-AI/OpenSpec. Fission AI, MIT. "Spec-driven development (SDD) for AI coding
+    assistants." Install with `npm install -g @fission-ai/openspec@latest`; commands are `/opsx:explore`,
+    `/opsx:propose`, `/opsx:apply` and `/opsx:archive`.
+  - **BMAD Method**: https://github.com/bmad-code-org/BMAD-METHOD. "Breakthrough Method for Agile AI Driven
+    Development". Analyst, PM, architect and dev agent roles carry an idea to delivery. Install with
+    `npx skills add bmad-code-org/BMAD-METHOD`. The license is not stated in the GitHub metadata.
+  - **Kiro**: https://kiro.dev. An AWS agentic IDE/platform that turns prompts into specs (requirements → design →
+    tasks) and runs the tasks with agents. It is a separate product, not a Claude skill.
+
+### Workflow gallery: non-technical uses
+
+Sources are Anthropic's official use-case pages on academy.claude.com. claude.com/resources/use-cases/* now redirects there.
+These are Anthropic's examples, not independent case studies. "Verified" means the underlying feature has an official
+support/docs line in this file. Connectors named in the examples (Salesforce, Gong, Apollo, Daloopa, S&P Global,
+Intercom, Canva, HubSpot, Notion, M365) are taken from the use-case pages; their availability per plan was not checked.
+
+| # | Name | Who | Steps | Features (✓ = verified in this fact sheet) | Source |
+|---|---|---|---|---|---|
+| 1 | Prep for your week | Managers, knowledge workers | 1 Connect Microsoft 365. 2 Name the week and the sources. 3 Claude flags meetings that need prep, conflicts and focus blocks. 4 Draft replies and prep notes. 5 Save the workflow as a skill. | Connectors ✓, Skills ✓ | https://academy.claude.com/use-cases/quickly-prep-for-your-week |
+| 2 | Daily briefing across tools | Ops managers, team leads | 1 Connect Slack, Notion and dashboards. 2 Specify the briefing sections (urgent, mentions, due). 3 Claude queries the sources in parallel. 4 Review by priority and dig in. 5 Run it on a schedule. | Connectors ✓, Claude in Chrome ✓, Scheduled tasks ✓, Cowork ✓ | https://academy.claude.com/use-cases/build-a-daily-briefing-across-your-tools |
+| 3 | Client call prep sheet | Sales / client-facing consultants | 1 Connect CRM, call transcripts and Drive. 2 Put the account docs in a working folder. 3 Ask for a one-page prep sheet (status, asks, objections). 4 Review before the call. 5 Schedule it for every external meeting. | Connectors ✓, Plugins ✓, Scheduled tasks ✓, Cowork ✓ | https://academy.claude.com/use-cases/call-prep-sheet |
+| 4 | Account research brief | Sales, business development | 1 Gather call notes, filings and internal docs in a folder. 2 Connect CRM and Drive. 3 Run the research prompt, choosing sections and a time window. 4 Review the one-page brief that mixes internal history with public signals. 5 Schedule reruns. | Connectors ✓, Skills ✓, Scheduled tasks ✓, Cowork ✓ | https://academy.claude.com/use-cases/account-research-brief |
+| 5 | Compare competing proposals | Procurement, finance, ops | 1 Upload vendor proposals (PDF/docs). 2 Set the criteria (price, terms, support). 3 Claude normalizes the data across proposals. 4 Review a colour-coded comparison spreadsheet with red flags. 5 Follow up with a cost projection or decision memo. | File upload, File creation (.xlsx) ✓ | https://academy.claude.com/use-cases/compare-and-analyze-competing-options |
+| 6 | Size a market | Strategists, analysts, consultants | 1 Describe the sizing question and the outputs you want. 2 Add your own research and templates. 3 Approve Claude's research plan. 4 Receive a PPTX, an XLSX and a sourced write-up. 5 Drill into segments or sensitivities. | Web research ✓ (Research), File creation ✓, Cowork ✓ | https://academy.claude.com/use-cases/size-a-market-using-your-research |
+| 7 | Research → presentation | Researchers, anyone presenting findings | 1 Upload the paper and data; connect Drive/Canva. 2 Pull out 3–4 key findings and a narrative. 3 Generate the slide outline and speaker notes. 4 Iterate slide by slide. 5 Rehearse with voice mode. | Connectors ✓, File creation ✓ (voice mode: not verified) | https://academy.claude.com/use-cases/turn-research-into-presentations |
+| 8 | On-brand content set | Marketing, comms | 1 Put the brief, brand guidelines and best examples in a folder. 2 Run the draft-content skill. 3 Check the drafts with the brand-review skill. 4 Customize the skill and share it with the team. 5 Schedule runs for new briefs. | Plugins ✓, Skills (org-shared) ✓, Scheduled tasks ✓ | https://academy.claude.com/use-cases/on-brand-content |
+| 9 | Forecast & scenarios | Finance / FP&A | 1 Load actuals, driver model and headcount plan. 2 Extend the model 4 quarters into base, upside and downside cases. 3 Log changed assumptions with deltas. 4 Write a one-page memo for leadership. 5 Schedule monthly reruns. | File creation (.xlsx/.docx) ✓, Skills ✓, Scheduled tasks ✓ | https://academy.claude.com/use-cases/forecast-scenarios |
+| 10 | Investment / recommendation memo | Analysts, advisors | 1 Specify the company, metrics and memo format. 2 Connect financial data connectors. 3 Claude pulls the data and calculates. 4 Get a formatted Word memo. 5 Refine the citations, or turn it into slides. | Connectors ✓, Web search ✓, File creation ✓ | https://academy.claude.com/use-cases/draft-investment-memos |
+| 11 | Synthesize customer feedback | Product, customer success, UX research | 1 Connect the feedback source and upload surveys and transcripts. 2 Ask for themes, needs and urgency. 3 Get an Excel workbook (themes, quotes, requests). 4 Validate the theme tab. 5 Segment and refine. | Connectors ✓, File creation (.xlsx) ✓ | https://academy.claude.com/use-cases/analyze-patterns-in-user-feedback |
+| 12 | Meeting notes → tasks (Slack) | Project managers, delivery leads | 1 Invite Claude to the project channel; connect the recorder and tracker. 2 Enable proactive replies. 3 The transcript posts with @Claude. 4 Claude replies in the thread with decisions and actions and files tickets. 5 The team refines in the thread. | Claude in Slack ("Claude Tag"): NOT verified in this sheet. Use only if the Slack surface is added to the fact sheet. | https://academy.claude.com/use-cases/meeting-notes-and-filed-tasks-from-a-call-transcript |
+
+Several examples call a role plugin skill by name (`/call-prep`, `/draft-content`, `/brand-review`,
+`/financial-statements`, `/account-research`). Those exact skill names come from the use-case pages only; teach
+them as "a plugin skill such as…", not as guaranteed commands.
+
+### Not verified, excluded
+
+- **The default state of the consumer "Help improve our AI models" toggle.** No official page fetched states whether
+  it is pre-selected on or off. The press widely reports "on by default"; leave it out and teach "you choose — check
+  Settings › Privacy".
+- Team plan custom retention (the article is Enterprise-only) and Team-plan Zero Data Retention.
+- Exact Cowork plan rollout of the merged "one Claude" experience for Team/Enterprise, and its timing ("rolling out in stages").
+- A single status word for Cowork. Cloud/web/mobile sessions are labelled "beta"; desktop status was not confirmed.
+  Computer use in Cowork is "beta on Pro/Max" according to the merge article only.
+- Scheduled-task approval-mode option names.
+- Claude Tag / Claude in Slack (see workflow 12), voice mode, Extended Thinking naming on claude.ai.
+- Per-plan availability of specific third-party connectors (Salesforce, Gong, Apollo, Daloopa, S&P Global, Intercom,
+  Canva, HubSpot, Notion).
+- Any community-skill benchmark (caveman 33%/65%, ponytail 54%/20%). These are author claims; GitHub star counts
+  (very high and fast-moving) are left out too.
+- Whether Superpowers' listing in "claude-plugins-official" means Anthropic endorses it. That comes from the repo
+  README only; don't call it Anthropic-approved.
+- BMAD license, Kiro pricing/model details, OpenSpec specifics beyond the README lines above.
+- Anthropic customer stories for non-technical workflows. None were fetched; the gallery uses Anthropic's own
+  use-case pages only.
